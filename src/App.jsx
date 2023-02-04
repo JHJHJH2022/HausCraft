@@ -14,6 +14,7 @@ export default function App() {
   const floorPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
 
   // Update buildings in canvas and building number display
+  // test test
   const [buildingNum, setBuildingNum] = useState(1);
 
   const [buildings] = useStore((state) => [state.buildings]);
