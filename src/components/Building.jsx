@@ -2,7 +2,9 @@ import React, { useState, useRef } from "react";
 import { useDrag } from "@use-gesture/react";
 import { animated, useSpring } from "@react-spring/three";
 import { useFrame, useThree } from "@react-three/fiber";
+import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
+import { Scene, Vector3 } from "three";
 
 export default function Building({
   position,
@@ -10,12 +12,31 @@ export default function Building({
   floorPlane,
   buildingHeight,
 }) {
-  const floatInAirHt = 1;
+  /* importing objects */
+  /* const hamburger = useGLTF("burger-merged.glb");
+  const object = hamburger.nodes.Cube003; */
+  const hamburger = useGLTF("testCube.glb");
+  const object = hamburger.nodes.Cube; // need to adapt accordingly
 
-  /* const [pos, setPos] = useState([0, buildingHeight / 2 + floatInAirHt, 0]); */
+  // bounding box to get height of imported object
+  const boxHelper = new THREE.BoxHelper(object, 0xffff00);
+
+  const bbox = object.geometry.computeBoundingBox();
+  const box = new THREE.Box3();
+  box.copy(object.geometry.boundingBox).applyMatrix4(object.matrixWorld);
+
+  const bboxVector = new Vector3();
+  box.getSize(bboxVector);
+  let objectHeight = bboxVector.y;
+
+  object.geometry.center(); // center the imported object
+
+  // object to float in air
+  const floatInAirHt = 3;
+
   const [pos, setPos] = useState([
     position[0],
-    buildingHeight / 2 + floatInAirHt,
+    objectHeight / 2 + floatInAirHt,
     position[2],
   ]);
 
@@ -25,7 +46,6 @@ export default function Building({
   let planeIntersectPoint = new THREE.Vector3();
 
   const [spring, api] = useSpring(() => ({
-    // position: [0, 0, 0],
     position: pos,
     scale: 1,
     rotation: [0, 0, 0],
@@ -33,9 +53,9 @@ export default function Building({
   }));
 
   /* Object float in air when first added */
-  const [positioned, setPositioned] = useState(false);
-  const dragObjectRef = useRef();
   const animatedMeshRef = useRef();
+  const [positioned, setPositioned] = useState(false);
+
   useFrame((state) => {
     if (!positioned) {
       animatedMeshRef.current.rotation.y += 0.003;
@@ -53,12 +73,14 @@ export default function Building({
     ({ active, event }) => {
       if (active) {
         event.ray.intersectPlane(floorPlane, planeIntersectPoint);
+
         let newPos = [
-          planeIntersectPoint.x,
-          buildingHeight / 2,
-          planeIntersectPoint.z,
-        ].map((x) => Math.floor(x) + 0.5); /* to snap to grid */
+          Math.floor(planeIntersectPoint.x) + 0.5,
+          objectHeight / 2, // y need to be exact value
+          Math.floor(planeIntersectPoint.z) + 0.5,
+        ]; /* to snap to grid */
         setPos(newPos);
+
         setPositioned(true); // so that object stops floating after being positioned
       }
 
@@ -76,13 +98,20 @@ export default function Building({
   );
 
   return (
-    <animated.mesh {...spring} {...bind()} castShadow ref={animatedMeshRef}>
-      <boxGeometry
-        ref={dragObjectRef}
-        attach="geometry"
-        args={[1, buildingHeight, 1]}
-      />
-      <meshNormalMaterial attach="material" />
-    </animated.mesh>
+    <>
+      <animated.mesh
+        {...spring}
+        {...bind()}
+        castShadow
+        ref={animatedMeshRef}
+        receiveShadow
+        geometry={object.geometry}
+        material={object.material}
+      >
+        <meshStandardMaterial />
+      </animated.mesh>
+
+      {/* <primitive object={boxHelper} /> */}
+    </>
   );
 }

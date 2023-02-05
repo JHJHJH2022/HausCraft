@@ -8,15 +8,29 @@ import Display from "./components/Display";
 import { useEffect } from "react";
 import { useStore } from "./hooks/useStore";
 
+/* To-do List
+[x] change imports into one mesh and one texture material and replace current animated mesh
+[x] fixed, objects of any height are able to snap to floor now 
+[] add in alt+LMC for deleting 
+[] model one level, export one mesh (keep the original file with separated objects first!)
+[] user decide how many levels to have
+[] add parameters of total GFA and spacing into UI
+[] prevent buildings from being added to same position
+[] rotating function
+[] how to let user design diff level plans
+[] export model with texture map
+[] deploy
+
+*/
+
 export default function App() {
-  const buildingHeight = 5;
+  // set up basic values
+  const buildingHeight = 8; // need to adapt to height decided by user
   const [isDragging, setIsDragging] = useState(false);
   const floorPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
 
   // Update buildings in canvas and building number display
-  // test test
   const [buildingNum, setBuildingNum] = useState(1);
-
   const [buildings] = useStore((state) => [state.buildings]);
   const [addbuildings] = useStore((state) => [state.addbuildings]);
 
@@ -27,6 +41,7 @@ export default function App() {
     setBuildingNum(buildings.length);
   }, [buildings]);
 
+  // return objects
   return (
     <div className="App">
       <Display buildingNum={buildingNum} handleClick={handleClick} />
@@ -39,21 +54,8 @@ export default function App() {
           shadow-mapSize-width={1512}
         />
 
-        {/*    <mesh
-        rotation={[-Math.PI / 2, 0, 0]}
-        position={[0, -0.1, 0]}
-        receiveShadow
-      >
-        <planeGeometry attach="geometry" args={[30, 30]} receiveShadow />
-        <meshPhongMaterial
-          attach="material"
-          side={THREE.DoubleSide}
-          receiveShadow
-        />
-      </mesh> */}
-        {/* main use of this mesh is to show shadow, can replace with site map texture later */}
-
         <gridHelper args={[200, 200, "grey", "lightgrey"]} />
+
         <Buildings
           setIsDragging={setIsDragging}
           floorPlane={floorPlane}
