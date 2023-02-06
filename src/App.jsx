@@ -11,14 +11,18 @@ import { useStore } from "./hooks/useStore";
 /* To-do List
 [x] change imports into one mesh and one texture material and replace current animated mesh
 [x] fixed, objects of any height are able to snap to floor now 
-[] add in alt+LMC for deleting 
+[x] add in alt+LMC for deleting 
+[x] find a better way to interact with use store to update and delete
 [] model one level, export one mesh (keep the original file with separated objects first!)
 [] user decide how many levels to have
 [] add parameters of total GFA and spacing into UI
+
 [] prevent buildings from being added to same position
 [] rotating function
 [] how to let user design diff level plans
 [] export model with texture map
+[] object to be added at mouse position and move together with mouse before positioned
+
 [] deploy
 
 */
@@ -33,6 +37,8 @@ export default function App() {
   const [buildingNum, setBuildingNum] = useState(1);
   const [buildings] = useStore((state) => [state.buildings]);
   const [addbuildings] = useStore((state) => [state.addbuildings]);
+  const [removebuildings] = useStore((state) => [state.removebuildings]);
+  const [updatebuildings] = useStore((state) => [state.updatebuildings]);
 
   const handleClick = () => {
     addbuildings(0, 0, 0);
@@ -61,6 +67,8 @@ export default function App() {
           floorPlane={floorPlane}
           buildingHeight={buildingHeight}
           buildings={buildings}
+          removebuildings={removebuildings}
+          updatebuildings={updatebuildings}
         />
 
         <OrthographicCamera makeDefault zoom={40} position={[100, 100, 150]} />

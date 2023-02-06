@@ -5,6 +5,8 @@ export default function Buildings({
   floorPlane,
   buildingHeight,
   buildings,
+  removebuildings,
+  updatebuildings,
 }) {
   /* add buildings to the canvas */
 
@@ -17,10 +19,13 @@ export default function Buildings({
     return (
       <Building
         key={key}
+        index={key}
         position={pos}
         setIsDragging={setIsDragging}
         floorPlane={floorPlane}
         buildingHeight={buildingHeight}
+        removebuildings={removebuildings}
+        updatebuildings={updatebuildings}
       />
     );
   });

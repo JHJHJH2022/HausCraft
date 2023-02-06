@@ -1,22 +1,29 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useDrag } from "@use-gesture/react";
 import { animated, useSpring } from "@react-spring/three";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 import { Scene, Vector3 } from "three";
+import { useStore } from "../hooks/useStore";
 
 export default function Building({
   position,
   setIsDragging,
   floorPlane,
   buildingHeight,
+  index,
+  removebuildings,
+  updatebuildings,
 }) {
+  // ref objects
+  const animatedMeshRef = useRef();
   /* importing objects */
-  /* const hamburger = useGLTF("burger-merged.glb");
-  const object = hamburger.nodes.Cube003; */
-  const hamburger = useGLTF("testCube.glb");
-  const object = hamburger.nodes.Cube; // need to adapt accordingly
+  const hamburger = useGLTF("burger-merged.glb");
+  const hamburgerObj = hamburger.nodes.Cube003;
+
+  const building = useGLTF("testCube.glb");
+  const object = building.nodes.Cube; // need to adapt accordingly
 
   // bounding box to get height of imported object
   const boxHelper = new THREE.BoxHelper(object, 0xffff00);
@@ -30,6 +37,15 @@ export default function Building({
   let objectHeight = bboxVector.y;
 
   object.geometry.center(); // center the imported object
+
+  // alt + LMC to remove buildings( for now)
+  /*   const [visible, setVisible] = useState(true); */
+  const handleDelete = (e) => {
+    if (e.altKey) {
+      /* setVisible((prev) => !prev); */
+      removebuildings(index);
+    }
+  };
 
   // object to float in air
   const floatInAirHt = 3;
@@ -53,7 +69,7 @@ export default function Building({
   }));
 
   /* Object float in air when first added */
-  const animatedMeshRef = useRef();
+
   const [positioned, setPositioned] = useState(false);
 
   useFrame((state) => {
@@ -69,6 +85,8 @@ export default function Building({
   /* code to be added */
   /*  */
 
+  // // update building pos in use store
+
   const bind = useDrag(
     ({ active, event }) => {
       if (active) {
@@ -79,9 +97,15 @@ export default function Building({
           objectHeight / 2, // y need to be exact value
           Math.floor(planeIntersectPoint.z) + 0.5,
         ]; /* to snap to grid */
+
         setPos(newPos);
 
         setPositioned(true); // so that object stops floating after being positioned
+
+        // update position
+        const newPosArray = [newPos[0], newPos[1], newPos[2]];
+        updatebuildings(index, newPosArray);
+        //
       }
 
       setIsDragging(active);
@@ -107,10 +131,11 @@ export default function Building({
         receiveShadow
         geometry={object.geometry}
         material={object.material}
+        onClick={handleDelete}
+        display="none"
       >
         <meshStandardMaterial />
       </animated.mesh>
-
       {/* <primitive object={boxHelper} /> */}
     </>
   );
