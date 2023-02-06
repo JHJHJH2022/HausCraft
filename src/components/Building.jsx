@@ -2,28 +2,38 @@ import React, { useState, useRef, useEffect } from "react";
 import { useDrag } from "@use-gesture/react";
 import { animated, useSpring } from "@react-spring/three";
 import { useFrame, useThree } from "@react-three/fiber";
-import { useGLTF } from "@react-three/drei";
+import { useGLTF, Html } from "@react-three/drei";
 import * as THREE from "three";
 import { Scene, Vector3 } from "three";
-import { useStore } from "../hooks/useStore";
+import { Slider } from "antd";
+import Tree from "./Tree.jsx";
 
 export default function Building({
   position,
   setIsDragging,
+  setIsRotating,
   floorPlane,
   buildingHeight,
   index,
   removebuildings,
   updatebuildings,
+  setIsChangingNoOfFloors,
 }) {
   // ref objects
   const animatedMeshRef = useRef();
-  /* importing objects */
-  const hamburger = useGLTF("burger-merged.glb");
-  const hamburgerObj = hamburger.nodes.Cube003;
+  const [noOfFloors, setNoOfFloors] = useState(5);
 
-  const building = useGLTF("testCube.glb");
-  const object = building.nodes.Cube; // need to adapt accordingly
+  /* importing objects */
+  const buildings = useGLTF("buildings-withFloorPlates.glb");
+  console.log(buildings);
+  const cube = useGLTF("testCube.glb");
+  const cubeObj = cube.nodes.Cube;
+
+  const walls = buildings.nodes.walls;
+  const windows = buildings.nodes.windows;
+  const others = buildings.nodes.others;
+  const floor = buildings.nodes.floor;
+  const object = walls; // need to adapt accordingly
 
   // bounding box to get height of imported object
   const boxHelper = new THREE.BoxHelper(object, 0xffff00);
@@ -34,9 +44,9 @@ export default function Building({
 
   const bboxVector = new Vector3();
   box.getSize(bboxVector);
-  let objectHeight = bboxVector.y;
+  let objectHeight = bboxVector.y * 10; // * 10 since is scaled
 
-  object.geometry.center(); // center the imported object
+  // buildings.scene.center(); // center the imported object -- rmb to apply posiiton, and model centered in blender
 
   // alt + LMC to remove buildings( for now)
   /*   const [visible, setVisible] = useState(true); */
@@ -56,6 +66,8 @@ export default function Building({
     position[2],
   ]);
 
+  const [rotation, setRotation] = useState([0, 0, 0]);
+
   const { size, viewport } = useThree();
   const aspect = size.width / viewport.width;
 
@@ -64,7 +76,7 @@ export default function Building({
   const [spring, api] = useSpring(() => ({
     position: pos,
     scale: 1,
-    rotation: [0, 0, 0],
+    rotation: rotation,
     config: { friction: 10 },
   }));
 
@@ -121,21 +133,133 @@ export default function Building({
     { delay: true }
   );
 
+  // Rotation ---WIP
+  /* const roundNearest = (value, nearest) =>
+    Math.round(value / nearest) * nearest;
+  const bind1 = useDrag(({ offset: [x, y], active }) => {
+    if (active) {
+      const deltaAngle = Math.atan2(y, x); // need to find a better way to rotate
+      const rotationAngle = deltaAngle * 0.01;
+      animatedMeshRef.current
+        ? (animatedMeshRef.current.rotation.y += rotationAngle)
+        : null;
+
+      let newRotation = [0, roundNearest(rotationAngle, Math.PI / 4), 0];
+
+      setRotation(newRotation);
+      console.log(newRotation);
+    }
+    setIsRotating(active);
+
+    api.start({
+      rotation: active ? rotation : rotation,
+    });
+    return null;
+  }); */
+
+  // re-orient the object once when it is first positioned
+  useEffect(() => {
+    if (positioned) {
+      animatedMeshRef.current.rotation.y = 0;
+      animatedMeshRef.current.position.y = 0;
+      console.log("repositioned");
+    }
+  }, [positioned]);
+
+  function BuildingOneFloor({ upperFloorPos }) {
+    return (
+      <group>
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={object.geometry}
+          material={object.material}
+          position={upperFloorPos}
+        ></mesh>
+
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={windows.geometry}
+          material={windows.material}
+          position={upperFloorPos}
+        ></mesh>
+
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={others.geometry}
+          material={others.material}
+          position={upperFloorPos}
+        ></mesh>
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={floor.geometry}
+          material={floor.material}
+          position={upperFloorPos}
+        ></mesh>
+      </group>
+    );
+  }
+
+  function BuildingAllFloors({ noOfFloors, objectHeight }) {
+    const array = Array(noOfFloors).fill(1);
+    let n = -1;
+    return array.map(() => {
+      n += 1;
+      return (
+        <BuildingOneFloor upperFloorPos={[0, (objectHeight / 10) * n, 0]} />
+      );
+    });
+  }
+
+  const handleHover = (e) => {
+    setIsChangingNoOfFloors(true);
+    setNoOfFloors(e);
+    setIsChangingNoOfFloors(false);
+  };
+
   return (
     <>
-      <animated.mesh
+      <animated.group
         {...spring}
         {...bind()}
-        castShadow
+        /* {...bind1()} */
         ref={animatedMeshRef}
-        receiveShadow
-        geometry={object.geometry}
-        material={object.material}
         onClick={handleDelete}
-        display="none"
+        scale={10}
       >
-        <meshStandardMaterial />
-      </animated.mesh>
+        <BuildingAllFloors
+          noOfFloors={noOfFloors}
+          objectHeight={objectHeight}
+        />
+        <Html
+          style={{
+            transition: "all 0.2s",
+            color: "black",
+            /* opacity: hidden ? 0 : 1,
+            transform: `scale(${hidden ? 0.5 : 1})`, */
+          }}
+          distanceFactor={1.5}
+          position={[2, 1, 0.51]}
+          transform
+          /* occlude
+          onOcclude={setVisible} */
+        >
+          <span>No. of Floors</span>
+          <Slider
+            style={{ height: 400 }}
+            min={1}
+            max={40}
+            step={1}
+            value={noOfFloors}
+            onChange={handleHover}
+            vertical
+          />
+        </Html>
+        <Tree />
+      </animated.group>
       {/* <primitive object={boxHelper} /> */}
     </>
   );

@@ -1,6 +1,4 @@
 export default function Display({ buildingNum, handleClick }) {
-
-
   return (
     <div className="sidebar">
       <h5>

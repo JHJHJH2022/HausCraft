@@ -2,11 +2,13 @@ import Building from "./Building.jsx";
 
 export default function Buildings({
   setIsDragging,
+  setIsRotating,
   floorPlane,
   buildingHeight,
   buildings,
   removebuildings,
   updatebuildings,
+  setIsChangingNoOfFloors,
 }) {
   /* add buildings to the canvas */
 
@@ -22,10 +24,12 @@ export default function Buildings({
         index={key}
         position={pos}
         setIsDragging={setIsDragging}
+        setIsRotating={setIsRotating}
         floorPlane={floorPlane}
         buildingHeight={buildingHeight}
         removebuildings={removebuildings}
         updatebuildings={updatebuildings}
+        setIsChangingNoOfFloors={setIsChangingNoOfFloors}
       />
     );
   });
