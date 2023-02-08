@@ -7,13 +7,13 @@ import * as THREE from "three";
 import { Scene, Vector3 } from "three";
 import { Slider } from "antd";
 import Tree from "./Tree.jsx";
-import { useDragObjects } from "../helpers/useDragObjects";
+import { getMeshHeight } from "../helpers/helpers";
+import BuildingIndivAllLevels from "../objectComponents/BuildingIndivAllLevels";
 
 export default function Building({
   position,
   setIsDragging,
   setIsRotating,
-  floorPlane,
   buildingHeight,
   index,
   removebuildings,
@@ -23,6 +23,8 @@ export default function Building({
   // ref objects
   const animatedMeshRef = useRef();
   const [noOfFloors, setNoOfFloors] = useState(5);
+
+  const floorPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
 
   /* importing objects */
   const buildings = useGLTF("buildings-withFloorPlates.glb");
@@ -34,18 +36,15 @@ export default function Building({
   const object = walls; // need to adapt accordingly
 
   // bounding box to get height of imported object
-  const boxHelper = new THREE.BoxHelper(object, 0xffff00);
-
-  const bbox = object.geometry.computeBoundingBox();
-  const box = new THREE.Box3();
-  box.copy(object.geometry.boundingBox).applyMatrix4(object.matrixWorld);
-
-  const bboxVector = new Vector3();
-  box.getSize(bboxVector);
-  let objectHeight = bboxVector.y * 10; // * 10 since is scaled
+  const objectHeight = getMeshHeight(object);
 
   // buildings.scene.center(); // center the imported object -- rmb to apply posiiton, and model centered in blender
-
+  const handleDelete = (e) => {
+    if (e.altKey) {
+      /* setVisible((prev) => !prev); */
+      removebuildings(index);
+    }
+  };
   // set up
   const floatInAirHt = 3;
   const [pos, setPos] = useState([
@@ -61,21 +60,15 @@ export default function Building({
 
   // alt + LMC to remove buildings( for now)
   /*   const [visible, setVisible] = useState(true); */
-  const handleDelete = (e) => {
-    if (e.altKey) {
-      /* setVisible((prev) => !prev); */
-      removebuildings(index);
-    }
-  };
 
   /* Object float in air when first added */
-  useFrame((state) => {
-    if (!positioned) {
-      animatedMeshRef.current.rotation.y += 0.003;
-      animatedMeshRef.current.position.y +=
-        Math.cos(state.clock.elapsedTime) * 0.01;
-    }
-  });
+  // useFrame((state) => {
+  //   if (!positioned) {
+  //     animatedMeshRef.current.rotation.y += 0.003;
+  //     animatedMeshRef.current.position.y +=
+  //       Math.cos(state.clock.elapsedTime) * 0.01;
+  //   }
+  // });
   /*  */
 
   /* object to be added at mouse position and move together with mouse before positioned */
@@ -104,12 +97,12 @@ export default function Building({
 
         setPos(newPos);
 
-        setPositioned(true); // so that object stops floating after being positioned
+        // setPositioned(true); // so that object stops floating after being positioned
 
-        // update position
-        const newPosArray = [newPos[0], newPos[1], newPos[2]];
-        updatebuildings(index, newPosArray);
-        //
+        // // update position
+        // const newPosArray = [newPos[0], newPos[1], newPos[2]];
+        // updatebuildings(index, newPosArray);
+        // //
       }
 
       setIsDragging(active);
@@ -125,30 +118,6 @@ export default function Building({
     { delay: true }
   );
 
-  // Rotation ---WIP
-  /* const roundNearest = (value, nearest) =>
-    Math.round(value / nearest) * nearest;
-  const bind1 = useDrag(({ offset: [x, y], active }) => {
-    if (active) {
-      const deltaAngle = Math.atan2(y, x); // need to find a better way to rotate
-      const rotationAngle = deltaAngle * 0.01;
-      animatedMeshRef.current
-        ? (animatedMeshRef.current.rotation.y += rotationAngle)
-        : null;
-
-      let newRotation = [0, roundNearest(rotationAngle, Math.PI / 4), 0];
-
-      setRotation(newRotation);
-      console.log(newRotation);
-    }
-    setIsRotating(active);
-
-    api.start({
-      rotation: active ? rotation : rotation,
-    });
-    return null;
-  }); */
-
   // re-orient the object once when it is first positioned
   useEffect(() => {
     if (positioned) {
@@ -156,61 +125,6 @@ export default function Building({
       animatedMeshRef.current.position.y = 0;
     }
   }, [positioned]);
-
-  function BuildingOneFloor({ upperFloorPos }) {
-    return (
-      <group>
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={object.geometry}
-          material={object.material}
-          position={upperFloorPos}
-        ></mesh>
-
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={windows.geometry}
-          material={windows.material}
-          position={upperFloorPos}
-        ></mesh>
-
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={others.geometry}
-          material={others.material}
-          position={upperFloorPos}
-        ></mesh>
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={floor.geometry}
-          material={floor.material}
-          position={upperFloorPos}
-        ></mesh>
-      </group>
-    );
-  }
-
-  function BuildingAllFloors({ noOfFloors, objectHeight }) {
-    const array = Array(noOfFloors).fill(1);
-    let n = -1;
-    return array.map(() => {
-      n += 1;
-      return (
-        <BuildingOneFloor upperFloorPos={[0, (objectHeight / 10) * n, 0]} />
-      );
-    });
-  }
-
-  // make sure orbit control is disabled when moving slider
-  const handleHover = (e) => {
-    setIsChangingNoOfFloors(true);
-    setNoOfFloors(e);
-    setIsChangingNoOfFloors(false);
-  };
 
   return (
     <>
@@ -222,7 +136,7 @@ export default function Building({
         onClick={handleDelete}
         scale={10}
       >
-        <BuildingAllFloors
+        <BuildingIndivAllLevels
           noOfFloors={noOfFloors}
           objectHeight={objectHeight}
         />
@@ -246,13 +160,11 @@ export default function Building({
             max={40}
             step={1}
             value={noOfFloors}
-            onChange={handleHover}
             vertical
           />
         </Html>
         <Tree />
       </animated.group>
-      {/* <primitive object={boxHelper} /> */}
     </>
   );
 }

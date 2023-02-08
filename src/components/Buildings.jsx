@@ -3,8 +3,6 @@ import Building from "./Building.jsx";
 export default function Buildings({
   setIsDragging,
   setIsRotating,
-  floorPlane,
-  buildingHeight,
   buildings,
   removebuildings,
   updatebuildings,
@@ -16,7 +14,6 @@ export default function Buildings({
   // then when click on the ground / another building, position that building at the mouse intersect with ground / another building
   // need to check if a building is already there
   /*  */
-
   return buildings.map(({ key, pos }) => {
     return (
       <Building
@@ -25,8 +22,6 @@ export default function Buildings({
         position={pos}
         setIsDragging={setIsDragging}
         setIsRotating={setIsRotating}
-        floorPlane={floorPlane}
-        buildingHeight={buildingHeight}
         removebuildings={removebuildings}
         updatebuildings={updatebuildings}
         setIsChangingNoOfFloors={setIsChangingNoOfFloors}

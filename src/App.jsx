@@ -2,82 +2,56 @@ import "./App.css";
 import React, { useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import Buildings from "./components/Buildings.jsx";
+import AllAnimatedObjects from "./components/AllAnimatedObjects.jsx";
+import AnimatedObjects from "./components/AnimatedObjects.jsx";
 import { OrthographicCamera, OrbitControls } from "@react-three/drei";
-import * as THREE from "three";
+
 import Display from "./components/Display";
 import { useEffect } from "react";
-import { useStore } from "./hooks/useStore";
+import { useStoreAll } from "./hooks/useStoreAll";
+import Plane from "./components/Plane";
+import Lights from "./components/Lights";
 
 export default function App() {
-  // set up basic values
-  const buildingHeight = 8; // need to adapt to height decided by user
+  // user control states
   const [isDragging, setIsDragging] = useState(false);
   const [isRotating, setIsRotating] = useState(false);
   const [isChangingNoOfFloors, setIsChangingNoOfFloors] = useState(false);
-  const floorPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
 
   // Update buildings in canvas and building number display
   const [buildingNum, setBuildingNum] = useState(1);
-  const [buildings] = useStore((state) => [state.buildings]);
-  const [addbuildings] = useStore((state) => [state.addbuildings]);
-  const [removebuildings] = useStore((state) => [state.removebuildings]);
-  const [updatebuildings] = useStore((state) => [state.updatebuildings]);
+  const [objects] = useStoreAll((state) => [state.objects]);
+  const [addobjects] = useStoreAll((state) => [state.addobjects]);
+  const [removeobjects] = useStoreAll((state) => [state.removeobjects]);
+  const [updateobjects] = useStoreAll((state) => [state.updateobjects]);
 
   const handleClick = () => {
-    addbuildings(0, 0, 0);
+    addobjects("buildingIndiv");
   };
-  useEffect(() => {
-    setBuildingNum(buildings.length);
-  }, [buildings]);
 
+  useEffect(() => {
+    setBuildingNum(objects.length);
+  }, [objects]);
+
+  console.log(objects);
   // return objects
   return (
     <div className="App">
       <Display buildingNum={buildingNum} handleClick={handleClick} />
       <Canvas flat style={{ background: "white" }} shadows dpr={[1, 2]}>
-        <ambientLight intensity={0.5} />
-        <directionalLight
-          intensity={2.5}
-          position={[20, 100, 80]}
-          castShadow
-          shadow-mapSize-height={1512}
-          shadow-mapSize-width={1512}
-          shadow-camera-left={200}
-          shadow-camera-right={-200}
-          shadow-camera-top={200}
-          shadow-camera-bottom={-200}
-        />
-
+        <Lights />
         <gridHelper args={[200, 200, "grey", "lightgrey"]} />
 
-        <Buildings
+        <AllAnimatedObjects
           setIsDragging={setIsDragging}
           setIsRotating={setIsRotating}
-          floorPlane={floorPlane}
-          buildingHeight={buildingHeight}
-          buildings={buildings}
-          removebuildings={removebuildings}
-          updatebuildings={updatebuildings}
           setIsChangingNoOfFloors={setIsChangingNoOfFloors}
+          objects={objects}
+          removeobjects={removeobjects}
+          updateobjects={updateobjects}
         />
 
-        <mesh
-          rotation={[-Math.PI / 2, 0, 0]}
-          position={[0, -0.1, 0]}
-          receiveShadow
-        >
-          <planeGeometry
-            attach="geometry"
-            args={[200, 200]}
-            receiveShadow
-          />
-          <meshPhongMaterial
-            attach="material"
-            color="#ccc"
-            side={THREE.DoubleSide}
-            receiveShadow
-          />
-        </mesh>
+        <Plane />
 
         <OrthographicCamera makeDefault zoom={20} position={[100, 100, 150]} />
 

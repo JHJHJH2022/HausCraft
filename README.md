@@ -37,6 +37,7 @@ resturecture useStore to include more information: type, number of floors, rotat
 [] base map / site model
 [] more pre made clusters with different color typologies, no need to be able to change no of floors yet
 [] have image of end design that resembles a realistic HDB design
+[] fix geometry display issue -- maybe leave small gap beteen geometries
 
 -------save to database
 [] later: able to save design / templates for users to start with (refer to minecraft tutorial)
@@ -51,6 +52,7 @@ demo
 
 2022.02.08 - 09 work on restructure
 [] restructure
+[] model need to scale X10 in blender
 [] rotation
 [] modeling
 [] total units count
