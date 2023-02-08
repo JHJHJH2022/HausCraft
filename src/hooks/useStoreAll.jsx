@@ -21,6 +21,7 @@ export const useStoreAll = create((set) => ({
         {
           key: nanoid(),
           position: [0, 0, 0],
+          rotation: [0, 0, 0],
           typology: typology,
           levels: 1,
           unitsPerLevel: 2,

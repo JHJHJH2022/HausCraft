@@ -67,7 +67,7 @@ export default function Inspector({
 
       api.start({
         position: pos,
-        scale: active ? 1.2 : 1,
+        scale: active ? 1.05 : 1,
         rotation: [0, angleSnap(euler.y, 45), 0],
       });
       return null;

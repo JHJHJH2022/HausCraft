@@ -54,11 +54,12 @@ demo
 [x] restructure
 [x] model need to scale X10 in blender
 [x] rotation
-
-[] fix display of total buildings to exclude trees
-[] fix adjust no of floors
+[x] fix display of total buildings to exclude trees
+[x] fix slide move and orbit conrol conflict
+[] update rotation and noOfFloors to store
 [] total units count
-[] modeling
+[] modeling, roof and void deck for indiv buildings
+[] objects to float when first added
 
 ---
 

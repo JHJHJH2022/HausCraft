@@ -1,7 +1,12 @@
 import "./App.css";
 import React, { useState } from "react";
 import { Canvas } from "@react-three/fiber";
-import { OrthographicCamera, OrbitControls } from "@react-three/drei";
+import {
+  OrthographicCamera,
+  OrbitControls,
+  GizmoHelper,
+  GizmoViewport,
+} from "@react-three/drei";
 import { useEffect } from "react";
 import { useStoreAll } from "./hooks/useStoreAll";
 import Plane from "./mainComponents/Plane";
@@ -12,7 +17,6 @@ import AllAnimatedObjects from "./mainComponents/AllAnimatedObjects.jsx";
 export default function App() {
   // user control states
   const [isDragging, setIsDragging] = useState(false);
-  const [isRotating, setIsRotating] = useState(false);
   const [isChangingNoOfFloors, setIsChangingNoOfFloors] = useState(false);
 
   // Update buildings in canvas and building number display
@@ -31,7 +35,11 @@ export default function App() {
   };
 
   useEffect(() => {
-    setBuildingNum(objects.length);
+    setBuildingNum(
+      objects.filter((object) => {
+        return object.typology !== "tree";
+      }).length
+    );
   }, [objects]);
 
   // return objects
@@ -40,11 +48,10 @@ export default function App() {
       <Display buildingNum={buildingNum} handleClick={handleClick} />
       <Canvas flat style={{ background: "white" }} shadows dpr={[1, 2]}>
         <Lights />
-        <gridHelper args={[200, 200, "grey", "lightgrey"]} />
+        <gridHelper args={[200, 100, "white", "lightgrey"]} />
 
         <AllAnimatedObjects
           setIsDragging={setIsDragging}
-          setIsRotating={setIsRotating}
           setIsChangingNoOfFloors={setIsChangingNoOfFloors}
           objects={objects}
           removeobjects={removeobjects}
@@ -58,8 +65,12 @@ export default function App() {
         <OrbitControls
           minZoom={7}
           maxZoom={50}
-          enabled={!isDragging && !isRotating && !isChangingNoOfFloors}
+          enabled={!isDragging && !isChangingNoOfFloors}
         />
+
+        <GizmoHelper alignment="top-right" margin={[150, 150]}>
+          <GizmoViewport labelColor="white" axisHeadScale={1} />
+        </GizmoHelper>
       </Canvas>
     </div>
   );

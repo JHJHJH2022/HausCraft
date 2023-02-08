@@ -6,7 +6,7 @@ export default function Plane() {
       <planeGeometry attach="geometry" args={[200, 200]} receiveShadow />
       <meshPhongMaterial
         attach="material"
-        color="#ccc"
+        color="hsl(120, 10%, 43%)"
         side={THREE.DoubleSide}
         receiveShadow
       />
