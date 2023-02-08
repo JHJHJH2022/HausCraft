@@ -1,4 +1,4 @@
-import AnimatedObjects from "./AnimatedObjects.jsx";
+import AnimatedObjects from "../objectComponentsHelpers/AnimatedObjects.jsx";
 
 export default function AllAnimatedObjects({
   setIsDragging,

@@ -1,4 +1,4 @@
-import BuildingIndivSingleLevel from "../objectComponents/BuildingIndivSingleLevel";
+import BuildingIndivSingleLevel from "./BuildingIndivSingleLevel";
 import { nanoid } from "nanoid";
 
 export default function BuildingIndivAllLevels({ noOfFloors, objectHeight }) {

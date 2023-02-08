@@ -20,13 +20,13 @@ To-do List
 
 2023.02.08 - 2023.02.13
 ------code restructure
-[] organise files, and modularize function to add in new neighborhood components into the scene:
+[x] organise files, and modularize function to add in new neighborhood components into the scene:
 allAnimatedObjects(Buildings) -> animatedObjects(Building) -> importedObjects(all imports)
 resturecture useStore to include more information: type, number of floors, rotation, color --> later can save the information and retrieve and recreate the saved scene
 
 -------functions / fix
-[] rotating function (refer to code sandbox example)
-[] prevent buildings from being added to same position
+[x] rotating function (refer to code sandbox example)
+[x] prevent buildings from being added to same position
 [] customise color of building parts / based on building type (refer to code sandbox example)
 
 -- consult feedback
@@ -51,11 +51,14 @@ demo
 ---
 
 2022.02.08 - 09 work on restructure
-[] restructure
-[] model need to scale X10 in blender
-[] rotation
-[] modeling
+[x] restructure
+[x] model need to scale X10 in blender
+[x] rotation
+
+[] fix display of total buildings to exclude trees
+[] fix adjust no of floors
 [] total units count
+[] modeling
 
 ---
 

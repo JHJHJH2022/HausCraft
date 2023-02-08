@@ -1,7 +1,7 @@
-import Inspector from "./Inspector";
+import Inspector from "../mainComponents/Inspector";
 import BuildingIndivAllLevels from "../objectComponents/BuildingIndivAllLevels";
-import { useState } from "react";
-import { getObjectsHeight } from "../objectComponents/getObjectsHeight";
+import Tree from "../objectComponents/Tree";
+import { getObjectsHeight } from "./getObjectsHeight";
 
 export default function AnimatedObjects({
   index,
@@ -25,11 +25,14 @@ export default function AnimatedObjects({
     }
   };
 
-  const { buildingIndivHeight } = getObjectsHeight();
+  const { buildingIndivHeight, treeHeight } = getObjectsHeight();
   let objectHeight = 0;
   if (typology === "buildingIndiv") {
     objectHeight = buildingIndivHeight;
+  } else if (typology === "tree") {
+    objectHeight = treeHeight;
   }
+
   return (
     <Inspector
       setIsDragging={setIsDragging}
@@ -48,6 +51,7 @@ export default function AnimatedObjects({
           objectHeight={buildingIndivHeight}
         />
       )}
+      {typology === "tree" && <Tree />}
     </Inspector>
   );
 }

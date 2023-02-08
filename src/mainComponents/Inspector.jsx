@@ -41,6 +41,7 @@ export default function Inspector({
   // drag to translate and rotate
   const bind = useDrag(
     ({ active, event, delta: [dx, dy] }) => {
+      event.stopPropagation();
       if (active && event.ctrlKey === false) {
         event.ray.intersectPlane(floorPlane, planeIntersectPoint);
 
@@ -67,7 +68,7 @@ export default function Inspector({
       api.start({
         position: pos,
         scale: active ? 1.2 : 1,
-        rotation: [0, angleSnap(euler.y, 30), 0],
+        rotation: [0, angleSnap(euler.y, 45), 0],
       });
       return null;
     },

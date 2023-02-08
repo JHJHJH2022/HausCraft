@@ -1,4 +1,4 @@
-import { importObjects } from "./ImportedObjects";
+import { importObjects } from "../objectComponentsHelpers/ImportedObjects";
 
 export default function BuildingIndivSingleLevel({ upperFloorPos }) {
   const meshes = importObjects().buildingIndivObj;

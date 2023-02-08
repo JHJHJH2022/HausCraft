@@ -1,16 +1,13 @@
 import "./App.css";
 import React, { useState } from "react";
 import { Canvas } from "@react-three/fiber";
-import Buildings from "./components/Buildings.jsx";
-import AllAnimatedObjects from "./components/AllAnimatedObjects.jsx";
-import AnimatedObjects from "./components/AnimatedObjects.jsx";
 import { OrthographicCamera, OrbitControls } from "@react-three/drei";
-
-import Display from "./components/Display";
 import { useEffect } from "react";
 import { useStoreAll } from "./hooks/useStoreAll";
-import Plane from "./components/Plane";
-import Lights from "./components/Lights";
+import Plane from "./mainComponents/Plane";
+import Lights from "./mainComponents/Lights";
+import Display from "./mainComponents/Display";
+import AllAnimatedObjects from "./mainComponents/AllAnimatedObjects.jsx";
 
 export default function App() {
   // user control states
@@ -25,15 +22,18 @@ export default function App() {
   const [removeobjects] = useStoreAll((state) => [state.removeobjects]);
   const [updateobjects] = useStoreAll((state) => [state.updateobjects]);
 
-  const handleClick = () => {
-    addobjects("buildingIndiv");
+  const handleClick = (e) => {
+    if (e.target.id == "buildingIndiv") {
+      addobjects("buildingIndiv");
+    } else if (e.target.id == "tree") {
+      addobjects("tree");
+    }
   };
 
   useEffect(() => {
     setBuildingNum(objects.length);
   }, [objects]);
 
-  console.log(objects);
   // return objects
   return (
     <div className="App">
