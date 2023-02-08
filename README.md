@@ -49,7 +49,7 @@ demo
 
 ---
 
-2022.02.08 - 09
+2022.02.08 - 09 work on restructure
 [] restructure
 [] rotation
 [] modeling
