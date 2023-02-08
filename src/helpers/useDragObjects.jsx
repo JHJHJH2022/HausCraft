@@ -22,7 +22,7 @@ export const useDragObjects = (pos, rotation) => {
           Math.floor(planeIntersectPoint.z) + 0.5,
         ]; /* to snap to grid */
 
-        setPos(newPos);
+        setPos(newPos); //
 
         setPositioned(true); // so that object stops floating after being positioned
 
