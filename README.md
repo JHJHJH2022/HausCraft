@@ -14,17 +14,53 @@ To-do List
 [x] model one level, export one mesh (keep the original file with separated objects first!) --- color each part
 [x] user decide how many levels to have
 [x] fix shadow display
+[x] deploy
 
-[WIP] rotating function
-[] base map / site model
+---
 
-[] organise files, and modularize function to add in new neighborhood components into the scene
-[] add parameters of total GFA and spacing into UI
-[] customise color of building parts
-[] users can choose to populate the site with random buildings from the start, then adjust from there
+2023.02.08 - 2023.02.13
+------code restructure
+[] organise files, and modularize function to add in new neighborhood components into the scene:
+allAnimatedObjects(Buildings) -> animatedObjects(Building) -> importedObjects(all imports)
+resturecture useStore to include more information: type, number of floors, rotation, color --> later can save the information and retrieve and recreate the saved scene
+
+-------functions / fix
+[] rotating function (refer to code sandbox example)
 [] prevent buildings from being added to same position
-[] how to let user design diff level plans
-[] export model with texture map
-[] object to be added at mouse position and move together with mouse before positioned
+[] customise color of building parts / based on building type (refer to code sandbox example)
 
-[] deploy
+-- consult feedback
+[] total no of units
+
+-----model making
+[] more neighborhood components to add in
+[] base map / site model
+[] more pre made clusters with different color typologies, no need to be able to change no of floors yet
+[] have image of end design that resembles a realistic HDB design
+
+-------save to database
+[] later: able to save design / templates for users to start with (refer to minecraft tutorial)
+
+--------- interim presentation
+[] 10 min presentation (20min inclusivw of Q&A)
+process workflow diagram
+outcomes
+demo
+
+---
+
+2022.02.08 - 09
+[] restructure
+[] rotation
+[] modeling
+[] total units count
+
+---
+
+------ after interim
+[KIV] add parameters of total GFA and spacing into UI
+[] how to let user design diff level plans
+[] develop more feedback / contraints / typologies e.g.spacing for pivacy
+[] object to be added at mouse position and move together with mouse before positioned
+[] first person view control (refer to minecraft tutorial)
+[] export model with texture map

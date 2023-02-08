@@ -7,6 +7,7 @@ import * as THREE from "three";
 import { Scene, Vector3 } from "three";
 import { Slider } from "antd";
 import Tree from "./Tree.jsx";
+import { useDragObjects } from "../helpers/useDragObjects";
 
 export default function Building({
   position,
@@ -25,9 +26,6 @@ export default function Building({
 
   /* importing objects */
   const buildings = useGLTF("buildings-withFloorPlates.glb");
-  console.log(buildings);
-  const cube = useGLTF("testCube.glb");
-  const cubeObj = cube.nodes.Cube;
 
   const walls = buildings.nodes.walls;
   const windows = buildings.nodes.windows;
@@ -48,6 +46,19 @@ export default function Building({
 
   // buildings.scene.center(); // center the imported object -- rmb to apply posiiton, and model centered in blender
 
+  // set up
+  const floatInAirHt = 3;
+  const [pos, setPos] = useState([
+    position[0],
+    objectHeight / 2 + floatInAirHt,
+    position[2],
+  ]);
+  const [rotation, setRotation] = useState([0, 0, 0]);
+  const [positioned, setPositioned] = useState(false);
+  const { size, viewport } = useThree();
+  const aspect = size.width / viewport.width;
+  let planeIntersectPoint = new THREE.Vector3();
+
   // alt + LMC to remove buildings( for now)
   /*   const [visible, setVisible] = useState(true); */
   const handleDelete = (e) => {
@@ -57,33 +68,7 @@ export default function Building({
     }
   };
 
-  // object to float in air
-  const floatInAirHt = 3;
-
-  const [pos, setPos] = useState([
-    position[0],
-    objectHeight / 2 + floatInAirHt,
-    position[2],
-  ]);
-
-  const [rotation, setRotation] = useState([0, 0, 0]);
-
-  const { size, viewport } = useThree();
-  const aspect = size.width / viewport.width;
-
-  let planeIntersectPoint = new THREE.Vector3();
-
-  const [spring, api] = useSpring(() => ({
-    position: pos,
-    scale: 1,
-    rotation: rotation,
-    config: { friction: 10 },
-  }));
-
   /* Object float in air when first added */
-
-  const [positioned, setPositioned] = useState(false);
-
   useFrame((state) => {
     if (!positioned) {
       animatedMeshRef.current.rotation.y += 0.003;
@@ -97,7 +82,14 @@ export default function Building({
   /* code to be added */
   /*  */
 
-  // // update building pos in use store
+  // update building pos in use store
+
+  const [spring, api] = useSpring(() => ({
+    position: pos,
+    scale: 1,
+    rotation: rotation,
+    config: { friction: 10 },
+  }));
 
   const bind = useDrag(
     ({ active, event }) => {
@@ -162,7 +154,6 @@ export default function Building({
     if (positioned) {
       animatedMeshRef.current.rotation.y = 0;
       animatedMeshRef.current.position.y = 0;
-      console.log("repositioned");
     }
   }, [positioned]);
 
@@ -214,6 +205,7 @@ export default function Building({
     });
   }
 
+  // make sure orbit control is disabled when moving slider
   const handleHover = (e) => {
     setIsChangingNoOfFloors(true);
     setNoOfFloors(e);
@@ -238,14 +230,14 @@ export default function Building({
           style={{
             transition: "all 0.2s",
             color: "black",
-            /* opacity: hidden ? 0 : 1,
-            transform: `scale(${hidden ? 0.5 : 1})`, */
+            // opacity: hidden ? 0 : 1,
+            // transform: `scale(${hidden ? 0.5 : 1})`,
           }}
           distanceFactor={1.5}
           position={[2, 1, 0.51]}
           transform
-          /* occlude
-          onOcclude={setVisible} */
+          // occlude
+          // onOcclude={setVisible}
         >
           <span>No. of Floors</span>
           <Slider
