@@ -79,7 +79,54 @@ export function importObjects() {
     roofCorridor: cluster1roofCorridor,
   };
 
-  // typology: "cluster1"
+  // typology: "cluster2"
+  const cluster2Level = useGLTF("cluster2Level.glb");
+  const cluster2level3room = cluster2Level.nodes.level3room;
+  const cluster2level4room = cluster2Level.nodes.level4room;
+  const cluster2level5room = cluster2Level.nodes.level5room;
+  const cluster2levelGlass = cluster2Level.nodes.levelGlass;
+  const cluster2levelWall = cluster2Level.nodes.levelWall;
+  const cluster2levelWindowFrame = cluster2Level.nodes.levelWindowFrame;
+  const cluster2LevelHeight = getMeshHeight(cluster2level3room);
+  const cluster2LevelObj = {
+    height: cluster2LevelHeight,
+    level3room: cluster2level3room,
+    level4room: cluster2level4room,
+    level5room: cluster2level5room,
+    levelGlass: cluster2levelGlass,
+    levelWall: cluster2levelWall,
+    levelWindowFrame: cluster2levelWindowFrame,
+  };
+
+  const cluster2VoidDeck = useGLTF("cluster2VoidDeck.glb");
+  const cluster2voiddeck3room = cluster2VoidDeck.nodes.voiddeck3room;
+  const cluster2voiddeck4room = cluster2VoidDeck.nodes.voiddeck4room;
+  const cluster2voiddeck5room = cluster2VoidDeck.nodes.voiddeck5room;
+  const cluster2voiddeckFloor = cluster2VoidDeck.nodes.voiddeckFloor;
+  const cluster2VoidDeckHeight = getMeshHeight(cluster2voiddeckFloor) - 0.1; // 0.1 is adjustment
+  const cluster2VoidDeckObj = {
+    height: cluster2VoidDeckHeight,
+    voiddeck3room: cluster2voiddeck3room,
+    voiddeck4room: cluster2voiddeck4room,
+    voiddeck5room: cluster2voiddeck5room,
+    voiddeckFloor: cluster2voiddeckFloor,
+  };
+
+  const cluster2Roof = useGLTF("cluster2Roof.glb");
+  const cluster2roof3room = cluster2Roof.nodes.roof3room;
+  const cluster2roof4room = cluster2Roof.nodes.roof4room;
+  const cluster2roof5room = cluster2Roof.nodes.roof5room;
+  const cluster2roofCorridor = cluster2Roof.nodes.roofCorridor;
+  const cluster2RoofHeight = getMeshHeight(cluster2roof5room);
+  const cluster2RoofObj = {
+    height: cluster2RoofHeight,
+    roof3room: cluster2roof3room,
+    roof4room: cluster2roof4room,
+    roof5room: cluster2roof5room,
+    roofCorridor: cluster2roofCorridor,
+  };
+
+  // typology: "carpark"
   const carparkLevel = useGLTF("carparkLevel.glb");
 
   const carparkLevelColumns = carparkLevel.nodes.carparkLevelColumns;
@@ -155,6 +202,9 @@ export function importObjects() {
     cluster1LevelObj: cluster1LevelObj,
     cluster1VoidDeckObj: cluster1VoidDeckObj,
     cluster1RoofObj: cluster1RoofObj,
+    cluster2LevelObj: cluster2LevelObj,
+    cluster2VoidDeckObj: cluster2VoidDeckObj,
+    cluster2RoofObj: cluster2RoofObj,
     treesCluster1Obj: treesCluster1Obj,
     treesCluster2Obj: treesCluster2Obj,
     carparkLevelObj: carparkLevelObj,

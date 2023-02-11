@@ -32,7 +32,6 @@ export default function App() {
     state.updateobjectsLevels,
   ]);
 
-  console.log(objects);
   const handleClick = (e) => {
     addobjects(e.target.id); // button id must be same as typology in useStore!
   };

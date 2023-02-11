@@ -4,6 +4,9 @@ import BuildingIndivAllLevels from "../objectComponents/BuildingIndivAllLevels";
 import ClusterOneAllLevels from "../objectComponents/ClusterOneAllLevels";
 import ClusterOneVoidDeck from "../objectComponents/ClusterOneVoidDeck";
 import ClusterOneRoof from "../objectComponents/ClusterOneRoof";
+import ClusterTwoAllLevels from "../objectComponents/ClusterTwoAllLevels";
+import ClusterTwoVoidDeck from "../objectComponents/ClusterTwoVoidDeck";
+import ClusterTwoRoof from "../objectComponents/ClusterTwoRoof";
 import CarparkAllLevels from "../objectComponents/CarparkAllLevels";
 import CarparkGround from "../objectComponents/CarparkGround";
 import CarparkRoof from "../objectComponents/CarparkRoof";
@@ -47,6 +50,9 @@ export default function AnimatedObjects({
     cluster1LevelHeight,
     cluster1VoidDeckHeight,
     cluster1RoofHeight,
+    cluster2LevelHeight,
+    cluster2VoidDeckHeight,
+    cluster2RoofHeight,
     treesCluster1Height,
     treesCluster2Height,
     carparkLevelHeight,
@@ -58,6 +64,8 @@ export default function AnimatedObjects({
     objectHeight = buildingIndivHeight;
   } else if (typology === "cluster1") {
     objectHeight = cluster1LevelHeight;
+  } else if (typology === "cluster2") {
+    objectHeight = cluster2LevelHeight;
   } else if (typology === "carpark") {
     objectHeight = carparkLevelHeight;
   } else if (typology === "treesCluster1") {
@@ -118,6 +126,36 @@ export default function AnimatedObjects({
             noOfFloors={noOfFloors}
             objectHeight={cluster1LevelHeight}
             voidDeckHeight={cluster1VoidDeckHeight}
+          />
+          {sliderVisible && (
+            <Slider
+              noOfFloors={noOfFloors}
+              setNoOfFloors={setNoOfFloors}
+              setIsChangingNoOfFloors={setIsChangingNoOfFloors}
+            />
+          )}
+        </>
+      )}
+
+      {typology === "cluster2" && (
+        <>
+          <SliderControl
+            buildingHeight={noOfFloors * cluster2LevelHeight}
+            setSliderVisible={setSliderVisible}
+          />
+          <ClusterTwoVoidDeck />
+          <ClusterTwoRoof
+            height={
+              noOfFloors * cluster2LevelHeight +
+              cluster2RoofHeight +
+              cluster2VoidDeckHeight -
+              2.2 //why need to move down by 2.2???
+            }
+          />
+          <ClusterTwoAllLevels
+            noOfFloors={noOfFloors}
+            objectHeight={cluster2LevelHeight}
+            voidDeckHeight={cluster2VoidDeckHeight}
           />
           {sliderVisible && (
             <Slider
