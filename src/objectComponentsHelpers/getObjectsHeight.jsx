@@ -7,6 +7,12 @@ export function getObjectsHeight() {
   const cluster1LevelHeight = meshes.cluster1LevelObj.height;
   const cluster1VoidDeckHeight = meshes.cluster1VoidDeckObj.height;
   const cluster1RoofHeight = meshes.cluster1RoofObj.height;
+  const treesCluster1Height = meshes.treesCluster1Obj.height;
+  const treesCluster2Height = meshes.treesCluster2Obj.height;
+  const carparkLevelHeight = meshes.carparkLevelObj.height;
+  const carparkGroundHeight = meshes.carparkGroundObj.height;
+
+  const carparkRoofHeight = meshes.carparkRoofObj.height;
 
   // all
   const heights = {
@@ -15,6 +21,11 @@ export function getObjectsHeight() {
     cluster1LevelHeight: cluster1LevelHeight,
     cluster1VoidDeckHeight: cluster1VoidDeckHeight,
     cluster1RoofHeight: cluster1RoofHeight,
+    treesCluster1Height: treesCluster1Height,
+    treesCluster2Height: treesCluster2Height,
+    carparkLevelHeight: carparkLevelHeight,
+    carparkGroundHeight: carparkGroundHeight,
+    carparkRoofHeight: carparkRoofHeight,
   };
   return heights;
 }

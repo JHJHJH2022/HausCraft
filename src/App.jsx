@@ -29,19 +29,18 @@ export default function App() {
   const [updateobjects] = useStoreAll((state) => [state.updateobjects]);
 
   const handleClick = (e) => {
-    if (e.target.id == "buildingIndiv") {
-      addobjects("buildingIndiv");
-    } else if (e.target.id == "cluster1") {
-      addobjects("cluster1");
-    } else if (e.target.id == "tree") {
-      addobjects("tree");
-    }
+    addobjects(e.target.id); // button id must be same as typology in useStore!
   };
 
   useEffect(() => {
     setBuildingNum(
       objects.filter((object) => {
-        return object.typology !== "tree";
+        return (
+          object.typology !== "tree" &&
+          object.typology !== "treesCluster1" &&
+          object.typology !== "treesCluster2" &&
+          object.typology !== "carpark"
+        );
       }).length
     );
   }, [objects]);

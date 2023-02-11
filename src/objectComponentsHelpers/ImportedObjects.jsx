@@ -79,16 +79,41 @@ export function importObjects() {
     roofCorridor: roofCorridor,
   };
 
-  // // typology:"FiveRoomUnit"
-  // const fiveRoomUnit = useGLTF("five-room-unit.glb");
+  // typology: "cluster1"
+  const carparkLevel = useGLTF("carparkLevel.glb");
 
-  // console.log(fiveRoomUnit);
-  // const fiveRoomUnitMesh = fiveRoomUnit.nodes["tree-lime"];
-  // // const treeHeight = getMeshHeight(treeMesh);
-  // // const treeObj = {
-  // //   height: treeHeight,
-  // //   tree: treeMesh,
-  // // };
+  const carparkLevelColumns = carparkLevel.nodes.carparkLevelColumns;
+  const carparkLevelFloor = carparkLevel.nodes.carparkLevelFloor;
+  const carparkLevelHeight = getMeshHeight(carparkLevelColumns);
+  const carparkLevelObj = {
+    height: carparkLevelHeight,
+    carparkLevelColumns: carparkLevelColumns,
+    carparkLevelFloor: carparkLevelFloor,
+  };
+
+  const carparkGround = useGLTF("carparkGround.glb");
+  const carparkGroundColumns = carparkGround.nodes.carparkGroundColumns;
+  const carparkGroundFloor = carparkGround.nodes.carparkGroundFloor;
+  const carparkGroundHeight = getMeshHeight(carparkGroundFloor);
+  const carparkGroundObj = {
+    height: carparkGroundHeight,
+    carparkGroundColumns: carparkGroundColumns,
+    carparkGroundFloor: carparkGroundFloor,
+  };
+
+  const carparkRoof = useGLTF("carparkRoof.glb");
+  console.log(carparkRoof);
+  const carparkRoofColumns = carparkRoof.nodes.carparkRoofColumns;
+  const carparkRoofWall = carparkRoof.nodes.carparkRoofWall;
+  const carparkRoofGreen = carparkRoof.nodes.carparkRoofGreen;
+  const carparkRoofHeight =
+    getMeshHeight(carparkRoofColumns) + getMeshHeight(carparkRoofWall);
+  const carparkRoofObj = {
+    height: carparkRoofHeight,
+    carparkRoofColumns: carparkRoofColumns,
+    carparkRoofWall: carparkRoofWall,
+    carparkRoofGreen: carparkRoofGreen,
+  };
 
   // typology:"tree"
   const tree = useGLTF("tree.glb");
@@ -99,6 +124,30 @@ export function importObjects() {
     tree: treeMesh,
   };
 
+  // typology: "treesCluster1"
+  const treesCluster1 = useGLTF("treesCluster1.glb");
+  const treesCluster1Beech = treesCluster1.nodes["tree-beech-merged"];
+  const treesCluster1Lime = treesCluster1.nodes["tree-lime-merged"];
+  const treesCluster1Height = getMeshHeight(treesCluster1Lime);
+  const treesCluster1Obj = {
+    height: treesCluster1Height,
+    treesCluster1Beech: treesCluster1Beech,
+    treesCluster1Lime: treesCluster1Lime,
+  };
+
+  // typology: "treesCluster1"
+  const treesCluster2 = useGLTF("treesCluster2.glb");
+  const treesCluster2Beech = treesCluster2.nodes["tree-beech"];
+  const treesCluster2Lime = treesCluster2.nodes["tree-lime"];
+  const treesCluster2Spruce = treesCluster2.nodes["tree-spruce"];
+  const treesCluster2Height = getMeshHeight(treesCluster2Spruce);
+  const treesCluster2Obj = {
+    height: treesCluster2Height,
+    treesCluster2Beech: treesCluster2Beech,
+    treesCluster2Lime: treesCluster2Lime,
+    treesCluster2Spruce: treesCluster2Spruce,
+  };
+
   // all
   const allObjects = {
     buildingIndivObj: buildingIndivObj,
@@ -107,6 +156,11 @@ export function importObjects() {
     cluster1LevelObj: cluster1LevelObj,
     cluster1VoidDeckObj: cluster1VoidDeckObj,
     cluster1RoofObj: cluster1RoofObj,
+    treesCluster1Obj: treesCluster1Obj,
+    treesCluster2Obj: treesCluster2Obj,
+    carparkLevelObj: carparkLevelObj,
+    carparkGroundObj: carparkGroundObj,
+    carparkRoofObj: carparkRoofObj,
   };
 
   return allObjects;

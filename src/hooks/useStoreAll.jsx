@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { nanoid } from "nanoid";
 
 export const useStoreAll = create((set) => ({
+  // button id must be same as typology in useStore!
   objects: [
     {
       key: "1",
