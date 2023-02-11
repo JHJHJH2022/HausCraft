@@ -3,7 +3,7 @@ export default function Lights() {
     <>
       <ambientLight intensity={0.3} />
       <directionalLight
-        intensity={4} // 2.5 when cast shadow
+        intensity={3} // 4 when cast shadow
         position={[30, 100, 20]}
         castShadow
         shadow-mapSize-height={1512}
@@ -12,7 +12,7 @@ export default function Lights() {
         shadow-camera-right={-350}
         shadow-camera-top={350}
         shadow-camera-bottom={-350}
-        shadowBias={false}
+        shadowBias={0.5}
       />
     </>
   );

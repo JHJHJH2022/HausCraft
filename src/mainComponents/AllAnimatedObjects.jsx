@@ -7,6 +7,7 @@ export default function AllAnimatedObjects({
   objects,
   removeobjects,
   updateobjects,
+  updateobjectsLevels,
 }) {
   return objects.map(({ key, position, rotation, typology }) => {
     return (
@@ -17,6 +18,7 @@ export default function AllAnimatedObjects({
         rotation={rotation}
         removeobjects={removeobjects}
         updateobjects={updateobjects}
+        updateobjectsLevels={updateobjectsLevels}
         setIsDragging={setIsDragging}
         setIsRotating={setIsRotating}
         typology={typology}

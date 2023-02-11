@@ -22,36 +22,65 @@ export default function App() {
   const [isChangingNoOfFloors, setIsChangingNoOfFloors] = useState(false);
 
   // Update buildings in canvas and building number display
-  const [buildingNum, setBuildingNum] = useState(1);
+  const [buildingNum, setBuildingNum] = useState(0);
+  const [parkingNum, setParkingNum] = useState(0);
   const [objects] = useStoreAll((state) => [state.objects]);
   const [addobjects] = useStoreAll((state) => [state.addobjects]);
   const [removeobjects] = useStoreAll((state) => [state.removeobjects]);
   const [updateobjects] = useStoreAll((state) => [state.updateobjects]);
+  const [updateobjectsLevels] = useStoreAll((state) => [
+    state.updateobjectsLevels,
+  ]);
 
+  console.log(objects);
   const handleClick = (e) => {
     addobjects(e.target.id); // button id must be same as typology in useStore!
   };
 
   useEffect(() => {
-    setBuildingNum(
-      objects.filter((object) => {
-        return (
-          object.typology !== "tree" &&
-          object.typology !== "treesCluster1" &&
-          object.typology !== "treesCluster2" &&
-          object.typology !== "carpark"
-        );
-      }).length
-    );
+    const allObjects = objects.filter((object) => {
+      return (
+        object.typology !== "tree" &&
+        object.typology !== "treesCluster1" &&
+        object.typology !== "treesCluster2" &&
+        object.typology !== "carpark"
+      );
+    });
+
+    let totalUnitCount = 0;
+
+    for (let i = 0; i < allObjects.length; i++) {
+      totalUnitCount += allObjects[i].unitsPerLevel * allObjects[i].levels;
+    }
+
+    setBuildingNum(totalUnitCount);
+  }, [objects]);
+
+  useEffect(() => {
+    const allObjects = objects.filter((object) => {
+      return object.typology === "carpark";
+    });
+
+    let totalUnitCount = 0;
+
+    for (let i = 0; i < allObjects.length; i++) {
+      totalUnitCount += allObjects[i].unitsPerLevel * allObjects[i].levels;
+    }
+
+    setParkingNum(totalUnitCount);
   }, [objects]);
 
   // return objects
   return (
     <div className="App">
-      <Display buildingNum={buildingNum} handleClick={handleClick} />
+      <Display
+        buildingNum={buildingNum}
+        parkingNum={parkingNum}
+        handleClick={handleClick}
+      />
       <Canvas flat style={{ background: "white" }} shadows dpr={[1, 2]}>
         <Lights />
-        <gridHelper args={[220, 100, "lightgrey", "lightgrey"]} />
+        {/* <gridHelper args={[220, 100, "lightgrey", "lightgrey"]} /> */}
 
         <Site />
         <AllAnimatedObjects
@@ -60,6 +89,7 @@ export default function App() {
           objects={objects}
           removeobjects={removeobjects}
           updateobjects={updateobjects}
+          updateobjectsLevels={updateobjectsLevels}
         />
 
         {/* <Plane /> */}

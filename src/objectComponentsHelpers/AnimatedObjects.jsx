@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Inspector from "../mainComponents/Inspector";
 import BuildingIndivAllLevels from "../objectComponents/BuildingIndivAllLevels";
 import ClusterOneAllLevels from "../objectComponents/ClusterOneAllLevels";
@@ -20,6 +20,7 @@ export default function AnimatedObjects({
   rotation,
   removeobjects,
   updateobjects,
+  updateobjectsLevels,
   setIsDragging,
   typology,
   setIsChangingNoOfFloors,
@@ -28,6 +29,10 @@ export default function AnimatedObjects({
   const initialNoOfFloors = 5;
   const [noOfFloors, setNoOfFloors] = useState(initialNoOfFloors);
   const [sliderVisible, setSliderVisible] = useState(false);
+
+  useEffect(() => {
+    updateobjectsLevels(index, noOfFloors);
+  }, [noOfFloors]);
 
   const handleDelete = (e) => {
     if (e.altKey) {

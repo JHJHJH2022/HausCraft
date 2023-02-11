@@ -34,49 +34,49 @@ export function importObjects() {
 
   // typology: "cluster1"
   const cluster1Level = useGLTF("cluster1Level.glb");
-  const level3room = cluster1Level.nodes.level3room;
-  const level4room = cluster1Level.nodes.level4room;
-  const level5room = cluster1Level.nodes.level5room;
-  const levelGlass = cluster1Level.nodes.levelGlass;
-  const levelWall = cluster1Level.nodes.levelWall;
-  const levelWindowFrame = cluster1Level.nodes.levelWindowFrame;
-  const cluster1LevelHeight = getMeshHeight(level3room);
+  const cluster1level3room = cluster1Level.nodes.level3room;
+  const cluster1level4room = cluster1Level.nodes.level4room;
+  const cluster1level5room = cluster1Level.nodes.level5room;
+  const cluster1levelGlass = cluster1Level.nodes.levelGlass;
+  const cluster1levelWall = cluster1Level.nodes.levelWall;
+  const cluster1levelWindowFrame = cluster1Level.nodes.levelWindowFrame;
+  const cluster1LevelHeight = getMeshHeight(cluster1level3room);
   const cluster1LevelObj = {
     height: cluster1LevelHeight,
-    level3room: level3room,
-    level4room: level4room,
-    level5room: level5room,
-    levelGlass: levelGlass,
-    levelWall: levelWall,
-    levelWindowFrame: levelWindowFrame,
+    level3room: cluster1level3room,
+    level4room: cluster1level4room,
+    level5room: cluster1level5room,
+    levelGlass: cluster1levelGlass,
+    levelWall: cluster1levelWall,
+    levelWindowFrame: cluster1levelWindowFrame,
   };
 
   const cluster1VoidDeck = useGLTF("cluster1VoidDeck.glb");
-  const voiddeck3room = cluster1VoidDeck.nodes.voiddeck3room;
-  const voiddeck4room = cluster1VoidDeck.nodes.voiddeck4room;
-  const voiddeck5room = cluster1VoidDeck.nodes.voiddeck5room;
-  const voiddeckFloor = cluster1VoidDeck.nodes.voiddeckFloor;
-  const cluster1VoidDeckHeight = getMeshHeight(voiddeckFloor);
+  const cluster1voiddeck3room = cluster1VoidDeck.nodes.voiddeck3room;
+  const cluster1voiddeck4room = cluster1VoidDeck.nodes.voiddeck4room;
+  const cluster1voiddeck5room = cluster1VoidDeck.nodes.voiddeck5room;
+  const cluster1voiddeckFloor = cluster1VoidDeck.nodes.voiddeckFloor;
+  const cluster1VoidDeckHeight = getMeshHeight(cluster1voiddeckFloor);
   const cluster1VoidDeckObj = {
     height: cluster1VoidDeckHeight,
-    voiddeck3room: voiddeck3room,
-    voiddeck4room: voiddeck4room,
-    voiddeck5room: voiddeck5room,
-    voiddeckFloor: voiddeckFloor,
+    voiddeck3room: cluster1voiddeck3room,
+    voiddeck4room: cluster1voiddeck4room,
+    voiddeck5room: cluster1voiddeck5room,
+    voiddeckFloor: cluster1voiddeckFloor,
   };
 
   const cluster1Roof = useGLTF("cluster1Roof.glb");
-  const roof3room = cluster1Roof.nodes.roof3room;
-  const roof4room = cluster1Roof.nodes.roof4room;
-  const roof5room = cluster1Roof.nodes.roof5room;
-  const roofCorridor = cluster1Roof.nodes.roofCorridor;
-  const cluster1RoofHeight = getMeshHeight(roof5room);
+  const cluster1roof3room = cluster1Roof.nodes.roof3room;
+  const cluster1roof4room = cluster1Roof.nodes.roof4room;
+  const cluster1roof5room = cluster1Roof.nodes.roof5room;
+  const cluster1roofCorridor = cluster1Roof.nodes.roofCorridor;
+  const cluster1RoofHeight = getMeshHeight(cluster1roof5room);
   const cluster1RoofObj = {
     height: cluster1RoofHeight,
-    roof3room: roof3room,
-    roof4room: roof4room,
-    roof5room: roof5room,
-    roofCorridor: roofCorridor,
+    roof3room: cluster1roof3room,
+    roof4room: cluster1roof4room,
+    roof5room: cluster1roof5room,
+    roofCorridor: cluster1roofCorridor,
   };
 
   // typology: "cluster1"
@@ -102,7 +102,6 @@ export function importObjects() {
   };
 
   const carparkRoof = useGLTF("carparkRoof.glb");
-  console.log(carparkRoof);
   const carparkRoofColumns = carparkRoof.nodes.carparkRoofColumns;
   const carparkRoofWall = carparkRoof.nodes.carparkRoofWall;
   const carparkRoofGreen = carparkRoof.nodes.carparkRoofGreen;

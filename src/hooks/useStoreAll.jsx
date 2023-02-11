@@ -3,19 +3,18 @@ import { nanoid } from "nanoid";
 
 export const useStoreAll = create((set) => ({
   // button id must be same as typology in useStore!
-  objects: [
-    {
-      key: "1",
-      position: [0, 0, 0],
-      rotation: [0, 0, 0],
-      typology: "buildingIndiv",
-      levels: 1,
-      unitsPerLevel: 2,
-      totalUnits: 2,
-    },
-  ],
+  objects: [],
 
   addobjects: (typology) => {
+    let noOfUnitsPerLevel = 0;
+    if (typology === "cluster1") {
+      noOfUnitsPerLevel = 10;
+    } else if (typology === "buildingIndiv") {
+      noOfUnitsPerLevel = 2;
+    } else if (typology === "carpark") {
+      noOfUnitsPerLevel = 80;
+    }
+
     set((prev) => ({
       objects: [
         ...prev.objects,
@@ -25,8 +24,7 @@ export const useStoreAll = create((set) => ({
           rotation: [0, 0, 0],
           typology: typology,
           levels: 1,
-          unitsPerLevel: 2,
-          totalUnits: 2,
+          unitsPerLevel: noOfUnitsPerLevel,
         },
       ],
     }));
@@ -45,6 +43,17 @@ export const useStoreAll = create((set) => ({
       objects: prev.objects.map((object) => {
         if (index === object.key) {
           object.position = newPos;
+        }
+        return object;
+      }),
+    }));
+  },
+
+  updateobjectsLevels: (index, newLevels) => {
+    set((prev) => ({
+      objects: prev.objects.map((object) => {
+        if (index === object.key) {
+          object.levels = newLevels;
         }
         return object;
       }),
