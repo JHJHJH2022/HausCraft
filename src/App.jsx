@@ -1,91 +1,111 @@
 import "./App.css";
 import React, { useState } from "react";
 import { Canvas } from "@react-three/fiber";
-import Buildings from "./components/Buildings.jsx";
-import { OrthographicCamera, OrbitControls } from "@react-three/drei";
-import * as THREE from "three";
-import Display from "./components/Display";
+import {
+  OrthographicCamera,
+  OrbitControls,
+  GizmoHelper,
+  GizmoViewport,
+} from "@react-three/drei";
 import { useEffect } from "react";
-import { useStore } from "./hooks/useStore";
+import { useStoreAll } from "./hooks/useStoreAll";
+import Plane from "./mainComponents/Plane";
+import Lights from "./mainComponents/Lights";
+import Display from "./mainComponents/Display";
+import AllAnimatedObjects from "./mainComponents/AllAnimatedObjects.jsx";
+
+import Site from "./objectComponents/Site";
 
 export default function App() {
-  // set up basic values
-  const buildingHeight = 8; // need to adapt to height decided by user
+  // user control states
   const [isDragging, setIsDragging] = useState(false);
-  const [isRotating, setIsRotating] = useState(false);
   const [isChangingNoOfFloors, setIsChangingNoOfFloors] = useState(false);
-  const floorPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
 
   // Update buildings in canvas and building number display
-  const [buildingNum, setBuildingNum] = useState(1);
-  const [buildings] = useStore((state) => [state.buildings]);
-  const [addbuildings] = useStore((state) => [state.addbuildings]);
-  const [removebuildings] = useStore((state) => [state.removebuildings]);
-  const [updatebuildings] = useStore((state) => [state.updatebuildings]);
+  const [buildingNum, setBuildingNum] = useState(0);
+  const [parkingNum, setParkingNum] = useState(0);
+  const [objects] = useStoreAll((state) => [state.objects]);
+  const [addobjects] = useStoreAll((state) => [state.addobjects]);
+  const [removeobjects] = useStoreAll((state) => [state.removeobjects]);
+  const [updateobjects] = useStoreAll((state) => [state.updateobjects]);
+  const [updateobjectsLevels] = useStoreAll((state) => [
+    state.updateobjectsLevels,
+  ]);
 
-  const handleClick = () => {
-    addbuildings(0, 0, 0);
+  const handleClick = (e) => {
+    addobjects(e.target.id); // button id must be same as typology in useStore!
   };
+
   useEffect(() => {
-    setBuildingNum(buildings.length);
-  }, [buildings]);
+    const allObjects = objects.filter((object) => {
+      return (
+        object.typology !== "tree" &&
+        object.typology !== "treesCluster1" &&
+        object.typology !== "treesCluster2" &&
+        object.typology !== "carpark"
+      );
+    });
+
+    let totalUnitCount = 0;
+
+    for (let i = 0; i < allObjects.length; i++) {
+      totalUnitCount += allObjects[i].unitsPerLevel * allObjects[i].levels;
+    }
+
+    setBuildingNum(totalUnitCount);
+  }, [objects]);
+
+  useEffect(() => {
+    const allObjects = objects.filter((object) => {
+      return object.typology === "carpark";
+    });
+
+    let totalUnitCount = 0;
+
+    for (let i = 0; i < allObjects.length; i++) {
+      totalUnitCount += allObjects[i].unitsPerLevel * allObjects[i].levels;
+    }
+
+    setParkingNum(totalUnitCount);
+  }, [objects]);
 
   // return objects
   return (
     <div className="App">
-      <Display buildingNum={buildingNum} handleClick={handleClick} />
+      <Display
+        buildingNum={buildingNum}
+        parkingNum={parkingNum}
+        handleClick={handleClick}
+      />
       <Canvas flat style={{ background: "white" }} shadows dpr={[1, 2]}>
-        <ambientLight intensity={0.5} />
-        <directionalLight
-          intensity={2.5}
-          position={[20, 100, 80]}
-          castShadow
-          shadow-mapSize-height={1512}
-          shadow-mapSize-width={1512}
-          shadow-camera-left={200}
-          shadow-camera-right={-200}
-          shadow-camera-top={200}
-          shadow-camera-bottom={-200}
-        />
+        <Lights />
+        {/* <gridHelper args={[220, 100, "lightgrey", "lightgrey"]} /> */}
 
-        <gridHelper args={[200, 200, "grey", "lightgrey"]} />
-
-        <Buildings
+        <Site />
+        <AllAnimatedObjects
           setIsDragging={setIsDragging}
-          setIsRotating={setIsRotating}
-          floorPlane={floorPlane}
-          buildingHeight={buildingHeight}
-          buildings={buildings}
-          removebuildings={removebuildings}
-          updatebuildings={updatebuildings}
           setIsChangingNoOfFloors={setIsChangingNoOfFloors}
+          objects={objects}
+          removeobjects={removeobjects}
+          updateobjects={updateobjects}
+          updateobjectsLevels={updateobjectsLevels}
         />
 
-        <mesh
-          rotation={[-Math.PI / 2, 0, 0]}
-          position={[0, -0.1, 0]}
-          receiveShadow
-        >
-          <planeGeometry
-            attach="geometry"
-            args={[200, 200]}
-            receiveShadow
-          />
-          <meshPhongMaterial
-            attach="material"
-            color="#ccc"
-            side={THREE.DoubleSide}
-            receiveShadow
-          />
-        </mesh>
+        {/* <Plane /> */}
 
-        <OrthographicCamera makeDefault zoom={20} position={[100, 100, 150]} />
+        <OrthographicCamera makeDefault zoom={6} position={[100, 100, 150]} />
 
         <OrbitControls
-          minZoom={7}
-          maxZoom={50}
-          enabled={!isDragging && !isRotating && !isChangingNoOfFloors}
+          minZoom={4}
+          maxZoom={20}
+          enabled={!isDragging && !isChangingNoOfFloors}
+          near={0.1}
+          far={500}
         />
+
+        <GizmoHelper alignment="top-right" margin={[150, 150]}>
+          <GizmoViewport labelColor="white" axisHeadScale={1} />
+        </GizmoHelper>
       </Canvas>
     </div>
   );

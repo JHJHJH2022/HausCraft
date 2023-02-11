@@ -20,13 +20,13 @@ To-do List
 
 2023.02.08 - 2023.02.13
 ------code restructure
-[] organise files, and modularize function to add in new neighborhood components into the scene:
+[x] organise files, and modularize function to add in new neighborhood components into the scene:
 allAnimatedObjects(Buildings) -> animatedObjects(Building) -> importedObjects(all imports)
 resturecture useStore to include more information: type, number of floors, rotation, color --> later can save the information and retrieve and recreate the saved scene
 
 -------functions / fix
-[] rotating function (refer to code sandbox example)
-[] prevent buildings from being added to same position
+[x] rotating function (refer to code sandbox example)
+[x] prevent buildings from being added to same position
 [] customise color of building parts / based on building type (refer to code sandbox example)
 
 -- consult feedback
@@ -37,6 +37,7 @@ resturecture useStore to include more information: type, number of floors, rotat
 [] base map / site model
 [] more pre made clusters with different color typologies, no need to be able to change no of floors yet
 [] have image of end design that resembles a realistic HDB design
+[] fix geometry display issue -- maybe leave small gap beteen geometries
 
 -------save to database
 [] later: able to save design / templates for users to start with (refer to minecraft tutorial)
@@ -46,14 +47,20 @@ resturecture useStore to include more information: type, number of floors, rotat
 process workflow diagram
 outcomes
 demo
+-->remember to test responsiveness!!!!!!
 
 ---
 
 2022.02.08 - 09 work on restructure
-[] restructure
-[] rotation
-[] modeling
+[x] restructure
+[x] model need to scale X10 in blender
+[x] rotation
+[x] fix display of total buildings to exclude trees
+[x] fix slide move and orbit conrol conflict
+[] update rotation and noOfFloors to store
 [] total units count
+[] modeling, roof and void deck for indiv buildings
+[] objects to float when first added
 
 ---
 
