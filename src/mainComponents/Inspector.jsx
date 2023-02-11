@@ -42,7 +42,7 @@ export default function Inspector({
   const bind = useDrag(
     ({ active, event, delta: [dx, dy] }) => {
       event.stopPropagation();
-      if (active && event.ctrlKey === false) {
+      if (active && event.ctrlKey === false && event.shiftKey === false) {
         event.ray.intersectPlane(floorPlane, planeIntersectPoint);
 
         let newPos = [
@@ -59,7 +59,7 @@ export default function Inspector({
         const newPosArray = [newPos[0], newPos[1], newPos[2]];
         updateobjects(index, newPosArray);
         //
-      } else if (active && event.ctrlKey === true) {
+      } else if (active && event.ctrlKey === true && event.shiftKey === false) {
         euler.y += (dx / size.width) * responsiveness;
       }
 

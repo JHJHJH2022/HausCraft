@@ -1,6 +1,9 @@
 import { useState } from "react";
 import Inspector from "../mainComponents/Inspector";
 import BuildingIndivAllLevels from "../objectComponents/BuildingIndivAllLevels";
+import ClusterOneAllLevels from "../objectComponents/ClusterOneAllLevels";
+import ClusterOneVoidDeck from "../objectComponents/ClusterOneVoidDeck";
+import ClusterOneRoof from "../objectComponents/ClusterOneRoof";
 import Tree from "../objectComponents/Tree";
 import Slider from "./htmlSlider";
 import { getObjectsHeight } from "./getObjectsHeight";
@@ -28,10 +31,18 @@ export default function AnimatedObjects({
     }
   };
 
-  const { buildingIndivHeight, treeHeight } = getObjectsHeight();
+  const {
+    buildingIndivHeight,
+    treeHeight,
+    cluster1LevelHeight,
+    cluster1VoidDeckHeight,
+    cluster1RoofHeight,
+  } = getObjectsHeight();
   let objectHeight = 0;
   if (typology === "buildingIndiv") {
     objectHeight = buildingIndivHeight;
+  } else if (typology === "cluster1") {
+    objectHeight = cluster1LevelHeight;
   } else if (typology === "tree") {
     objectHeight = treeHeight;
   }
@@ -67,6 +78,36 @@ export default function AnimatedObjects({
           )}
         </>
       )}
+      {typology === "cluster1" && (
+        <>
+          <SliderControl
+            buildingHeight={noOfFloors * cluster1LevelHeight}
+            setSliderVisible={setSliderVisible}
+          />
+          <ClusterOneVoidDeck />
+          <ClusterOneRoof
+            height={
+              noOfFloors * cluster1LevelHeight +
+              cluster1RoofHeight +
+              cluster1VoidDeckHeight -
+              2.2 //why need to move down by 2.2???
+            }
+          />
+          <ClusterOneAllLevels
+            noOfFloors={noOfFloors}
+            objectHeight={cluster1LevelHeight}
+            voidDeckHeight={cluster1VoidDeckHeight}
+          />
+          {sliderVisible && (
+            <Slider
+              noOfFloors={noOfFloors}
+              setNoOfFloors={setNoOfFloors}
+              setIsChangingNoOfFloors={setIsChangingNoOfFloors}
+            />
+          )}
+        </>
+      )}
+
       {typology === "tree" && <Tree />}
     </Inspector>
   );

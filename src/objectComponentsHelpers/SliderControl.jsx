@@ -9,15 +9,13 @@ export default function SliderControl({ buildingHeight, setSliderVisible }) {
   };
   return (
     <mesh
-      position={[0, buildingHeight + 2.5, 0]}
+      position={[0, buildingHeight + 5, 0]}
       onClick={handleVisbility}
       scale={clicked ? "1.7" : "1"}
     >
       <sphereGeometry args={[0.5, 32]} />
       <meshBasicMaterial
-        color={
-          clicked ? "rgba(165, 165, 165, 0.52)" : "rgba(211, 211, 211, 0.52)"
-        }
+        color={clicked ? "hotpink" : "hotpink"}
         opacity={0.1}
         transparent:true
       />

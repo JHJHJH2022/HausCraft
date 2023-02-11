@@ -47,6 +47,7 @@ resturecture useStore to include more information: type, number of floors, rotat
 process workflow diagram
 outcomes
 demo
+-->remember to test responsiveness!!!!!!
 
 ---
 

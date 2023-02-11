@@ -14,6 +14,8 @@ import Lights from "./mainComponents/Lights";
 import Display from "./mainComponents/Display";
 import AllAnimatedObjects from "./mainComponents/AllAnimatedObjects.jsx";
 
+import Site from "./objectComponents/Site";
+
 export default function App() {
   // user control states
   const [isDragging, setIsDragging] = useState(false);
@@ -29,6 +31,8 @@ export default function App() {
   const handleClick = (e) => {
     if (e.target.id == "buildingIndiv") {
       addobjects("buildingIndiv");
+    } else if (e.target.id == "cluster1") {
+      addobjects("cluster1");
     } else if (e.target.id == "tree") {
       addobjects("tree");
     }
@@ -48,8 +52,9 @@ export default function App() {
       <Display buildingNum={buildingNum} handleClick={handleClick} />
       <Canvas flat style={{ background: "white" }} shadows dpr={[1, 2]}>
         <Lights />
-        <gridHelper args={[200, 100, "white", "lightgrey"]} />
+        <gridHelper args={[220, 100, "lightgrey", "lightgrey"]} />
 
+        <Site />
         <AllAnimatedObjects
           setIsDragging={setIsDragging}
           setIsChangingNoOfFloors={setIsChangingNoOfFloors}
@@ -58,14 +63,16 @@ export default function App() {
           updateobjects={updateobjects}
         />
 
-        <Plane />
+        {/* <Plane /> */}
 
-        <OrthographicCamera makeDefault zoom={20} position={[100, 100, 150]} />
+        <OrthographicCamera makeDefault zoom={6} position={[100, 100, 150]} />
 
         <OrbitControls
-          minZoom={7}
-          maxZoom={50}
+          minZoom={4}
+          maxZoom={20}
           enabled={!isDragging && !isChangingNoOfFloors}
+          near={0.1}
+          far={500}
         />
 
         <GizmoHelper alignment="top-right" margin={[150, 150]}>

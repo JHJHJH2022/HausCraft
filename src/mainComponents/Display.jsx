@@ -13,6 +13,9 @@ export default function Display({
         <button id="buildingIndiv" onClick={handleClick}>
           Add Building
         </button>
+        <button id="cluster1" onClick={handleClick}>
+          Add Cluster One
+        </button>
         <button id="tree" onClick={handleClick}>
           Add Tree
         </button>
