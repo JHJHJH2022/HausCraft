@@ -9,6 +9,8 @@ export const useStoreAll = create((set) => ({
     let noOfUnitsPerLevel = 0;
     if (typology === "cluster1") {
       noOfUnitsPerLevel = 10;
+    } else if (typology === "cluster2") {
+      noOfUnitsPerLevel = 8;
     } else if (typology === "buildingIndiv") {
       noOfUnitsPerLevel = 2;
     } else if (typology === "carpark") {

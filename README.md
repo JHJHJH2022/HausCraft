@@ -57,9 +57,9 @@ demo
 [x] rotation
 [x] fix display of total buildings to exclude trees
 [x] fix slide move and orbit conrol conflict
-[] update rotation and noOfFloors to store
-[] total units count
-[] modeling, roof and void deck for indiv buildings
+[x] update rotation and noOfFloors to store
+[x] total units count
+[x] modeling, roof and void deck for indiv buildings
 [] objects to float when first added
 
 ---
