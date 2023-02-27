@@ -1,7 +1,7 @@
-import { importObjects } from "../objectComponentsHelpers/ImportedObjects";
+import { importObjects } from "../../imports/ImportedObjects";
 
 export default function ClusterOneRoof({ height }) {
-  const meshes = importObjects().cluster1RoofObj;
+  const meshes = importObjects().cluster2RoofObj;
   return (
     <group position={[0, height, 0]}>
       <mesh

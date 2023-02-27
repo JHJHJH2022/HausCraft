@@ -1,7 +1,7 @@
-import { importObjects } from "../objectComponentsHelpers/ImportedObjects";
+import { importObjects } from "../../imports/ImportedObjects";
 
-export default function ClusterOneSingleLevel({ upperFloorPos }) {
-  const meshes = importObjects().cluster1LevelObj;
+export default function ClusterTwoSingleLevel({ upperFloorPos }) {
+  const meshes = importObjects().cluster2LevelObj;
   return (
     <group>
       <mesh

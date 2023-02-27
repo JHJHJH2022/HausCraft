@@ -1,12 +1,9 @@
-import { importObjects } from "../objectComponentsHelpers/ImportedObjects";
+import { importObjects } from "../../imports/ImportedObjects";
 
-export default function BuildingIndivSingleLevel({
-  upperFloorPos,
-}) {
+export default function BuildingIndivSingleLevel({ upperFloorPos }) {
   const meshes = importObjects().buildingIndivObj;
   return (
-    <group
-    >
+    <group>
       <mesh
         castShadow
         receiveShadow

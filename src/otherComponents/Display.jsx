@@ -1,4 +1,10 @@
-export default function Display({ buildingNum, parkingNum, handleClick }) {
+export default function Display({
+  buildingNum,
+  parkingNum,
+  handleClick,
+  handleSave,
+  handleGet,
+}) {
   return (
     <div className="sidebar">
       {/* button id must be same as typology in useStore! */}
@@ -12,6 +18,8 @@ export default function Display({ buildingNum, parkingNum, handleClick }) {
         </h5>
       </div>
       <div className="buttons">
+        <button onClick={handleSave}>Save</button>
+        <button onClick={handleGet}>Get</button>
         <button id="carpark" onClick={handleClick}>
           Add Car Park
         </button>

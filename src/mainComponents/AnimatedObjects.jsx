@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
-import Inspector from "../mainComponents/Inspector";
-import BuildingIndivAllLevels from "../objectComponents/BuildingIndivAllLevels";
-import ClusterOneAllLevels from "../objectComponents/ClusterOneAllLevels";
-import ClusterOneVoidDeck from "../objectComponents/ClusterOneVoidDeck";
-import ClusterOneRoof from "../objectComponents/ClusterOneRoof";
-import ClusterTwoAllLevels from "../objectComponents/ClusterTwoAllLevels";
-import ClusterTwoVoidDeck from "../objectComponents/ClusterTwoVoidDeck";
-import ClusterTwoRoof from "../objectComponents/ClusterTwoRoof";
-import CarparkAllLevels from "../objectComponents/CarparkAllLevels";
-import CarparkGround from "../objectComponents/CarparkGround";
-import CarparkRoof from "../objectComponents/CarparkRoof";
-import Tree from "../objectComponents/Tree";
-import TreesClusterOne from "../objectComponents/TreesClusterOne";
-import TreesClusterTwo from "../objectComponents/TreesClusterTwo";
-import Slider from "./htmlSlider";
-import { getObjectsHeight } from "./getObjectsHeight";
-import SliderControl from "./SliderControl";
+import Inspector from "../mainSubComponents/Inspector";
+import BuildingIndivAllLevels from "../objectComponents/BuildingIndiv/BuildingIndivAllLevels";
+import ClusterOneAllLevels from "../objectComponents/ClusterOne/ClusterOneAllLevels";
+import ClusterOneVoidDeck from "../objectComponents/ClusterOne/ClusterOneVoidDeck";
+import ClusterOneRoof from "../objectComponents/ClusterOne/ClusterOneRoof";
+import ClusterTwoAllLevels from "../objectComponents/ClusterTwo/ClusterTwoAllLevels";
+import ClusterTwoVoidDeck from "../objectComponents/ClusterTwo/ClusterTwoVoidDeck";
+import ClusterTwoRoof from "../objectComponents/ClusterTwo/ClusterTwoRoof";
+import CarparkAllLevels from "../objectComponents/Carpark/CarparkAllLevels";
+import CarparkGround from "../objectComponents/Carpark/CarparkGround";
+import CarparkRoof from "../objectComponents/Carpark/CarparkRoof";
+import Tree from "../objectComponents/Trees/Tree";
+import TreesClusterOne from "../objectComponents/Trees/TreesClusterOne";
+import TreesClusterTwo from "../objectComponents/Trees/TreesClusterTwo";
+import Slider from "../mainSubComponents/htmlSlider";
+import { getObjectsHeight } from "../helpers/getObjectsHeight";
+import SliderControl from "../mainSubComponents/SliderControl";
 
 export default function AnimatedObjects({
   index,
@@ -27,9 +27,10 @@ export default function AnimatedObjects({
   setIsDragging,
   typology,
   setIsChangingNoOfFloors,
+  levels,
 }) {
   const floatInAirHt = 0;
-  const initialNoOfFloors = 5;
+  const initialNoOfFloors = levels;
   const [noOfFloors, setNoOfFloors] = useState(initialNoOfFloors);
   const [sliderVisible, setSliderVisible] = useState(false);
 

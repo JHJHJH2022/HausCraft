@@ -1,7 +1,6 @@
-import { importObjects } from "../objectComponentsHelpers/ImportedObjects";
+import { importObjects } from "../../imports/ImportedObjects";
 
 export default function Tree() {
-  // this component is not used
   const meshes = importObjects().treeObj;
   return (
     <mesh
@@ -9,6 +8,8 @@ export default function Tree() {
       receiveShadow
       geometry={meshes.tree.geometry}
       material={meshes.tree.material}
+      scale={[2, 2, 2]}
+      position={[0, 4, 0]}
     ></mesh>
   );
 }

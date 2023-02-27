@@ -1,4 +1,4 @@
-import { importObjects } from "../objectComponentsHelpers/ImportedObjects";
+import { importObjects } from "../../imports/ImportedObjects";
 
 export default function TreesClusterTwo() {
   const meshes = importObjects().treesCluster2Obj;

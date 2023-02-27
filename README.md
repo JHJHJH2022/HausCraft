@@ -27,23 +27,17 @@ resturecture useStore to include more information: type, number of floors, rotat
 -------functions / fix
 [x] rotating function (refer to code sandbox example)
 [x] prevent buildings from being added to same position
-[] customise color of building parts / based on building type (refer to code sandbox example)
 
 -- consult feedback
-[] total no of units
+[x] total no of units
 
 -----model making
-[] more neighborhood components to add in
-[] base map / site model
-[] more pre made clusters with different color typologies, no need to be able to change no of floors yet
-[] have image of end design that resembles a realistic HDB design
-[] fix geometry display issue -- maybe leave small gap beteen geometries
-
--------save to database
-[] later: able to save design / templates for users to start with (refer to minecraft tutorial)
+[x] base map / site model
+[x] more pre made clusters with different color typologies, no need to be able to change no of floors yet
+[x] have image of end design that resembles a realistic HDB design
 
 --------- interim presentation
-[] 10 min presentation (20min inclusivw of Q&A)
+[x] 10 min presentation (20min inclusivw of Q&A)
 process workflow diagram
 outcomes
 demo
@@ -64,10 +58,25 @@ demo
 
 ---
 
------- after interim
-[KIV] add parameters of total GFA and spacing into UI
-[] how to let user design diff level plans
-[] develop more feedback / contraints / typologies e.g.spacing for pivacy
+**after interim**
+
+**2023.02.25 - 2023.03.07 (1.5 weeks)**
+
+**database**
+[] update rotation and noOfFloors to store
+[] \*\* connect to a database, can retrieve template / saved designs
+
+**main features**
+[] first person view control (refer to minecraft tutorial) --- FPV, Player, Ground, useKeyboard, install cannon
+[] \*\* how to let user design diff level plans
+[] more neighborhood components to add in
+[] \*\* develop more feedback / contraints / typologies e.g.spacing for pivacy
+
+**fixes**
+[] fix geometry display issue -- maybe leave small gap beteen geometries
+
+**optional features**
+[] customise color of building parts / based on building type (refer to code sandbox example)
+[] multi users design together in real time with web socket
 [] object to be added at mouse position and move together with mouse before positioned
-[] first person view control (refer to minecraft tutorial)
 [] export model with texture map

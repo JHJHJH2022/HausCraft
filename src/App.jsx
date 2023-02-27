@@ -9,12 +9,13 @@ import {
 } from "@react-three/drei";
 import { useEffect } from "react";
 import { useStoreAll } from "./hooks/useStoreAll";
-import Plane from "./mainComponents/Plane";
-import Lights from "./mainComponents/Lights";
-import Display from "./mainComponents/Display";
+import Plane from "./otherComponents/Plane";
+import Lights from "./otherComponents/Lights";
+import Display from "./otherComponents/Display";
 import AllAnimatedObjects from "./mainComponents/AllAnimatedObjects.jsx";
 
 import Site from "./objectComponents/Site";
+import * as designSessions from "./api/modifyDesignSessions";
 
 export default function App() {
   // user control states
@@ -26,14 +27,31 @@ export default function App() {
   const [parkingNum, setParkingNum] = useState(0);
   const [objects] = useStoreAll((state) => [state.objects]);
   const [addobjects] = useStoreAll((state) => [state.addobjects]);
+  const [setallobjects] = useStoreAll((state) => [state.setallobjects]);
   const [removeobjects] = useStoreAll((state) => [state.removeobjects]);
   const [updateobjects] = useStoreAll((state) => [state.updateobjects]);
   const [updateobjectsLevels] = useStoreAll((state) => [
     state.updateobjectsLevels,
   ]);
 
+  // save to DB
+  const sessionId = "myFirstDesign";
+  // designSessions.createDesignSession(sessionId);
+  const handleSave = async () => {
+    await designSessions.updateDesignSession(sessionId, { objects: objects });
+  };
+
+  // get from DB
+  const handleGet = async () => {
+    const objectsToSet = await designSessions.getDesignSession(sessionId);
+    console.log(objectsToSet);
+    setallobjects(objectsToSet);
+  };
+
+  // handle click
   const handleClick = (e) => {
-    addobjects(e.target.id); // button id must be same as typology in useStore!
+    const typology = e.target.id;
+    addobjects(typology); // button id must be same as typology in useStore!
   };
 
   useEffect(() => {
@@ -76,6 +94,8 @@ export default function App() {
         buildingNum={buildingNum}
         parkingNum={parkingNum}
         handleClick={handleClick}
+        handleSave={handleSave}
+        handleGet={handleGet}
       />
       <Canvas flat style={{ background: "white" }} shadows dpr={[1, 2]}>
         <Lights />

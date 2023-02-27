@@ -51,6 +51,10 @@ export const useStoreAll = create((set) => ({
     }));
   },
 
+  setallobjects: (objects) => {
+    set({ objects });
+  },
+
   updateobjectsLevels: (index, newLevels) => {
     set((prev) => ({
       objects: prev.objects.map((object) => {

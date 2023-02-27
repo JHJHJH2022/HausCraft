@@ -1,4 +1,4 @@
-import { importObjects } from "./ImportedObjects";
+import { importObjects } from "../imports/ImportedObjects";
 
 export function getObjectsHeight() {
   const meshes = importObjects();

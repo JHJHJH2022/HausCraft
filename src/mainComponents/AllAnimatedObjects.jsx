@@ -1,4 +1,4 @@
-import AnimatedObjects from "../objectComponentsHelpers/AnimatedObjects.jsx";
+import AnimatedObjects from "./AnimatedObjects.jsx";
 
 export default function AllAnimatedObjects({
   setIsDragging,
@@ -9,7 +9,7 @@ export default function AllAnimatedObjects({
   updateobjects,
   updateobjectsLevels,
 }) {
-  return objects.map(({ key, position, rotation, typology }) => {
+  return objects.map(({ key, position, rotation, typology, levels }) => {
     return (
       <AnimatedObjects
         key={key}
@@ -22,6 +22,7 @@ export default function AllAnimatedObjects({
         setIsDragging={setIsDragging}
         setIsRotating={setIsRotating}
         typology={typology}
+        levels={levels}
         setIsChangingNoOfFloors={setIsChangingNoOfFloors}
       />
     );
