@@ -9,11 +9,11 @@ export default function Display({
     <div className="sidebar">
       {/* button id must be same as typology in useStore! */}
       <div>
-        <h5>
+        <h5 className="indicators">
           {buildingNum} housing unit{buildingNum == 1 ? "" : "s"} has been
           placed
         </h5>
-        <h5>
+        <h5 className="indicators">
           {parkingNum} parking lot{parkingNum == 1 ? "" : "s"} has been placed
         </h5>
       </div>
