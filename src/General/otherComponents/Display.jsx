@@ -10,11 +10,12 @@ export default function Display({
       {/* button id must be same as typology in useStore! */}
       <div>
         <h5 className="indicators">
-          {buildingNum} housing unit{buildingNum == 1 ? "" : "s"} has been
-          placed
+          <span className="highlightText">{buildingNum}</span> housing unit
+          {buildingNum == 1 ? "" : "s"} has been placed
         </h5>
         <h5 className="indicators">
-          {parkingNum} parking lot{parkingNum == 1 ? "" : "s"} has been placed
+          <span className="highlightText">{parkingNum}</span> parking lot
+          {parkingNum == 1 ? "" : "s"} has been placed
         </h5>
       </div>
       <div className="buttons">

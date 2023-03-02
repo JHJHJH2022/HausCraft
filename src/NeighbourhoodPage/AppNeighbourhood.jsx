@@ -1,4 +1,4 @@
-import "./index.css";
+import "../index.css";
 import React, { useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import {
@@ -9,11 +9,11 @@ import {
 } from "@react-three/drei";
 import { useEffect } from "react";
 import { useStoreAll } from "./hooks/useStoreAll";
-import Plane from "./otherComponents/Plane";
-import Lights from "./otherComponents/Lights";
-import Display from "./otherComponents/Display";
+import Lights from "../General/otherComponents/Lights";
+import Display from "../General/otherComponents/Display";
 import AllAnimatedObjects from "./mainComponents/AllAnimatedObjects.jsx";
-
+import Road from "../ComponentsPage/corridorComponents/Road";
+import Plane from "../ComponentsPage/corridorComponents/Plane";
 import Site from "./objectComponents/Site";
 import * as designSessions from "./api/modifyDesignSessions";
 
@@ -44,7 +44,7 @@ export default function AppNeighbourhood() {
   // get from DB
   const handleGet = async () => {
     const objectsToSet = await designSessions.getDesignSession(sessionId);
-    console.log(objectsToSet);
+
     setallobjects(objectsToSet);
   };
 
@@ -110,6 +110,8 @@ export default function AppNeighbourhood() {
           updateobjects={updateobjects}
           updateobjectsLevels={updateobjectsLevels}
         />
+        <Plane />
+        <Road />
 
         {/* <Plane /> */}
 

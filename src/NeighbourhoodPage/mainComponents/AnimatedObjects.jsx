@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Inspector from "../mainSubComponents/Inspector";
+import Inspector from "../../General/mainSubComponents/Inspector";
 import BuildingIndivAllLevels from "../objectComponents/BuildingIndiv/BuildingIndivAllLevels";
 import ClusterOneAllLevels from "../objectComponents/ClusterOne/ClusterOneAllLevels";
 import ClusterOneVoidDeck from "../objectComponents/ClusterOne/ClusterOneVoidDeck";
@@ -13,9 +13,9 @@ import CarparkRoof from "../objectComponents/Carpark/CarparkRoof";
 import Tree from "../objectComponents/Trees/Tree";
 import TreesClusterOne from "../objectComponents/Trees/TreesClusterOne";
 import TreesClusterTwo from "../objectComponents/Trees/TreesClusterTwo";
-import Slider from "../mainSubComponents/htmlSlider";
-import { getObjectsHeight } from "../helpers/getObjectsHeight";
-import SliderControl from "../mainSubComponents/SliderControl";
+import Slider from "../../General/mainSubComponents/htmlSlider";
+import { getObjectsHeight } from "../../General/helpers/getObjectsHeight";
+import SliderControl from "../../General/mainSubComponents/SliderControl";
 
 export default function AnimatedObjects({
   index,

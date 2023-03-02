@@ -15,7 +15,6 @@ export const getDesignSession = async (id) => {
   try {
     const response = await fetch(`${API_URL}/${id}`);
     const data = await response.json();
-    console.log(data.objects);
     return data.objects;
   } catch (err) {
     console.error(err);

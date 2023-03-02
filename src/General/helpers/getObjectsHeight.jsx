@@ -1,4 +1,4 @@
-import { importObjects } from "../imports/ImportedObjects";
+import { importObjects } from "../../NeighbourhoodPage/imports/ImportedObjects";
 
 export function getObjectsHeight() {
   const meshes = importObjects();

@@ -1,5 +1,5 @@
 import { useGLTF } from "@react-three/drei";
-import { getMeshHeight } from "../helpers/helpers";
+import { getMeshHeight } from "../../General/helpers/helpers";
 
 export function importObjects() {
   // site model
