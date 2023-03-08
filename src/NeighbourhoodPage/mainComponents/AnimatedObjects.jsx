@@ -16,6 +16,7 @@ import TreesClusterTwo from "../objectComponents/Trees/TreesClusterTwo";
 import Slider from "../../General/mainSubComponents/htmlSlider";
 import { getObjectsHeight } from "../../General/helpers/getObjectsHeight";
 import SliderControl from "../../General/mainSubComponents/SliderControl";
+import Comment from "../../General/otherComponents/Comment";
 
 export default function AnimatedObjects({
   index,
@@ -89,6 +90,7 @@ export default function AnimatedObjects({
       updateobjects={updateobjects}
       handleDelete={handleDelete}
     >
+      <Comment />
       {typology === "buildingIndiv" && (
         <>
           <SliderControl

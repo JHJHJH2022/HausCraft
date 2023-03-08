@@ -4,39 +4,19 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
 import AppNeighbourhood from "./NeighbourhoodPage/AppNeighbourhood";
 import AppCorridor from "./ComponentsPage/AppCorridor";
-import Test from "./HomePage/Test1";
 import AllDesigns from "./HomePage/AllDesigns";
-
-function NavigationBar() {
-  return (
-    <nav className="navbar">
-      <h3 className="logo">HausCraft</h3>
-      <ul>
-        <li>
-          <Link to="/">HOME</Link>
-        </li>
-        <li>|</li>
-        <li>
-          <Link to="/corridor">COMPONENTS</Link>
-        </li>
-        <li>|</li>
-        <li>
-          <Link to="/neighbourhood">NEIGHBOURHOOD</Link>
-        </li>
-      </ul>
-    </nav>
-  );
-}
+import NavigationBar from "./Navbar";
 
 export default function App() {
   return (
-    <div className="fullPage">
+    <div className="flex-column h-screen">
       <BrowserRouter>
         <NavigationBar />
         <Routes>
           <Route exact path="/" element={<AllDesigns />} />
           <Route exact path="/corridor" element={<AppCorridor />} />
           <Route path="/neighbourhood" element={<AppNeighbourhood />} />
+          <Route path="/about" />
         </Routes>
       </BrowserRouter>
     </div>

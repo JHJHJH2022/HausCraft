@@ -6,42 +6,18 @@ export default function Display({
   handleGet,
 }) {
   return (
-    <div className="sidebar">
+    <div className=" absolute w-72 z-40 p-5 bg-black/30 top-36 rounded-lg m-5 text-white">
       {/* button id must be same as typology in useStore! */}
-      <div>
-        <h5 className="indicators">
+      <h1 className="font-bold py-2 text-xl">Design 7</h1>
+      <div className="flex flex-col">
+        <h5>
           <span className="highlightText">{buildingNum}</span> housing unit
           {buildingNum == 1 ? "" : "s"} has been placed
         </h5>
-        <h5 className="indicators">
+        <h5>
           <span className="highlightText">{parkingNum}</span> parking lot
           {parkingNum == 1 ? "" : "s"} has been placed
         </h5>
-      </div>
-      <div className="buttons">
-        <button onClick={handleSave}>Save</button>
-        <button onClick={handleGet}>Get</button>
-        <button id="carpark" onClick={handleClick}>
-          Add Car Park
-        </button>
-        <button id="buildingIndiv" onClick={handleClick}>
-          Add Building
-        </button>
-        <button id="cluster1" onClick={handleClick}>
-          Add Building Cluster One
-        </button>
-        <button id="cluster2" onClick={handleClick}>
-          Add Building Cluster Two
-        </button>
-        <button id="tree" onClick={handleClick}>
-          Add Tree
-        </button>
-        <button id="treesCluster1" onClick={handleClick}>
-          Add Trees Cluster One
-        </button>
-        <button id="treesCluster2" onClick={handleClick}>
-          Add Trees Cluster Two
-        </button>
       </div>
     </div>
   );

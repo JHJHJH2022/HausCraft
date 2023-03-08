@@ -6,6 +6,7 @@ import {
   OrbitControls,
   GizmoHelper,
   GizmoViewport,
+  Html,
 } from "@react-three/drei";
 import { useEffect } from "react";
 import { useStoreAll } from "./hooks/useStoreAll";
@@ -16,6 +17,9 @@ import Road from "../ComponentsPage/corridorComponents/Road";
 import Plane from "../ComponentsPage/corridorComponents/Plane";
 import Site from "./objectComponents/Site";
 import * as designSessions from "./api/modifyDesignSessions";
+import Buttons from "../General/otherComponents/Buttons";
+import AllDesignSessions from "../HomePage/AllDesignSessions";
+import ComponentsList from "../General/otherComponents/ComponentsList";
 
 export default function AppNeighbourhood() {
   // user control states
@@ -89,46 +93,64 @@ export default function AppNeighbourhood() {
 
   // return objects
   return (
-    <div className="AppNeighbourhood">
-      <Display
-        buildingNum={buildingNum}
-        parkingNum={parkingNum}
-        handleClick={handleClick}
-        handleSave={handleSave}
-        handleGet={handleGet}
-      />
-      <Canvas flat style={{ background: "white" }} shadows dpr={[1, 2]}>
-        <Lights />
-        {/* <gridHelper args={[220, 100, "lightgrey", "lightgrey"]} /> */}
-
-        <Site />
-        <AllAnimatedObjects
-          setIsDragging={setIsDragging}
-          setIsChangingNoOfFloors={setIsChangingNoOfFloors}
-          objects={objects}
-          removeobjects={removeobjects}
-          updateobjects={updateobjects}
-          updateobjectsLevels={updateobjectsLevels}
+    <div
+      className="flex gap-10 justify-between items-center px-20 py-10"
+      style={{ height: "92%", width: "100%" }}
+    >
+      <div className="w-1/2 h-full">
+        <AllDesignSessions />
+      </div>
+      <div className="w-1/2 h-full">
+        <Display
+          buildingNum={buildingNum}
+          parkingNum={parkingNum}
+          handleClick={handleClick}
+          handleSave={handleSave}
+          handleGet={handleGet}
         />
-        <Plane />
-        <Road />
-
-        {/* <Plane /> */}
-
-        <OrthographicCamera makeDefault zoom={6} position={[100, 100, 150]} />
-
-        <OrbitControls
-          minZoom={4}
-          maxZoom={20}
-          enabled={!isDragging && !isChangingNoOfFloors}
-          near={0.1}
-          far={500}
+        <ComponentsList
+          buildingNum={buildingNum}
+          parkingNum={parkingNum}
+          handleClick={handleClick}
+          handleSave={handleSave}
+          handleGet={handleGet}
         />
 
-        <GizmoHelper alignment="top-right" margin={[150, 150]}>
-          <GizmoViewport labelColor="white" axisHeadScale={1} />
-        </GizmoHelper>
-      </Canvas>
+        <Canvas
+          className="rounded-lg border border-gray-300 z-0 "
+          flat
+          style={{ background: "white" }}
+          shadows
+          dpr={[1, 2]}
+        >
+          <Lights />
+          {/* <gridHelper args={[220, 100, "lightgrey", "lightgrey"]} /> */}
+          <Site />
+          <AllAnimatedObjects
+            setIsDragging={setIsDragging}
+            setIsChangingNoOfFloors={setIsChangingNoOfFloors}
+            objects={objects}
+            removeobjects={removeobjects}
+            updateobjects={updateobjects}
+            updateobjectsLevels={updateobjectsLevels}
+          />
+          <Plane />
+          <Road /> // roads for testing
+          <OrthographicCamera makeDefault zoom={6} position={[100, 100, 150]} />
+          <OrbitControls
+            minZoom={4}
+            maxZoom={20}
+            enabled={!isDragging && !isChangingNoOfFloors}
+            near={0.1}
+            far={500}
+          />
+          <GizmoHelper alignment="top-right" margin={[150, 150]}>
+            <GizmoViewport labelColor="white" axisHeadScale={1} />
+          </GizmoHelper>
+        </Canvas>
+
+        <Buttons />
+      </div>
     </div>
   );
 }
