@@ -1,10 +1,4 @@
-export default function Display({
-  buildingNum,
-  parkingNum,
-  handleClick,
-  handleSave,
-  handleGet,
-}) {
+export default function Display({ buildingNum, parkingNum }) {
   return (
     <div className=" absolute w-72 z-40 p-5 bg-black/30 top-36 rounded-lg m-5 text-white">
       {/* button id must be same as typology in useStore! */}

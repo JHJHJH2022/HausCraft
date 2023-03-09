@@ -13,7 +13,7 @@ export default function AppCorridor() {
   return (
     <Canvas flat style={{ background: "white" }} shadows dpr={[1, 2]}>
       <gridHelper args={[200, 200, "grey", "grey"]} />
-      <Lights />
+      <Lights timeOfDay={15} />
 
       <Points />
       <CorridorDot />

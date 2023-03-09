@@ -1,10 +1,4 @@
-export default function Display({
-  buildingNum,
-  parkingNum,
-  handleClick,
-  handleSave,
-  handleGet,
-}) {
+export default function Display({ handleClick }) {
   return (
     <div className="scrollHidden w-72 absolute z-40 p-5 bg-black/30 top-72 rounded-lg m-5 text-white overflow-y-scroll h-1/2">
       {/* button id must be same as typology in useStore! */}

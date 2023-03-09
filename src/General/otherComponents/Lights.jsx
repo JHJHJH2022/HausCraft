@@ -1,10 +1,16 @@
-export default function Lights() {
+export default function Lights({ timeOfDay }) {
+  let sunValue = 13 - timeOfDay;
+  console.log(sunValue);
+  let intensity = Math.log2((9 - Math.abs(sunValue)));
+  if(intensity<0){intensity=0}
+  // range of sun value is -6 to 6 inclusive
+
   return (
     <>
-      <ambientLight intensity={0.3} />
+      <ambientLight intensity={0.2} />
       <directionalLight
-        intensity={3} // 4 when cast shadow
-        position={[30, 100, 20]}
+        intensity={intensity} // 4 when cast shadow
+        position={[100/6*sunValue-10, 150, 200/6*sunValue-10]}
         castShadow
         shadow-mapSize-height={1512}
         shadow-mapSize-width={1512}

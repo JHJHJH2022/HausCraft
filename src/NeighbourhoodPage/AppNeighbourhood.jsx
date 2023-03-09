@@ -20,12 +20,37 @@ import * as designSessions from "./api/modifyDesignSessions";
 import Buttons from "../General/otherComponents/Buttons";
 import AllDesignSessions from "../HomePage/AllDesignSessions";
 import ComponentsList from "../General/otherComponents/ComponentsList";
-
+import SunSlider from "../General/mainSubComponents/SunSlider";
+import BuildingHeightLimit from "../General/otherComponents/BuildingHeightLimit";
+import Comment from "../General/otherComponents/Comment";
 export default function AppNeighbourhood() {
   // user control states
   const [isDragging, setIsDragging] = useState(false);
   const [isChangingNoOfFloors, setIsChangingNoOfFloors] = useState(false);
 
+  const [timeOfDay, setTimeOfDay] = useState(10);
+
+  const [heightLimit, setHeightLimit] = useState(50);
+  const handleInput = (e) => {
+    setHeightLimit(e.target.value);
+  };
+  // set tools visibility with buttons
+  const [heightLimitVisible, setHeightLimitVisbible] = useState(false);
+  const handleBuildingHeightLimit = () => {
+    setHeightLimitVisbible((prev) => !prev);
+  };
+  const [sunSliderVisible, setSunSliderVisible] = useState(false);
+  const handleSunSliderVisible = () => {
+    setSunSliderVisible((prev) => !prev);
+  };
+  const [commentVisible, setCommentVisible] = useState(false);
+  const handleCommentVisible = () => {
+    setCommentVisible((prev) => !prev);
+  };
+  const [editMode, setEditMode] = useState(false);
+  const handleEditMode = () => {
+    setEditMode((prev) => !prev);
+  };
   // Update buildings in canvas and building number display
   const [buildingNum, setBuildingNum] = useState(0);
   const [parkingNum, setParkingNum] = useState(0);
@@ -97,10 +122,12 @@ export default function AppNeighbourhood() {
       className="flex gap-10 justify-between items-center px-20 py-10"
       style={{ height: "92%", width: "100%" }}
     >
-      <div className="w-1/2 h-full">
-        <AllDesignSessions />
-      </div>
-      <div className="w-1/2 h-full">
+      {!editMode && (
+        <div className="w-1/2 h-full">
+          <AllDesignSessions />
+        </div>
+      )}
+      <div className={editMode ? "w-full h-full" : "w-1/2 h-full"}>
         <Display
           buildingNum={buildingNum}
           parkingNum={parkingNum}
@@ -108,13 +135,18 @@ export default function AppNeighbourhood() {
           handleSave={handleSave}
           handleGet={handleGet}
         />
-        <ComponentsList
-          buildingNum={buildingNum}
-          parkingNum={parkingNum}
-          handleClick={handleClick}
-          handleSave={handleSave}
-          handleGet={handleGet}
-        />
+        {editMode && (
+          <ComponentsList
+            buildingNum={buildingNum}
+            parkingNum={parkingNum}
+            handleClick={handleClick}
+            handleSave={handleSave}
+            handleGet={handleGet}
+          />
+        )}
+        {sunSliderVisible && (
+          <SunSlider setTimeOfDay={setTimeOfDay} timeOfDay={timeOfDay} />
+        )}
 
         <Canvas
           className="rounded-lg border border-gray-300 z-0 "
@@ -123,7 +155,15 @@ export default function AppNeighbourhood() {
           shadows
           dpr={[1, 2]}
         >
-          <Lights />
+          {/*Building height limit indicator  */}
+          {heightLimitVisible && (
+            <BuildingHeightLimit
+              heightLimit={heightLimit}
+              setHeightLimit={setHeightLimit}
+            />
+          )}
+          {commentVisible && <Comment />}
+          <Lights timeOfDay={timeOfDay} />
           {/* <gridHelper args={[220, 100, "lightgrey", "lightgrey"]} /> */}
           <Site />
           <AllAnimatedObjects
@@ -135,8 +175,13 @@ export default function AppNeighbourhood() {
             updateobjectsLevels={updateobjectsLevels}
           />
           <Plane />
-          <Road /> // roads for testing
-          <OrthographicCamera makeDefault zoom={6} position={[100, 100, 150]} />
+
+          <OrthographicCamera
+            makeDefault
+            near={0}
+            zoom={6}
+            position={[100, 100, 150]}
+          />
           <OrbitControls
             minZoom={4}
             maxZoom={20}
@@ -144,12 +189,18 @@ export default function AppNeighbourhood() {
             near={0.1}
             far={500}
           />
-          <GizmoHelper alignment="top-right" margin={[150, 150]}>
+          <GizmoHelper alignment="top-right" margin={[100, 100]}>
             <GizmoViewport labelColor="white" axisHeadScale={1} />
           </GizmoHelper>
         </Canvas>
 
-        <Buttons />
+        <Buttons
+          handleSunSliderVisible={handleSunSliderVisible}
+          handleBuildingHeightLimit={handleBuildingHeightLimit}
+          handleCommentVisible={handleCommentVisible}
+          handleEditMode={handleEditMode}
+          editMode={editMode}
+        />
       </div>
     </div>
   );
