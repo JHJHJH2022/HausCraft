@@ -1,5 +1,4 @@
 import { Html } from "@react-three/drei";
-import { useState } from "react";
 
 export default function BuildingHeightLimit({ heightLimit, setHeightLimit }) {
   const handleInput = (e) => {

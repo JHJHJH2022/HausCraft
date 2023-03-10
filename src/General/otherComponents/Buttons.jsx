@@ -3,11 +3,13 @@ export default function Buttons({
   handleSunSliderVisible,
   handleCommentVisible,
   handleEditMode,
+  handleStreetView,
   editMode,
+  streetView,
 }) {
   return (
     <div className="absolute z-50 right-24 bottom-16 flex flex-col">
-      {editMode && (
+      {editMode && !streetView && (
         <div className="p-1 m-2 text-white bg-black/30 rounded-md">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -25,7 +27,7 @@ export default function Buttons({
           </svg>
         </div>
       )}
-      {editMode && (
+      {editMode && !streetView && (
         <div className="p-1 m-2 text-white bg-black/30 rounded-md">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -44,7 +46,7 @@ export default function Buttons({
         </div>
       )}
 
-      {editMode && (
+      {editMode && !streetView && (
         <div
           className="p-1 m-2 text-white bg-black/30 rounded-md"
           onClick={handleBuildingHeightLimit}
@@ -65,7 +67,7 @@ export default function Buttons({
           </svg>
         </div>
       )}
-      {editMode && (
+      {editMode && !streetView && (
         <div
           className="p-1 m-2 text-white bg-black/30 rounded-md"
           onClick={handleSunSliderVisible}
@@ -107,7 +109,10 @@ export default function Buttons({
         </svg>
       </div>
 
-      <div className="p-1 m-2 text-white bg-black/30 rounded-md">
+      <div
+        className="p-1 m-2 text-white bg-black/30 rounded-md"
+        onClick={handleStreetView}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

@@ -13,6 +13,7 @@
     "@fseehawer/react-circular-slider": "^2.5.16",
     "@react-spring/three": "^9.6.1",
     "@react-spring/web": "^9.6.1",
+    "@react-three/cannon": "^6.5.2",
     "@react-three/drei": "^9.56.12",
     "@react-three/fiber": "^8.10.1",
     "@use-gesture/react": "^10.2.24",

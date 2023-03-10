@@ -16,6 +16,7 @@ export default function Inspector({
   index,
   updateobjects,
   handleDelete,
+  streetView,
 }) {
   // set constants
   const floorPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
@@ -42,7 +43,12 @@ export default function Inspector({
   const bind = useDrag(
     ({ active, event, delta: [dx, dy] }) => {
       event.stopPropagation();
-      if (active && event.ctrlKey === false && event.shiftKey === false) {
+      if (
+        active &&
+        event.ctrlKey === false &&
+        event.shiftKey === false &&
+        !streetView
+      ) {
         event.ray.intersectPlane(floorPlane, planeIntersectPoint);
 
         let newPos = [

@@ -1,20 +1,12 @@
 import "../index.css";
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-import {
-  OrthographicCamera,
-  OrbitControls,
-  GizmoHelper,
-  GizmoViewport,
-  Html,
-} from "@react-three/drei";
+import { GizmoHelper, GizmoViewport, Sky } from "@react-three/drei";
 import { useEffect } from "react";
 import { useStoreAll } from "./hooks/useStoreAll";
 import Lights from "../General/otherComponents/Lights";
 import Display from "../General/otherComponents/Display";
 import AllAnimatedObjects from "./mainComponents/AllAnimatedObjects.jsx";
-import Road from "../ComponentsPage/corridorComponents/Road";
-import Plane from "../ComponentsPage/corridorComponents/Plane";
 import Site from "./objectComponents/Site";
 import * as designSessions from "./api/modifyDesignSessions";
 import Buttons from "../General/otherComponents/Buttons";
@@ -23,6 +15,9 @@ import ComponentsList from "../General/otherComponents/ComponentsList";
 import SunSlider from "../General/mainSubComponents/SunSlider";
 import BuildingHeightLimit from "../General/otherComponents/BuildingHeightLimit";
 import Comment from "../General/otherComponents/Comment";
+
+import CameraControl from "./Cameras/CameraControl";
+
 export default function AppNeighbourhood() {
   // user control states
   const [isDragging, setIsDragging] = useState(false);
@@ -30,7 +25,7 @@ export default function AppNeighbourhood() {
 
   const [timeOfDay, setTimeOfDay] = useState(10);
 
-  const [heightLimit, setHeightLimit] = useState(50);
+  const [heightLimit, setHeightLimit] = useState(100);
   const handleInput = (e) => {
     setHeightLimit(e.target.value);
   };
@@ -47,9 +42,15 @@ export default function AppNeighbourhood() {
   const handleCommentVisible = () => {
     setCommentVisible((prev) => !prev);
   };
+
   const [editMode, setEditMode] = useState(false);
   const handleEditMode = () => {
     setEditMode((prev) => !prev);
+  };
+
+  const [streetView, setStreetView] = useState(false);
+  const handleStreetView = () => {
+    setStreetView((prev) => !prev);
   };
   // Update buildings in canvas and building number display
   const [buildingNum, setBuildingNum] = useState(0);
@@ -118,90 +119,91 @@ export default function AppNeighbourhood() {
 
   // return objects
   return (
-    <div
-      className="flex gap-10 justify-between items-center px-20 py-10"
-      style={{ height: "92%", width: "100%" }}
-    >
-      {!editMode && (
-        <div className="w-1/2 h-full">
-          <AllDesignSessions />
-        </div>
-      )}
-      <div className={editMode ? "w-full h-full" : "w-1/2 h-full"}>
-        <Display
-          buildingNum={buildingNum}
-          parkingNum={parkingNum}
-          handleClick={handleClick}
-          handleSave={handleSave}
-          handleGet={handleGet}
-        />
-        {editMode && (
-          <ComponentsList
+    <Suspense fallback={<span>loading...</span>}>
+      <div
+        className="flex gap-10 justify-between items-center px-20 py-10"
+        style={{ height: "92%", width: "100%" }}
+      >
+        {!editMode && (
+          <div className="w-1/2 h-full">
+            <AllDesignSessions />
+          </div>
+        )}
+        <div className={editMode ? "w-full h-full" : "w-1/2 h-full"}>
+          <Display
             buildingNum={buildingNum}
             parkingNum={parkingNum}
             handleClick={handleClick}
             handleSave={handleSave}
             handleGet={handleGet}
           />
-        )}
-        {sunSliderVisible && (
-          <SunSlider setTimeOfDay={setTimeOfDay} timeOfDay={timeOfDay} />
-        )}
-
-        <Canvas
-          className="rounded-lg border border-gray-300 z-0 "
-          flat
-          style={{ background: "white" }}
-          shadows
-          dpr={[1, 2]}
-        >
-          {/*Building height limit indicator  */}
-          {heightLimitVisible && (
-            <BuildingHeightLimit
-              heightLimit={heightLimit}
-              setHeightLimit={setHeightLimit}
+          {editMode && !streetView && (
+            <ComponentsList
+              buildingNum={buildingNum}
+              parkingNum={parkingNum}
+              handleClick={handleClick}
+              handleSave={handleSave}
+              handleGet={handleGet}
             />
           )}
-          {commentVisible && <Comment />}
-          <Lights timeOfDay={timeOfDay} />
-          {/* <gridHelper args={[220, 100, "lightgrey", "lightgrey"]} /> */}
-          <Site />
-          <AllAnimatedObjects
-            setIsDragging={setIsDragging}
-            setIsChangingNoOfFloors={setIsChangingNoOfFloors}
-            objects={objects}
-            removeobjects={removeobjects}
-            updateobjects={updateobjects}
-            updateobjectsLevels={updateobjectsLevels}
-          />
-          <Plane />
+          {sunSliderVisible && (
+            <SunSlider setTimeOfDay={setTimeOfDay} timeOfDay={timeOfDay} />
+          )}
 
-          <OrthographicCamera
-            makeDefault
-            near={0}
-            zoom={6}
-            position={[100, 100, 150]}
+          <Buttons
+            handleSunSliderVisible={handleSunSliderVisible}
+            handleBuildingHeightLimit={handleBuildingHeightLimit}
+            handleCommentVisible={handleCommentVisible}
+            handleEditMode={handleEditMode}
+            editMode={editMode}
+            streetView={streetView}
+            handleStreetView={handleStreetView}
           />
-          <OrbitControls
-            minZoom={4}
-            maxZoom={20}
-            enabled={!isDragging && !isChangingNoOfFloors}
-            near={0.1}
-            far={500}
-          />
-          <GizmoHelper alignment="top-right" margin={[100, 100]}>
-            <GizmoViewport labelColor="white" axisHeadScale={1} />
-          </GizmoHelper>
-        </Canvas>
 
-        <Buttons
-          handleSunSliderVisible={handleSunSliderVisible}
-          handleBuildingHeightLimit={handleBuildingHeightLimit}
-          handleCommentVisible={handleCommentVisible}
-          handleEditMode={handleEditMode}
-          editMode={editMode}
-        />
+          <Canvas
+            className="rounded-lg border border-gray-300 z-0 "
+            flat
+            style={{ background: "white" }}
+            shadows
+            dpr={[1, 2]}
+          >
+            {streetView && (
+              <Sky sunPosition={[100, 200, 100]} distance={1000} />
+            )}
+
+            {/*Building height limit indicator  */}
+            {heightLimitVisible && (
+              <BuildingHeightLimit
+                heightLimit={heightLimit}
+                setHeightLimit={setHeightLimit}
+              />
+            )}
+            {commentVisible && <Comment />}
+            <Lights timeOfDay={timeOfDay} />
+            {/* <gridHelper args={[220, 100, "lightgrey", "lightgrey"]} /> */}
+            <Site />
+            <AllAnimatedObjects
+              setIsDragging={setIsDragging}
+              setIsChangingNoOfFloors={setIsChangingNoOfFloors}
+              objects={objects}
+              removeobjects={removeobjects}
+              updateobjects={updateobjects}
+              updateobjectsLevels={updateobjectsLevels}
+              streetView={streetView}
+            />
+
+            <CameraControl
+              streetView={streetView}
+              isDragging={isDragging}
+              isChangingNoOfFloors={isChangingNoOfFloors}
+            />
+
+            <GizmoHelper alignment="top-right" margin={[100, 100]}>
+              <GizmoViewport labelColor="white" axisHeadScale={1} />
+            </GizmoHelper>
+          </Canvas>
+        </div>
       </div>
-    </div>
+    </Suspense>
   );
 }

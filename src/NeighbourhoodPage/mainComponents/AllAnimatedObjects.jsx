@@ -8,6 +8,7 @@ export default function AllAnimatedObjects({
   removeobjects,
   updateobjects,
   updateobjectsLevels,
+  streetView,
 }) {
   return objects.map(({ key, position, rotation, typology, levels }) => {
     return (
@@ -24,6 +25,7 @@ export default function AllAnimatedObjects({
         typology={typology}
         levels={levels}
         setIsChangingNoOfFloors={setIsChangingNoOfFloors}
+        streetView={streetView}
       />
     );
   });

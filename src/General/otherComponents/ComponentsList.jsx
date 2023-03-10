@@ -1,10 +1,10 @@
 export default function Display({ handleClick }) {
   return (
-    <div className="scrollHidden w-72 absolute z-40 p-5 bg-black/30 top-72 rounded-lg m-5 text-white overflow-y-scroll h-1/2">
+    <div className="scrollHidden w-80 absolute z-40 p-5 bg-black/30 top-96 rounded-lg m-5 text-white overflow-y-scroll h-1/2">
       {/* button id must be same as typology in useStore! */}
 
       <div className="flex flex-col gap-2 py-3">
-        <img src="design1" alt="" />
+        <h1 className="font-bold py-2 text-xl">Components</h1>
         <button id="carpark" onClick={handleClick}>
           Car Park
         </button>

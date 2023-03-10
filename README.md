@@ -80,3 +80,26 @@ demo
 [] multi users design together in real time with web socket
 [] object to be added at mouse position and move together with mouse before positioned
 [] export model with texture map
+
+**2023.03.10 - 03.13**
+main:
+[] FPV
+[] update rotation to store
+[] _database functions for neighbourhood_
+[] screenshot function (tgt with DB functions)
+
+feedback panel:
+[] setback display
+[] separate feedback for diff room types
+[] spacing and parking lot requirement
+
+fixes:
+[] loading page
+[] ask about display issue
+
+**next 2 weeks**
+[] new components modelling
+[] _customise and save components_: --refer to track game for batch import models
+-carpark: rooftop garden /urban farming / PV panels options
+-trees: density
+[] roads: connect to carpark and main road

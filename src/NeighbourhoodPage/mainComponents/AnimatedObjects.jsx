@@ -17,7 +17,6 @@ import Slider from "../../General/mainSubComponents/htmlSlider";
 import { getObjectsHeight } from "../../General/helpers/getObjectsHeight";
 import SliderControl from "../../General/mainSubComponents/SliderControl";
 
-
 export default function AnimatedObjects({
   index,
   position,
@@ -29,6 +28,7 @@ export default function AnimatedObjects({
   typology,
   setIsChangingNoOfFloors,
   levels,
+  streetView,
 }) {
   const floatInAirHt = 0;
   const initialNoOfFloors = levels;
@@ -89,8 +89,8 @@ export default function AnimatedObjects({
       index={index}
       updateobjects={updateobjects}
       handleDelete={handleDelete}
+      streetView={streetView}
     >
-      
       {typology === "buildingIndiv" && (
         <>
           <SliderControl
