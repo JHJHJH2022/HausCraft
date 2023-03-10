@@ -79,7 +79,6 @@ export default function AppNeighbourhood() {
       setAllSessions(data);
     };
     getAllSessions();
-    console.log("getall");
   };
   useEffect(() => {
     getAll();
@@ -88,7 +87,10 @@ export default function AppNeighbourhood() {
   const handleSave = async () => {
     await api.updateDesignSession(currentSessionId, {
       objects: objects,
+      buildingNum: buildingNum,
+      parkingNum: parkingNum,
     });
+    getAll();
   };
 
   const handleCreateNewSession = async () => {
@@ -99,12 +101,10 @@ export default function AppNeighbourhood() {
   const handleDeleteSession = async () => {
     await api.deleteDesignSession(currentSessionId);
     setCurrentSessionId("myFirstDesign");
-    getAll();
   };
 
   useEffect(() => {
     const getCurrentSession = async () => {
-      console.log("set");
       const objectsToSet = await api.getDesignSession(currentSessionId);
       setallobjects(objectsToSet);
     };

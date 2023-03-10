@@ -40,11 +40,12 @@ export const useStoreAll = create((set) => ({
     }));
   },
 
-  updateobjects: (index, newPos) => {
+  updateobjects: (index, newPos, newRotation) => {
     set((prev) => ({
       objects: prev.objects.map((object) => {
         if (index === object.key) {
-          object.position = newPos;
+          if (newPos.length > 0) object.position = newPos;
+          if (newRotation.length > 0) object.rotation = newRotation;
         }
         return object;
       }),

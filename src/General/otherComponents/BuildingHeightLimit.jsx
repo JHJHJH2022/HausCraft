@@ -8,12 +8,12 @@ export default function BuildingHeightLimit({ heightLimit, setHeightLimit }) {
   return (
     <>
       <gridHelper
-        args={[250, 50, "lightpink", "lightpink"]}
+        args={[400, 100, "lightpink", "lightpink"]}
         position={[0, heightLimit, 0]}
       />
       <Html
         wrapperClass="label"
-        position={[0, heightLimit, 125]}
+        position={[0, heightLimit, 200]}
         center
         distanceFactor={0.2}
         className="w-16"
@@ -31,7 +31,7 @@ export default function BuildingHeightLimit({ heightLimit, setHeightLimit }) {
       </Html>
       <Html
         wrapperClass="label"
-        position={[-125, heightLimit, 0]}
+        position={[-200, heightLimit, 0]}
         center
         distanceFactor={0.2}
         className="w-16"
@@ -49,7 +49,7 @@ export default function BuildingHeightLimit({ heightLimit, setHeightLimit }) {
       </Html>
       <Html
         wrapperClass="label"
-        position={[125, heightLimit, 0]}
+        position={[200, heightLimit, 0]}
         center
         distanceFactor={0.2}
         className="w-16"
@@ -67,7 +67,7 @@ export default function BuildingHeightLimit({ heightLimit, setHeightLimit }) {
       </Html>
       <Html
         wrapperClass="label"
-        position={[0, heightLimit, -125]}
+        position={[0, heightLimit, -200]}
         center
         distanceFactor={0.2}
         className="w-16"

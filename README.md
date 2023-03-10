@@ -84,8 +84,9 @@ demo
 **2023.03.10 - 03.13**
 main:
 [x] FPV
-[] update rotation to store
-[] _database functions for neighbourhood_
+[x] update rotation to store
+[x] _database functions for neighbourhood_
+[] deploy client & server
 
 feedback panel:
 [] setback display
@@ -94,10 +95,12 @@ feedback panel:
 
 smaller issues:
 [] screenshot function (tgt with DB functions)
+[x] cut off edge display issue
 [x] loading page
 [x] ask about display issue
 
 **next 2 weeks**
+[] add 'enabled' param to inspector, disable when in view mode, and when is adjusting one building no of floors
 [] new components modelling
 [] _customise and save components_: --refer to track game for batch import models
 -carpark: rooftop garden /urban farming / PV panels options

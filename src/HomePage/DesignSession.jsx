@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import * as api from "../NeighbourhoodPage/api/modifyDesignSessions";
 
-export default function DesignSession({ id, setCurrentSessionId }) {
+export default function DesignSession({
+  id,
+  buildingNum,
+  parkingNum,
+  setCurrentSessionId,
+}) {
   const handleClick = (e) => {
     const id = e.target.id;
     setCurrentSessionId(id);
@@ -19,12 +24,12 @@ export default function DesignSession({ id, setCurrentSessionId }) {
         />
       </div>
       <div className="w-1/2">
-        <h1 className="cursor-pointer" id={id} onClick={handleClick}>
+        <h1 className="cursor-pointer text-xl" id={id} onClick={handleClick}>
           {id}
         </h1>
-        <p>------------------------------------</p>
-        <p>------------------------------------</p>
-        <p>------------------------------------</p>
+        <br />
+        <p>Number of housing units: {buildingNum}</p>
+        <p>Number of parking lots: {parkingNum}</p>
       </div>
     </div>
   );

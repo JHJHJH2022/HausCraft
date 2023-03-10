@@ -11,10 +11,12 @@ export default function AllDesignSessions({
     return allSessions
       .slice(0)
       .reverse()
-      .map(({ sessionId }) => {
+      .map(({ sessionId, parkingNum, buildingNum }) => {
         return (
           <DesignSession
             id={sessionId}
+            parkingNum={parkingNum}
+            buildingNum={buildingNum}
             setCurrentSessionId={setCurrentSessionId}
           />
         );

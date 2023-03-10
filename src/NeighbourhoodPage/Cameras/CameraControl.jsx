@@ -14,7 +14,7 @@ export default function CameraControl({
         makeDefault={!streetView}
         near={0}
         zoom={editMode ? 4 : 3}
-        position={[100, 100, 150]}
+        position={[200, 200, 250]}
       />
 
       <PerspectiveCamera makeDefault={streetView} fov={60} />
