@@ -6,13 +6,14 @@ export default function CameraControl({
   streetView,
   isDragging,
   isChangingNoOfFloors,
+  editMode,
 }) {
   return (
     <>
       <OrthographicCamera
         makeDefault={!streetView}
         near={0}
-        zoom={6}
+        zoom={editMode ? 4 : 3}
         position={[100, 100, 150]}
       />
 
@@ -22,6 +23,7 @@ export default function CameraControl({
         <EditControl
           isDragging={isDragging}
           isChangingNoOfFloors={isChangingNoOfFloors}
+          editMode={editMode}
         />
       )}
       {streetView && <StreetViewControl />}

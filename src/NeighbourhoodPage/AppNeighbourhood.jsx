@@ -8,9 +8,9 @@ import Lights from "../General/otherComponents/Lights";
 import Display from "../General/otherComponents/Display";
 import AllAnimatedObjects from "./mainComponents/AllAnimatedObjects.jsx";
 import Site from "./objectComponents/Site";
-import * as designSessions from "./api/modifyDesignSessions";
+import * as api from "./api/modifyDesignSessions";
 import Buttons from "../General/otherComponents/Buttons";
-import AllDesignSessions from "../HomePage/AllDesignSessions";
+import AllDesigns from "../HomePage/AllDesigns";
 import ComponentsList from "../General/otherComponents/ComponentsList";
 import SunSlider from "../General/mainSubComponents/SunSlider";
 import BuildingHeightLimit from "../General/otherComponents/BuildingHeightLimit";
@@ -29,6 +29,12 @@ export default function AppNeighbourhood() {
   const handleInput = (e) => {
     setHeightLimit(e.target.value);
   };
+  const [currentSessionId, setCurrentSessionId] = useState("myFirstDesign");
+
+  const [newSession, setNewSession] = useState("");
+  const handleNewSessionInput = (e) => {
+    setNewSession(e.target.value);
+  };
   // set tools visibility with buttons
   const [heightLimitVisible, setHeightLimitVisbible] = useState(false);
   const handleBuildingHeightLimit = () => {
@@ -46,6 +52,7 @@ export default function AppNeighbourhood() {
   const [editMode, setEditMode] = useState(false);
   const handleEditMode = () => {
     setEditMode((prev) => !prev);
+    handleSave();
   };
 
   const [streetView, setStreetView] = useState(false);
@@ -64,19 +71,45 @@ export default function AppNeighbourhood() {
     state.updateobjectsLevels,
   ]);
 
-  // save to DB
-  const sessionId = "myFirstDesign";
-  // designSessions.createDesignSession(sessionId);
+  // DB operations
+  const [allSessions, setAllSessions] = useState();
+  const getAll = () => {
+    const getAllSessions = async () => {
+      const data = await api.getAllDesignSessions();
+      setAllSessions(data);
+    };
+    getAllSessions();
+    console.log("getall");
+  };
+  useEffect(() => {
+    getAll();
+  }, []);
+
   const handleSave = async () => {
-    await designSessions.updateDesignSession(sessionId, { objects: objects });
+    await api.updateDesignSession(currentSessionId, {
+      objects: objects,
+    });
   };
 
-  // get from DB
-  const handleGet = async () => {
-    const objectsToSet = await designSessions.getDesignSession(sessionId);
-
-    setallobjects(objectsToSet);
+  const handleCreateNewSession = async () => {
+    await api.createDesignSession(newSession);
+    setCurrentSessionId(newSession);
+    getAll();
   };
+  const handleDeleteSession = async () => {
+    await api.deleteDesignSession(currentSessionId);
+    setCurrentSessionId("myFirstDesign");
+    getAll();
+  };
+
+  useEffect(() => {
+    const getCurrentSession = async () => {
+      console.log("set");
+      const objectsToSet = await api.getDesignSession(currentSessionId);
+      setallobjects(objectsToSet);
+    };
+    getCurrentSession();
+  }, [currentSessionId]);
 
   // handle click
   const handleClick = (e) => {
@@ -126,7 +159,13 @@ export default function AppNeighbourhood() {
       >
         {!editMode && (
           <div className="w-1/2 h-full">
-            <AllDesignSessions />
+            <AllDesigns
+              allSessions={allSessions}
+              setCurrentSessionId={setCurrentSessionId}
+              handleNewSessionInput={handleNewSessionInput}
+              newSession={newSession}
+              handleCreateNewSession={handleCreateNewSession}
+            />
           </div>
         )}
         <div className={editMode ? "w-full h-full" : "w-1/2 h-full"}>
@@ -134,16 +173,13 @@ export default function AppNeighbourhood() {
             buildingNum={buildingNum}
             parkingNum={parkingNum}
             handleClick={handleClick}
-            handleSave={handleSave}
-            handleGet={handleGet}
+            currentSessionId={currentSessionId}
           />
           {editMode && !streetView && (
             <ComponentsList
               buildingNum={buildingNum}
               parkingNum={parkingNum}
               handleClick={handleClick}
-              handleSave={handleSave}
-              handleGet={handleGet}
             />
           )}
           {sunSliderVisible && (
@@ -158,6 +194,8 @@ export default function AppNeighbourhood() {
             editMode={editMode}
             streetView={streetView}
             handleStreetView={handleStreetView}
+            handleSave={handleSave}
+            handleDeleteSession={handleDeleteSession}
           />
 
           <Canvas
@@ -168,7 +206,7 @@ export default function AppNeighbourhood() {
             dpr={[1, 2]}
           >
             {streetView && (
-              <Sky sunPosition={[100, 200, 100]} distance={1000} />
+              <Sky sunPosition={[100, 200, 100]} distance={10000} />
             )}
 
             {/*Building height limit indicator  */}
@@ -196,6 +234,7 @@ export default function AppNeighbourhood() {
               streetView={streetView}
               isDragging={isDragging}
               isChangingNoOfFloors={isChangingNoOfFloors}
+              editMode={editMode}
             />
 
             <GizmoHelper alignment="top-right" margin={[100, 100]}>

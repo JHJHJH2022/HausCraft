@@ -83,19 +83,19 @@ demo
 
 **2023.03.10 - 03.13**
 main:
-[] FPV
+[x] FPV
 [] update rotation to store
 [] _database functions for neighbourhood_
-[] screenshot function (tgt with DB functions)
 
 feedback panel:
 [] setback display
 [] separate feedback for diff room types
 [] spacing and parking lot requirement
 
-fixes:
-[] loading page
-[] ask about display issue
+smaller issues:
+[] screenshot function (tgt with DB functions)
+[x] loading page
+[x] ask about display issue
 
 **next 2 weeks**
 [] new components modelling

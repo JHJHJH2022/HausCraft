@@ -6,9 +6,11 @@ export default function Buttons({
   handleStreetView,
   editMode,
   streetView,
+  handleSave,
+  handleDeleteSession,
 }) {
   return (
-    <div className="absolute z-50 right-24 bottom-16 flex flex-col">
+    <div className="cursor-pointer absolute z-50 right-24 bottom-16 flex flex-col">
       {editMode && !streetView && (
         <div className="p-1 m-2 text-white bg-black/30 rounded-md">
           <svg
@@ -27,8 +29,12 @@ export default function Buttons({
           </svg>
         </div>
       )}
+
       {editMode && !streetView && (
-        <div className="p-1 m-2 text-white bg-black/30 rounded-md">
+        <div
+          onClick={handleSave}
+          className="p-1 m-2 text-white bg-black/30 rounded-md"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -48,7 +54,7 @@ export default function Buttons({
 
       {editMode && !streetView && (
         <div
-          className="p-1 m-2 text-white bg-black/30 rounded-md"
+          className="cursor-pointer p-1 m-2 text-white bg-black/30 rounded-md"
           onClick={handleBuildingHeightLimit}
         >
           <svg
@@ -69,7 +75,7 @@ export default function Buttons({
       )}
       {editMode && !streetView && (
         <div
-          className="p-1 m-2 text-white bg-black/30 rounded-md"
+          className="cursor-pointer p-1 m-2 text-white bg-black/30 rounded-md"
           onClick={handleSunSliderVisible}
         >
           <svg
@@ -90,7 +96,7 @@ export default function Buttons({
       )}
 
       <div
-        className="p-1 m-2 text-white bg-primary/30 rounded-md"
+        className="cursor-pointer p-1 m-2 text-white bg-primary/30 rounded-md"
         onClick={handleEditMode}
       >
         <svg
@@ -110,7 +116,7 @@ export default function Buttons({
       </div>
 
       <div
-        className="p-1 m-2 text-white bg-black/30 rounded-md"
+        className="cursor-pointer p-1 m-2 text-white bg-black/30 rounded-md"
         onClick={handleStreetView}
       >
         <svg
@@ -134,7 +140,7 @@ export default function Buttons({
         </svg>
       </div>
       <div
-        className="p-1 m-2 text-white bg-black/30 rounded-md"
+        className="cursor-pointer p-1 m-2 text-white bg-black/30 rounded-md"
         onClick={handleCommentVisible}
       >
         <svg
@@ -153,7 +159,7 @@ export default function Buttons({
         </svg>
       </div>
 
-      <div className="p-1 m-2 text-white bg-black/30 rounded-md">
+      <div className="cursor-pointer p-1 m-2 text-white bg-black/30 rounded-md">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -175,7 +181,10 @@ export default function Buttons({
         </svg>
       </div>
 
-      <div className="p-1 m-2 text-white bg-black/30 rounded-md">
+      <div
+        onClick={handleDeleteSession}
+        className="cursor-pointer p-1 m-2 text-white bg-black/30 rounded-md"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -192,7 +201,7 @@ export default function Buttons({
         </svg>
       </div>
 
-      {/*  <div className="p-1 m-2 text-white bg-black/30 rounded-md">
+      {/*  <div className="cursor-pointer p-1 m-2 text-white bg-black/30 rounded-md">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
