@@ -30,7 +30,7 @@ export default function Inspector({
   ]);
   const { size } = useThree();
   const euler = useMemo(() => new THREE.Euler(), []);
-  const [rtn, setRtn] = useState([rotation]);
+  const [rtn, setRtn] = useState(rotation);
   // create spring
   const [spring, api] = useSpring(() => ({
     position: pos,
@@ -41,7 +41,7 @@ export default function Inspector({
 
   // drag to translate and rotate
   const bind = useDrag(
-    ({ active, event, delta: [dx, dy] }) => {
+    ({ active, event, delta: [dx] }) => {
       event.stopPropagation();
       if (
         active &&
@@ -59,19 +59,19 @@ export default function Inspector({
 
         setPos(newPos);
 
-        // setPositioned(true); // so that object stops floating after being positioned
-
         // update position
         const newPosArray = [newPos[0], newPos[1], newPos[2]];
         updateobjects(index, newPosArray, []);
         //
       } else if (active && event.ctrlKey === true && event.shiftKey === false) {
         euler.y += (dx / size.width) * responsiveness;
+        let newRtn = [0, angleSnap(euler.y, 45), 0];
+        setRtn(newRtn);
+        updateobjects(index, [], rtn);
       }
 
       setIsDragging(active);
-      setRtn([0, angleSnap(euler.y, 45), 0]);
-      updateobjects(index, [], rtn);
+
       api.start({
         position: pos,
         scale: active ? 1.05 : 1,

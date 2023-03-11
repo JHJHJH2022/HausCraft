@@ -101,6 +101,7 @@ export default function AppNeighbourhood() {
   const handleDeleteSession = async () => {
     await api.deleteDesignSession(currentSessionId);
     setCurrentSessionId("myFirstDesign");
+    getAll();
   };
 
   useEffect(() => {
@@ -150,6 +151,7 @@ export default function AppNeighbourhood() {
     setParkingNum(totalUnitCount);
   }, [objects]);
 
+  console.log(objects);
   // return objects
   return (
     <Suspense fallback={<span>loading...</span>}>
