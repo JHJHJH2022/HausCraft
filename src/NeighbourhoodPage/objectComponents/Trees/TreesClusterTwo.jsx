@@ -10,23 +10,23 @@ export default function TreesClusterTwo() {
         castShadow
         receiveShadow
         geometry={meshes.treesCluster2Beech.geometry}
-        /* material={meshes.treesCluster2Beech.material} */
-        material={materials.TreeBeechMaterial}
+        material={meshes.treesCluster2Beech.material}
+        // material={materials.TreeBeechMaterial}
       ></mesh>
 
       <mesh
         castShadow
         receiveShadow
         geometry={meshes.treesCluster2Lime.geometry}
-        /*  material={meshes.treesCluster2Lime.material} */
-        material={materials.TreeLimeMaterial}
+        material={meshes.treesCluster2Lime.material}
+        // material={materials.TreeLimeMaterial}
       ></mesh>
       <mesh
         castShadow
         receiveShadow
         geometry={meshes.treesCluster2Spruce.geometry}
-        // material={meshes.treesCluster2Spruce.material}
-        material={materials.TreeSpruceMaterial}
+        material={meshes.treesCluster2Spruce.material}
+        // material={materials.TreeSpruceMaterial}
       ></mesh>
     </group>
   );

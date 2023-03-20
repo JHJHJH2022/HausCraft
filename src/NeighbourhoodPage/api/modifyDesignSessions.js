@@ -1,4 +1,5 @@
-const API_URL = "http://localhost:5000/savedSessions";
+const API_URL = "https://hauscraft-server.onrender.com/savedSessions";
+// const API_URL = "http://localhost:5000/savedSessions";
 
 export const getAllDesignSessions = async () => {
   try {
