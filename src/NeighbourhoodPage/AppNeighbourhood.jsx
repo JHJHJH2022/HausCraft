@@ -8,6 +8,7 @@ import Lights from "../General/otherComponents/Lights";
 import Display from "../General/otherComponents/Display";
 import AllAnimatedObjects from "./mainComponents/AllAnimatedObjects.jsx";
 import Site from "./objectComponents/Site";
+import DragonSlide from "./objectComponents/Playground/DragonSlide";
 import * as api from "./api/modifyDesignSessions";
 import Buttons from "../General/otherComponents/Buttons";
 import AllDesigns from "../HomePage/AllDesigns";
@@ -29,7 +30,7 @@ export default function AppNeighbourhood() {
   const handleInput = (e) => {
     setHeightLimit(e.target.value);
   };
-  const [currentSessionId, setCurrentSessionId] = useState("myFirstDesign");
+  const [currentSessionId, setCurrentSessionId] = useState("Design 3"); // need to ensure user cannot delete this one!!! OR user will default to an empty page
 
   const [newSession, setNewSession] = useState("");
   const handleNewSessionInput = (e) => {
@@ -151,7 +152,6 @@ export default function AppNeighbourhood() {
     setParkingNum(totalUnitCount);
   }, [objects]);
 
-  console.log(objects);
   // return objects
   return (
     <Suspense fallback={<span>loading...</span>}>
@@ -220,8 +220,9 @@ export default function AppNeighbourhood() {
             )}
             {commentVisible && <Comment />}
             <Lights timeOfDay={timeOfDay} />
-            {/* <gridHelper args={[220, 100, "lightgrey", "lightgrey"]} /> */}
+            <gridHelper args={[200, 100, "lightgrey", "lightgrey"]} />
             <Site />
+            <DragonSlide />
             <AllAnimatedObjects
               setIsDragging={setIsDragging}
               setIsChangingNoOfFloors={setIsChangingNoOfFloors}

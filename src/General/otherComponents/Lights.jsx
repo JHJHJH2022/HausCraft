@@ -1,6 +1,5 @@
 export default function Lights({ timeOfDay }) {
   let sunValue = 13 - timeOfDay;
-  console.log(sunValue);
   let intensity = Math.log2(9 - Math.abs(sunValue)) / 2;
   if (intensity < 0) {
     intensity = 0;

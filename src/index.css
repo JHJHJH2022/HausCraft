@@ -14,7 +14,7 @@ textarea {
   height: 140px;
 }
 button {
-  @apply w-20 h-10 bg-white border rounded-full  p-1.5 text-black/80 w-full;
+  @apply w-20 h-10 bg-white border rounded-full  p-1.5 text-black/80 w-full hover:shadow-md hover:shadow-gray-500;
 }
 button.primary {
   background-color: #f5385d;

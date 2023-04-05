@@ -76,7 +76,7 @@ export default function Buttons({
       {editMode && !streetView && (
         <div
           className="cursor-pointer p-1 m-2 text-white bg-black/30 rounded-md"
-          onClick={handleSunSliderVisible}
+          onClick={handleSunSliderVisible} // causing bug in deployed version only, need to investigate
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

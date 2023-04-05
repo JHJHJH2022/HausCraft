@@ -14,6 +14,7 @@ export default function AllDesignSessions({
       .map(({ sessionId, parkingNum, buildingNum }) => {
         return (
           <DesignSession
+            key={sessionId}
             id={sessionId}
             parkingNum={parkingNum}
             buildingNum={buildingNum}

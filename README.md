@@ -106,3 +106,12 @@ smaller issues:
 -carpark: rooftop garden /urban farming / PV panels options
 -trees: density
 [] roads: connect to carpark and main road
+
+
+**Steps to add imported objects**
+
+1. save glb model to public folder
+2. go to NeighbourhoodPage folder
+3. imports >> ImportedObjects.jsx
+4. 
+5. objectComponents >>> create a new folder named the new components

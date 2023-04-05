@@ -28,7 +28,7 @@ export default function NavigationBar() {
 
         <ul className="flex gap-4  py-2 px-4 ">
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/home">Home</Link>
           </li>
           <li className="border-l border-gray-300"></li>
           <li>
