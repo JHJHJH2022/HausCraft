@@ -30,7 +30,6 @@ export default function AnimatedObjects({
   levels,
   streetView,
 }) {
-  const floatInAirHt = 0;
   const initialNoOfFloors = levels;
   const [noOfFloors, setNoOfFloors] = useState(initialNoOfFloors);
   const [sliderVisible, setSliderVisible] = useState(false);
@@ -84,7 +83,6 @@ export default function AnimatedObjects({
       responsiveness={25}
       position={position}
       rotation={rotation}
-      floatInAirHt={floatInAirHt}
       objectHeight={objectHeight} // this needs to be fixed when roof level and ground are diff height, should be different here as well, probably this is causing bugs for carpark ground and cluster roof
       index={index}
       updateobjects={updateobjects}

@@ -7,8 +7,10 @@ import { useStoreAll } from "./hooks/useStoreAll";
 import Lights from "../General/otherComponents/Lights";
 import Display from "../General/otherComponents/Display";
 import AllAnimatedObjects from "./mainComponents/AllAnimatedObjects.jsx";
+
 import Site from "./objectComponents/Site";
-import DragonSlide from "./objectComponents/Playground/DragonSlide";
+import CustomCorridorAllFull from "./objectComponentsCustom/CustomCorridors/CustomCorridor/CustomCorridorAllFull";
+
 import * as api from "./api/modifyDesignSessions";
 import Buttons from "../General/otherComponents/Buttons";
 import AllDesigns from "../HomePage/AllDesigns";
@@ -220,9 +222,14 @@ export default function AppNeighbourhood() {
             )}
             {commentVisible && <Comment />}
             <Lights timeOfDay={timeOfDay} />
-            <gridHelper args={[200, 100, "lightgrey", "lightgrey"]} />
+            <gridHelper args={[200, 200, "white", "white"]} />
             <Site />
-            <DragonSlide />
+
+            <group position={[-20, 0, 0]}>
+              {/*  <CustomCorridor /> */}
+              <CustomCorridorAllFull />
+            </group>
+
             <AllAnimatedObjects
               setIsDragging={setIsDragging}
               setIsChangingNoOfFloors={setIsChangingNoOfFloors}

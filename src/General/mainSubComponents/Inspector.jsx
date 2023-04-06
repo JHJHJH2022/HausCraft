@@ -11,7 +11,6 @@ export default function Inspector({
   position,
   rotation,
   objectHeight,
-  floatInAirHt,
   setIsDragging,
   index,
   updateobjects,
@@ -23,11 +22,7 @@ export default function Inspector({
   let planeIntersectPoint = new THREE.Vector3();
 
   // keep position of object in state
-  const [pos, setPos] = useState([
-    position[0],
-    objectHeight / 2 + floatInAirHt,
-    position[2],
-  ]);
+  const [pos, setPos] = useState([position[0], objectHeight / 2, position[2]]);
   const { size } = useThree();
   const euler = useMemo(() => new THREE.Euler(), []);
   const [rtn, setRtn] = useState(rotation);
