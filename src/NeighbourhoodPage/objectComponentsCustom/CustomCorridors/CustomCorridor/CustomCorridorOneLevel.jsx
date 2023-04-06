@@ -42,11 +42,46 @@ export default function CustomCorridorOneLevel({
         m % 2 === 0
           ? [dist, 0, corridorWidth / 2]
           : [dist, 0, -corridorWidth / 2];
-
-      m += 1;
-    } else if (clusterType === "linear") {
-    } else if (clusterType === "linear") {
+    } else if (clusterType === "rectilinear") {
+      /* CLUSTER TYPE 2: RECTILINEAR CLUSTERS */
+      const initialDist = -13;
+      let dist = (Math.floor((m + 2) / 4) + 1) * pairDist;
+      if (m < 2) {
+        position =
+          m === 0
+            ? [initialDist + pairDist, 0, -corridorWidth / 2]
+            : [-corridorWidth / 2, 0, initialDist + pairDist];
+      } else {
+        position =
+          m % 4 === 0
+            ? [initialDist + dist, 0, corridorWidth / 2]
+            : m % 4 === 1
+            ? [initialDist + dist, 0, -corridorWidth / 2]
+            : m % 4 === 2
+            ? [corridorWidth / 2, 0, initialDist + dist]
+            : m % 4 === 3
+            ? [-corridorWidth / 2, 0, initialDist + dist]
+            : [0, 0, 0];
+      }
+      /* Rotate every other unit */
+      if (m < 2) {
+        rotation = m === 0 ? [0, Math.PI, 0] : [0, Math.PI * 1.5, 0]; // 90 degree
+      } else {
+        rotation =
+          m % 4 === 0
+            ? [0, 0, 0] // 0 degree
+            : m % 4 === 1
+            ? [0, Math.PI, 0] // 180 degree
+            : m % 4 === 2
+            ? [0, Math.PI * 0.5, 0] // 90 degree
+            : m % 4 === 3
+            ? [0, Math.PI * 1.5, 0] // 270 degree
+            : [0, 0, 0];
+      }
+    } else if (clusterType === "angled") {
     }
+
+    m += 1;
 
     // position order based on unit type, starting from the largest room positioned at center
     let unitType =

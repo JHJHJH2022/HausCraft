@@ -7,11 +7,11 @@ import { nanoid } from "nanoid";
 
 export default function CustomCorridorAllFull({
   // all these are user input from UI, can have default value
-  noOfFloors = 25,
-  noOfUnitsArr = [2, 6, 2, 6],
+  noOfFloors = 15,
+  noOfUnitsArr = [0, 4, 4, 0],
   corridorWidth = 2.5,
-  pairDist = 30, // this is the distance between centers of two adjacent units
-  clusterType = "linear", // 'right-angle', 'obtuse-angle'
+  pairDist = 22, // this is the distance between centers of two adjacent units
+  clusterType = "rectilinear", // 'right-angle', 'obtuse-angle'
 }) {
   //constants
   const heightVoidDeck = 2.6;
@@ -30,8 +30,14 @@ export default function CustomCorridorAllFull({
       ? [0, 0, 0]
       : [-pairDist / 2, 0, 0];
 
+  // show control panel when any part of the group is clicked --- WIP
+  const handleClick = (e) => {
+    e.stopPropagation(); // if not when clicked, this function will be triggered multiple times if there are objects behind
+    console.log(e.eventObject.name);
+  };
+
   return (
-    <>
+    <group onClick={handleClick} name="customClusterName">
       <group position={[0, heightLevel * noOfFloors + heightVoidDeck, 0]}>
         <CustomCorridorOneLevel
           key={nanoid()}
@@ -72,6 +78,6 @@ export default function CustomCorridorAllFull({
         <boxGeometry args={[baseLength, baseThickness, baseWidth]} />
         <meshStandardMaterial />
       </mesh>
-    </>
+    </group>
   );
 }
