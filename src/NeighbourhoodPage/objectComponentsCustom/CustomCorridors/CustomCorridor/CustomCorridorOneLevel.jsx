@@ -1,11 +1,12 @@
 import PairTwoRoomAll from "../CorridorComponents/PairAllRooms";
-
+import { nanoid } from "nanoid";
 export default function CustomCorridorOneLevel({
   noOfUnitsArr,
   geomType,
   corridorWidth,
   pairDist,
   clusterType,
+  rectilinearInitialDist,
 }) {
   // number of each unit type pair, units must come in pairs, if not will round up to nearest even number
   const noOfFiveRoomPair = Math.ceil(noOfUnitsArr[0] / 2);
@@ -44,7 +45,7 @@ export default function CustomCorridorOneLevel({
           : [dist, 0, -corridorWidth / 2];
     } else if (clusterType === "rectilinear") {
       /* CLUSTER TYPE 2: RECTILINEAR CLUSTERS */
-      const initialDist = -13;
+      const initialDist = rectilinearInitialDist;
       let dist = (Math.floor((m + 2) / 4) + 1) * pairDist;
       if (m < 2) {
         position =
@@ -63,9 +64,9 @@ export default function CustomCorridorOneLevel({
             ? [-corridorWidth / 2, 0, initialDist + dist]
             : [0, 0, 0];
       }
-      /* Rotate every other unit */
+      /* Rotate*/
       if (m < 2) {
-        rotation = m === 0 ? [0, Math.PI, 0] : [0, Math.PI * 1.5, 0]; // 90 degree
+        rotation = m === 0 ? [0, Math.PI, 0] : [0, Math.PI * 1.5, 0]; // 180/270 degree
       } else {
         rotation =
           m % 4 === 0
@@ -77,6 +78,7 @@ export default function CustomCorridorOneLevel({
             : m % 4 === 3
             ? [0, Math.PI * 1.5, 0] // 270 degree
             : [0, 0, 0];
+        // m=0->180; m=1=>270;m=2->0;m=3->180; 4-90;5-270;6-0;7-180...
       }
     } else if (clusterType === "angled") {
     }
