@@ -10,7 +10,7 @@ export default function Buttons({
   handleDeleteSession,
 }) {
   return (
-    <div className="cursor-pointer absolute z-50 right-24 bottom-16 flex flex-col">
+    <div className="cursor-pointer absolute z-50 right-24 bottom-16 flex flex-row ">
       {editMode && !streetView && (
         <div className="p-1 m-2 text-white bg-black/30 rounded-md">
           <svg

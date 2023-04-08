@@ -13,6 +13,7 @@ export default function CustomCorridorAllLevels({
   clusterType,
   corridorObj,
   rectilinearInitialDist,
+  slideDist,
 }) {
   // length of oblque corridor of custer rectilinear
 
@@ -32,6 +33,7 @@ export default function CustomCorridorAllLevels({
           pairDist={pairDist}
           clusterType={clusterType}
           rectilinearInitialDist={rectilinearInitialDist}
+          slideDist={slideDist}
         />
 
         {/*Parametric Corridor */}

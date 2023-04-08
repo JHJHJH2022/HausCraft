@@ -10,16 +10,17 @@ export default function CustomCorridorAllFull({
   // all these are user input from UI, can have default value
   noOfFloors = 18,
   noOfUnitsArr = [0, 0, 2, 6],
-  corridorWidth = 3,
+  corridorWidth = 5,
   pairDist = 20, // this is the distance between centers of two adjacent units
   clusterType = "rectilinear", // 'linear', 'angled','rectilinear'
   rectilinearInitialDist = -10,
+  slideDist = 0,
 }) {
   //constants
   const heightVoidDeck = 2.6;
   const heightLevel = 2.9;
   const baseThickness = 0.5;
-  const unitFrontWidth = 12; //  this can be adjusted
+  const unitFrontWidth = 10; //  this can be adjusted
   const baseExtensionLength = 15;
 
   // calculate length of corridor and base at void deck
@@ -93,6 +94,7 @@ export default function CustomCorridorAllFull({
           pairDist={pairDist}
           clusterType={clusterType}
           rectilinearInitialDist={rectilinearInitialDist}
+          slideDist={slideDist}
         />
       </group>
 
@@ -106,6 +108,7 @@ export default function CustomCorridorAllFull({
           heightLevel={heightLevel}
           clusterType={clusterType}
           rectilinearInitialDist={rectilinearInitialDist}
+          slideDist={slideDist}
         />
       </group>
 
@@ -118,6 +121,7 @@ export default function CustomCorridorAllFull({
           pairDist={pairDist}
           clusterType={clusterType}
           rectilinearInitialDist={rectilinearInitialDist}
+          slideDist={slideDist}
         />
       </group>
 

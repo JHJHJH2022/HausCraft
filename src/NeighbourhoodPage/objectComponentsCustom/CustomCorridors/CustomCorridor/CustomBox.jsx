@@ -4,6 +4,7 @@ export default function CustomBox({
   length,
   thickness,
   width,
+  color,
 }) {
   return (
     <mesh position={position} rotation={rotation} castShadow receiveShadow>

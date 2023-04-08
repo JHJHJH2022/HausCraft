@@ -7,6 +7,7 @@ export default function CustomCorridorOneLevel({
   pairDist,
   clusterType,
   rectilinearInitialDist,
+  slideDist,
 }) {
   // number of each unit type pair, units must come in pairs, if not will round up to nearest even number
   const noOfFiveRoomPair = Math.ceil(noOfUnitsArr[0] / 2);
@@ -34,7 +35,9 @@ export default function CustomCorridorOneLevel({
       /* decide lateral translation distance, and whether to add on left or right side */
       let directionFactor = Math.floor(m / 2) % 2 === 0 ? 1 : -1; // m=0,1 -> -1; m=2,3->1; m=4,5->-1...
       let dist = pairDist * Math.floor((m + 2) / 4) * directionFactor; // m=0,1 -> 0; m=2,3,4,5->p; m=6,7,8,9->2*p ...
-
+      if (m % 2 === 1) {
+        dist -= slideDist;
+      }
       /* Rotate every other unit */
       rotation = m % 2 === 0 ? [0, 0, 0] : [0, Math.PI, 0];
 
@@ -47,6 +50,9 @@ export default function CustomCorridorOneLevel({
       /* CLUSTER TYPE 2: RECTILINEAR CLUSTERS */
       const initialDist = rectilinearInitialDist;
       let dist = (Math.floor((m + 2) / 4) + 1) * pairDist;
+      if (m % 2 === 0) {
+        dist -= slideDist;
+      } // so move inside units so that not perfectly align
       if (m < 2) {
         position =
           m === 0
