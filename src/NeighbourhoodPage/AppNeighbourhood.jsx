@@ -19,6 +19,8 @@ import SunSlider from "../General/mainSubComponents/SunSlider";
 import BuildingHeightLimit from "../General/otherComponents/BuildingHeightLimit";
 import Comment from "../General/otherComponents/Comment";
 
+import CustomComponents from "../General/otherComponents/CustomComponentsUI";
+
 import CameraControl from "./Cameras/CameraControl";
 
 export default function AppNeighbourhood() {
@@ -32,7 +34,7 @@ export default function AppNeighbourhood() {
   const handleInput = (e) => {
     setHeightLimit(e.target.value);
   };
-  const [currentSessionId, setCurrentSessionId] = useState("Design 3"); // need to ensure user cannot delete this one!!! OR user will default to an empty page
+  const [currentSessionId, setCurrentSessionId] = useState("Design 123"); // need to ensure user cannot delete this one!!! OR user will default to an empty page
 
   const [newSession, setNewSession] = useState("");
   const handleNewSessionInput = (e) => {
@@ -103,25 +105,29 @@ export default function AppNeighbourhood() {
   };
   const handleDeleteSession = async () => {
     await api.deleteDesignSession(currentSessionId);
-    setCurrentSessionId("myFirstDesign");
+    setCurrentSessionId("Design 123");
     getAll();
   };
 
+  // get all objects of current session from DB, then set all objects to store, then map all objects in store to display on canvas
   useEffect(() => {
     const getCurrentSession = async () => {
-      const objectsToSet = await api.getDesignSession(currentSessionId);
-      setallobjects(objectsToSet);
+      const objectsToDisplay = await api.getDesignSession(currentSessionId);
+
+      setallobjects(objectsToDisplay);
     };
     getCurrentSession();
   }, [currentSessionId]);
 
-  // handle click
+  // handles addition of new objects to canvas when button is clicked
   const handleClick = (e) => {
     const typology = e.target.id;
     addobjects(typology); // button id must be same as typology in useStore!
   };
 
+  // calculate total building units
   useEffect(() => {
+    // filter out all building objects from store
     const allObjects = objects.filter((object) => {
       return (
         object.typology !== "tree" &&
@@ -140,6 +146,7 @@ export default function AppNeighbourhood() {
     setBuildingNum(totalUnitCount);
   }, [objects]);
 
+  // calculate total carpark units
   useEffect(() => {
     const allObjects = objects.filter((object) => {
       return object.typology === "carpark";
@@ -180,12 +187,12 @@ export default function AppNeighbourhood() {
             currentSessionId={currentSessionId}
           />
           {editMode && !streetView && (
-            <ComponentsList
-              buildingNum={buildingNum}
-              parkingNum={parkingNum}
-              handleClick={handleClick}
-            />
+            <ComponentsList handleClick={handleClick} />
           )}
+          {editMode && !streetView && (
+            <CustomComponents handleClick={handleClick} />
+          )}
+
           {sunSliderVisible && (
             <SunSlider setTimeOfDay={setTimeOfDay} timeOfDay={timeOfDay} />
           )}
@@ -224,11 +231,6 @@ export default function AppNeighbourhood() {
             <Lights timeOfDay={timeOfDay} />
             <gridHelper args={[200, 200, "white", "white"]} />
             <Site />
-
-            <group position={[-20, 0, 0]}>
-              {/*  <CustomCorridor /> */}
-              <CustomCorridorAllFull />
-            </group>
 
             <AllAnimatedObjects
               setIsDragging={setIsDragging}

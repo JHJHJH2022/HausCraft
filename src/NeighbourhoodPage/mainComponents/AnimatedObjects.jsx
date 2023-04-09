@@ -16,6 +16,7 @@ import TreesClusterTwo from "../objectComponents/Trees/TreesClusterTwo";
 import Slider from "../../General/mainSubComponents/htmlSlider";
 import { getObjectsHeight } from "../../General/helpers/getObjectsHeight";
 import SliderControl from "../../General/mainSubComponents/SliderControl";
+import CustomCorridorAllFull from "../objectComponentsCustom/CustomCorridors/CustomCorridor/CustomCorridorAllFull";
 
 export default function AnimatedObjects({
   index,
@@ -28,7 +29,9 @@ export default function AnimatedObjects({
   typology,
   setIsChangingNoOfFloors,
   levels,
+  customCorridorSettings,
   streetView,
+  setSelectedIndex,
 }) {
   const initialNoOfFloors = levels;
   const [noOfFloors, setNoOfFloors] = useState(initialNoOfFloors);
@@ -38,10 +41,13 @@ export default function AnimatedObjects({
     updateobjectsLevels(index, noOfFloors);
   }, [noOfFloors]);
 
-  const handleDelete = (e) => {
+  const handleMouseClick = (e) => {
+    e.stopPropagation();
     if (e.altKey) {
       removeobjects(index);
-      console.log("clicked");
+    } else {
+      // left mouse click to update or copy custom properties
+      setSelectedIndex(index);
     }
   };
 
@@ -86,9 +92,22 @@ export default function AnimatedObjects({
       objectHeight={objectHeight} // this needs to be fixed when roof level and ground are diff height, should be different here as well, probably this is causing bugs for carpark ground and cluster roof
       index={index}
       updateobjects={updateobjects}
-      handleDelete={handleDelete}
+      handleMouseClick={handleMouseClick}
       streetView={streetView}
     >
+      {typology === "customCorridor" && customCorridorSettings && (
+        // check if the settings is not empty
+
+        <CustomCorridorAllFull
+          noOfFloors={customCorridorSettings.noOfFloors}
+          noOfUnitsArr={customCorridorSettings.noOfUnitsArr}
+          corridorWidth={customCorridorSettings.corridorWidth}
+          pairDist={customCorridorSettings.pairDist}
+          clusterType={customCorridorSettings.clusterType}
+          rectilinearInitialDist={customCorridorSettings.rectilinearInitialDist}
+          slideDist={customCorridorSettings.slideDist}
+        />
+      )}
       {typology === "buildingIndiv" && (
         <>
           <SliderControl

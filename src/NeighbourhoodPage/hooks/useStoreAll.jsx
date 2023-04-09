@@ -22,12 +22,30 @@ export const useStoreAll = create((set) => ({
         ...prev.objects,
         {
           key: nanoid(),
+          position: [100, 0, 100],
+          rotation: [0, 0, 0],
+          typology: "customCorridor",
+          levels: 1,
+          unitsPerLevel: 10,
+          customCorridorSettings: {
+            clusterType: "linear",
+            noOfFloors: 18,
+            noOfUnitsArr: [8, 0, 2, 6],
+            corridorWidth: 5,
+            pairDist: 28,
+            rectilinearInitialDist: -15,
+            slideDist: 0,
+          },
+        },
+
+        /*   {
+          key: nanoid(),
           position: [0, 0, 0],
           rotation: [0, 0, 0],
           typology: typology,
           levels: 1,
           unitsPerLevel: noOfUnitsPerLevel,
-        },
+        }, */
       ],
     }));
   },

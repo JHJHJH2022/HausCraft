@@ -14,7 +14,7 @@ export default function Inspector({
   setIsDragging,
   index,
   updateobjects,
-  handleDelete,
+  handleMouseClick,
   streetView,
 }) {
   // set constants
@@ -77,7 +77,7 @@ export default function Inspector({
     { delay: true }
   );
   return (
-    <animated.group {...bind()} {...spring} onClick={handleDelete}>
+    <animated.group {...bind()} {...spring} onClick={handleMouseClick}>
       {children}
     </animated.group>
   );

@@ -8,13 +8,13 @@ import { nanoid } from "nanoid";
 
 export default function CustomCorridorAllFull({
   // all these are user input from UI, can have default value
-  noOfFloors = 18,
-  noOfUnitsArr = [0, 0, 2, 6],
-  corridorWidth = 5,
-  pairDist = 20, // this is the distance between centers of two adjacent units
-  clusterType = "rectilinear", // 'linear', 'angled','rectilinear'
-  rectilinearInitialDist = -10,
-  slideDist = 0,
+  noOfFloors,
+  noOfUnitsArr,
+  corridorWidth,
+  pairDist, // this is the distance between centers of two adjacent units
+  clusterType, // 'linear', 'angled','rectilinear'
+  rectilinearInitialDist,
+  slideDist,
 }) {
   //constants
   const heightVoidDeck = 2.6;
@@ -24,7 +24,7 @@ export default function CustomCorridorAllFull({
   const baseExtensionLength = 15;
 
   // calculate length of corridor and base at void deck
-  const numberOfPairs = Math.ceil(noOfUnitsArr.reduce((a, b) => a + b, 0) / 2);
+  const numberOfPairs = Math.ceil(noOfUnitsArr?.reduce((a, b) => a + b, 0) / 2);
 
   /* for cluster type: linear */
   const corridorLength =
@@ -77,14 +77,14 @@ export default function CustomCorridorAllFull({
 
   //corridor b needs to rotate by 90degree
 
-  // show control panel when any part of the group is clicked --- WIP
+  /*  // show control panel when any part of the group is clicked --- WIP
   const handleClick = (e) => {
     e.stopPropagation(); // if not when clicked, this function will be triggered multiple times if there are objects behind
     console.log(e.eventObject.name);
-  };
+  }; */
 
   return (
-    <group onClick={handleClick} name="customClusterName">
+    <group name="customClusterName">
       <group position={[0, heightLevel * noOfFloors + heightVoidDeck, 0]}>
         <CustomCorridorOneLevel
           key={nanoid()}
