@@ -1,30 +1,53 @@
-import React, { useState } from "react";
-export default function CustomComponentsUI() {
+import React, { useState, useEffect } from "react";
+export default function CustomComponentsUI({
+  selectedIndex,
+  selectedIndexCustomSettings,
+  updateCustomObject,
+}) {
   const [formData, setFormData] = useState({
     clusterType: "linear", // linear, rectilinear
-    fiveRoom: 0,
-    fourRoom: 0,
-    threeRoom: 0,
-    twoRoom: 0,
     noOfUnitsArr: [0, 0, 0, 0], // number of 5,4,3,2-room units respectively
     noOfFloors: 1,
     corridorWidth: 2.0,
     pairDist: 25,
     slideDist: 0,
-    initialDist: -15,
+    rectilinearInitialDist: -15,
   });
+
+  useEffect(() => {
+    if (selectedIndexCustomSettings !== undefined) {
+      setFormData(selectedIndexCustomSettings);
+    }
+  }, [selectedIndexCustomSettings]);
+
+  useEffect(() => {
+    // update custom settings by index
+    updateCustomObject(selectedIndex, formData);
+  }, [formData]);
 
   function handleChange(event) {
     const { name, value, type } = event.target;
+
     setFormData((prevFormData) => {
+      if (name == "fiveRoom") {
+        prevFormData.noOfUnitsArr[0] = parseFloat(value);
+        console.log(prevFormData);
+      } else if (name == "fourRoom") {
+        prevFormData.noOfUnitsArr[1] = parseFloat(value);
+        console.log(prevFormData);
+      } else if (name == "threeRoom") {
+        prevFormData.noOfUnitsArr[2] = parseFloat(value);
+        console.log(prevFormData);
+      } else if (name == "twoRoom") {
+        prevFormData.noOfUnitsArr[3] = parseFloat(value);
+        console.log(prevFormData);
+      }
       return {
         ...prevFormData,
         [name]: type === "range" ? parseFloat(value) : value,
       };
     });
   }
-
-  console.log(formData);
 
   return (
     <div className="scrollHidden w-80 absolute z-40 p-5 bg-black/30 top-36 rounded-lg m-5 text-white overflow-y-scroll h-3/4 right-20 transition duration-150 ease-in-out  hover:bg-secondary">
@@ -53,13 +76,13 @@ export default function CustomComponentsUI() {
 
           {/* five room units - range of int (in string form) */}
           <label htmlFor="fiveRoom">Five-room Units : </label>
-          <span>{formData.fiveRoom}</span>
+          <span>{formData.noOfUnitsArr[0]}</span>
           <br />
           <input
             type="range"
             onChange={handleChange}
             name="fiveRoom"
-            value={formData.fiveRoom}
+            value={formData.noOfUnitsArr[0]}
             min={0}
             max={10}
             step={2}
@@ -68,13 +91,13 @@ export default function CustomComponentsUI() {
 
           {/* four room units - range of int (in string form) */}
           <label htmlFor="fourRoom">Four-room Units : </label>
-          <span>{formData.fourRoom}</span>
+          <span>{formData.noOfUnitsArr[1]}</span>
           <br />
           <input
             type="range"
             onChange={handleChange}
             name="fourRoom"
-            value={formData.fourRoom}
+            value={formData.noOfUnitsArr[1]}
             min={0}
             max={10}
             step={2}
@@ -83,13 +106,13 @@ export default function CustomComponentsUI() {
 
           {/* three room units - range of int (in string form) */}
           <label htmlFor="threeRoom">Three-room Units : </label>
-          <span>{formData.threeRoom}</span>
+          <span>{formData.noOfUnitsArr[2]}</span>
           <br />
           <input
             type="range"
             onChange={handleChange}
             name="threeRoom"
-            value={formData.threeRoom}
+            value={formData.noOfUnitsArr[2]}
             min={0}
             max={10}
             step={2}
@@ -98,13 +121,13 @@ export default function CustomComponentsUI() {
 
           {/* two room units - range of int (in string form) */}
           <label htmlFor="twoRoom">Two-room Units : </label>
-          <span>{formData.twoRoom}</span>
+          <span>{formData.noOfUnitsArr[3]}</span>
           <br />
           <input
             type="range"
             onChange={handleChange}
             name="twoRoom"
-            value={formData.twoRoom}
+            value={formData.noOfUnitsArr[3]}
             min={0}
             max={10}
             step={2}
@@ -168,21 +191,21 @@ export default function CustomComponentsUI() {
             onChange={handleChange}
             name="slideDist"
             value={formData.slideDist}
-            min={0}
-            max={50}
+            min={-30}
+            max={30}
             step={0.1}
             className="w-full"
           ></input>
 
           {/* number of floors - range of int (in string form) */}
-          <label htmlFor="initialDist">Spacing at Turning : </label>
-          <span>{formData.initialDist}</span>
+          <label htmlFor="rectilinearInitialDist">Spacing at Turning : </label>
+          <span>{formData.rectilinearInitialDist}</span>
           <br />
           <input
             type="range"
             onChange={handleChange}
-            name="initialDist"
-            value={formData.initialDist}
+            name="rectilinearInitialDist"
+            value={formData.rectilinearInitialDist}
             min={-50}
             max={0}
             step={0.1}

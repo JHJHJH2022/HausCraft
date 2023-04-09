@@ -38,12 +38,7 @@ export default function Inspector({
   const bind = useDrag(
     ({ active, event, delta: [dx] }) => {
       event.stopPropagation();
-      if (
-        active &&
-        event.ctrlKey === false &&
-        event.shiftKey === false &&
-        !streetView
-      ) {
+      if (active && event.shiftKey === true && !streetView) {
         event.ray.intersectPlane(floorPlane, planeIntersectPoint);
 
         let newPos = [

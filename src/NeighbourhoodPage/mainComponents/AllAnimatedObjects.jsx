@@ -10,10 +10,8 @@ export default function AllAnimatedObjects({
   updateobjects,
   updateobjectsLevels,
   streetView,
+  setSelectedIndex,
 }) {
-  const [selectedIndex, setSelectedIndex] = useState("");
-
-  console.log(selectedIndex);
   return objects.map(
     ({ key, position, rotation, typology, levels, customCorridorSettings }) => {
       return (

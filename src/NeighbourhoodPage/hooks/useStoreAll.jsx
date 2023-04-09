@@ -70,6 +70,17 @@ export const useStoreAll = create((set) => ({
     }));
   },
 
+  updateCustomObject: (index, formData) => {
+    set((prev) => ({
+      objects: prev.objects.map((object) => {
+        if (index === object.key) {
+          object.customCorridorSettings = formData;
+        }
+        return object;
+      }),
+    }));
+  },
+
   setallobjects: (objects) => {
     set({ objects });
   },

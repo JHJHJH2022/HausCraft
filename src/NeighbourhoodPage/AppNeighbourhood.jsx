@@ -19,7 +19,7 @@ import SunSlider from "../General/mainSubComponents/SunSlider";
 import BuildingHeightLimit from "../General/otherComponents/BuildingHeightLimit";
 import Comment from "../General/otherComponents/Comment";
 
-import CustomComponents from "../General/otherComponents/CustomComponentsUI";
+import CustomComponentsUI from "../General/otherComponents/CustomComponentsUI";
 
 import CameraControl from "./Cameras/CameraControl";
 
@@ -72,6 +72,9 @@ export default function AppNeighbourhood() {
   const [setallobjects] = useStoreAll((state) => [state.setallobjects]);
   const [removeobjects] = useStoreAll((state) => [state.removeobjects]);
   const [updateobjects] = useStoreAll((state) => [state.updateobjects]);
+  const [updateCustomObject] = useStoreAll((state) => [
+    state.updateCustomObject,
+  ]);
   const [updateobjectsLevels] = useStoreAll((state) => [
     state.updateobjectsLevels,
   ]);
@@ -161,6 +164,26 @@ export default function AppNeighbourhood() {
     setParkingNum(totalUnitCount);
   }, [objects]);
 
+  /* get custom settings of selected object with its index */
+  const [selectedIndex, setSelectedIndex] = useState();
+
+  const [selectedIndexCustomSettings, setSelectedIndexCustomSettings] =
+    useState();
+
+  const getCustomSettings = (index) => {
+    if (index !== undefined) {
+      const selectedObjAttributesAll = objects.filter((object) => {
+        return index == object.key;
+      });
+      setSelectedIndexCustomSettings(
+        selectedObjAttributesAll[0]?.customCorridorSettings
+      );
+    }
+  };
+  useEffect(() => {
+    getCustomSettings(selectedIndex);
+  }, [selectedIndex]);
+
   // return objects
   return (
     <Suspense fallback={<span>loading...</span>}>
@@ -190,7 +213,12 @@ export default function AppNeighbourhood() {
             <ComponentsList handleClick={handleClick} />
           )}
           {editMode && !streetView && (
-            <CustomComponents handleClick={handleClick} />
+            <CustomComponentsUI
+              handleClick={handleClick}
+              selectedIndexCustomSettings={selectedIndexCustomSettings}
+              updateCustomObject={updateCustomObject}
+              selectedIndex={selectedIndex}
+            />
           )}
 
           {sunSliderVisible && (
@@ -240,6 +268,7 @@ export default function AppNeighbourhood() {
               updateobjects={updateobjects}
               updateobjectsLevels={updateobjectsLevels}
               streetView={streetView}
+              setSelectedIndex={setSelectedIndex}
             />
 
             <CameraControl
