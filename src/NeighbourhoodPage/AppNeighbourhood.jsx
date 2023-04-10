@@ -9,7 +9,6 @@ import Display from "../General/otherComponents/Display";
 import AllAnimatedObjects from "./mainComponents/AllAnimatedObjects.jsx";
 
 import Site from "./objectComponents/Site";
-import CustomCorridorAllFull from "./objectComponentsCustom/CustomCorridors/CustomCorridor/CustomCorridorAllFull";
 
 import * as api from "./api/modifyDesignSessions";
 import Buttons from "../General/otherComponents/Buttons";
@@ -19,7 +18,7 @@ import SunSlider from "../General/mainSubComponents/SunSlider";
 import BuildingHeightLimit from "../General/otherComponents/BuildingHeightLimit";
 import Comment from "../General/otherComponents/Comment";
 
-import CustomComponentsUI from "../General/otherComponents/CustomComponentsUI";
+import CustomUI from "../General/CustomUI/CustomUI";
 
 import CameraControl from "./Cameras/CameraControl";
 
@@ -66,9 +65,15 @@ export default function AppNeighbourhood() {
   };
   // Update buildings in canvas and building number display
   const [buildingNum, setBuildingNum] = useState(0);
+  const [buildingNumFive, setBuildingNumFive] = useState(0);
+  const [buildingNumFour, setBuildingNumFour] = useState(0);
+  const [buildingNumThree, setBuildingNumThree] = useState(0);
+  const [buildingNumTwo, setBuildingNumTwo] = useState(0);
+
   const [parkingNum, setParkingNum] = useState(0);
   const [objects] = useStoreAll((state) => [state.objects]);
   const [addobjects] = useStoreAll((state) => [state.addobjects]);
+  const [addCustom] = useStoreAll((state) => [state.addCustom]);
   const [setallobjects] = useStoreAll((state) => [state.setallobjects]);
   const [removeobjects] = useStoreAll((state) => [state.removeobjects]);
   const [updateobjects] = useStoreAll((state) => [state.updateobjects]);
@@ -101,6 +106,8 @@ export default function AppNeighbourhood() {
     getAll();
   };
 
+  console.log(objects);
+
   const handleCreateNewSession = async () => {
     await api.createDesignSession(newSession);
     setCurrentSessionId(newSession);
@@ -126,6 +133,10 @@ export default function AppNeighbourhood() {
   const handleClick = (e) => {
     const typology = e.target.id;
     addobjects(typology); // button id must be same as typology in useStore!
+  };
+
+  const handleAddCustom = () => {
+    addCustom("customCorridor", selectedIndexCustomSettings);
   };
 
   // calculate total building units
@@ -164,11 +175,89 @@ export default function AppNeighbourhood() {
     setParkingNum(totalUnitCount);
   }, [objects]);
 
+  // calculate total five-room units
+  useEffect(() => {
+    const allObjects = objects.filter((object) => {
+      return object.typology === "customCorridor";
+    });
+
+    let fiveRoomUnitCount = 0;
+
+    for (let i = 0; i < allObjects.length; i++) {
+      fiveRoomUnitCount +=
+        allObjects[i].customCorridorSettings.noOfUnitsArr[0] *
+        allObjects[i].customCorridorSettings.noOfFloors;
+    }
+
+    setBuildingNumFive(fiveRoomUnitCount);
+  }, [objects]);
+
+  // calculate total four-room units
+  useEffect(() => {
+    const allObjects = objects.filter((object) => {
+      return object.typology === "customCorridor";
+    });
+
+    let fourRoomUnitCount = 0;
+
+    for (let i = 0; i < allObjects.length; i++) {
+      fourRoomUnitCount +=
+        allObjects[i].customCorridorSettings.noOfUnitsArr[1] *
+        allObjects[i].customCorridorSettings.noOfFloors;
+    }
+
+    setBuildingNumFour(fourRoomUnitCount);
+  }, [objects]);
+
+  // calculate total three-room units
+  useEffect(() => {
+    const allObjects = objects.filter((object) => {
+      return object.typology === "customCorridor";
+    });
+
+    let threeRoomUnitCount = 0;
+
+    for (let i = 0; i < allObjects.length; i++) {
+      threeRoomUnitCount +=
+        allObjects[i].customCorridorSettings.noOfUnitsArr[2] *
+        allObjects[i].customCorridorSettings.noOfFloors;
+    }
+
+    setBuildingNumThree(threeRoomUnitCount);
+  }, [objects]);
+
+  // calculate total two-room units
+  useEffect(() => {
+    const allObjects = objects.filter((object) => {
+      return object.typology === "customCorridor";
+    });
+
+    let twoRoomUnitCount = 0;
+
+    for (let i = 0; i < allObjects.length; i++) {
+      twoRoomUnitCount +=
+        allObjects[i].customCorridorSettings.noOfUnitsArr[3] *
+        allObjects[i].customCorridorSettings.noOfFloors;
+    }
+
+    setBuildingNumTwo(twoRoomUnitCount);
+  }, [objects]);
+
   /* get custom settings of selected object with its index */
   const [selectedIndex, setSelectedIndex] = useState();
 
   const [selectedIndexCustomSettings, setSelectedIndexCustomSettings] =
-    useState();
+    useState({
+      clusterType: "linear",
+      noOfFloors: 18,
+      noOfUnitsArr: [4, 0, 2, 6],
+      corridorWidth: 5,
+      pairDist: 28,
+      rectilinearInitialDist: -15,
+      slideDist: 0,
+    });
+
+  console.log(selectedIndexCustomSettings);
 
   const getCustomSettings = (index) => {
     if (index !== undefined) {
@@ -199,25 +288,33 @@ export default function AppNeighbourhood() {
               handleNewSessionInput={handleNewSessionInput}
               newSession={newSession}
               handleCreateNewSession={handleCreateNewSession}
+              currentSessionId={currentSessionId}
             />
           </div>
         )}
         <div className={editMode ? "w-full h-full" : "w-1/2 h-full"}>
-          <Display
-            buildingNum={buildingNum}
-            parkingNum={parkingNum}
-            handleClick={handleClick}
-            currentSessionId={currentSessionId}
-          />
+          {editMode && !streetView && (
+            <Display
+              buildingNum={buildingNum}
+              buildingNumFive={buildingNumFive}
+              buildingNumFour={buildingNumFour}
+              buildingNumThree={buildingNumThree}
+              buildingNumTwo={buildingNumTwo}
+              parkingNum={parkingNum}
+              handleClick={handleClick}
+              currentSessionId={currentSessionId}
+            />
+          )}
           {editMode && !streetView && (
             <ComponentsList handleClick={handleClick} />
           )}
           {editMode && !streetView && (
-            <CustomComponentsUI
-              handleClick={handleClick}
+            <CustomUI
+              handleSave={handleSave}
               selectedIndexCustomSettings={selectedIndexCustomSettings}
               updateCustomObject={updateCustomObject}
               selectedIndex={selectedIndex}
+              addCustom={handleAddCustom}
             />
           )}
 
@@ -278,9 +375,11 @@ export default function AppNeighbourhood() {
               editMode={editMode}
             />
 
-            <GizmoHelper alignment="top-right" margin={[100, 100]}>
-              <GizmoViewport labelColor="white" axisHeadScale={1} />
-            </GizmoHelper>
+            {!editMode && (
+              <GizmoHelper alignment="top-right" margin={[100, 100]}>
+                <GizmoViewport labelColor="white" axisHeadScale={1} />
+              </GizmoHelper>
+            )}
           </Canvas>
         </div>
       </div>

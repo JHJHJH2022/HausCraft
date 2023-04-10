@@ -26,11 +26,11 @@ export const useStoreAll = create((set) => ({
           rotation: [0, 0, 0],
           typology: "customCorridor",
           levels: 1,
-          unitsPerLevel: 10,
+          unitsPerLevel: 0,
           customCorridorSettings: {
             clusterType: "linear",
             noOfFloors: 18,
-            noOfUnitsArr: [8, 0, 2, 6],
+            noOfUnitsArr: [4, 0, 2, 6],
             corridorWidth: 5,
             pairDist: 28,
             rectilinearInitialDist: -15,
@@ -46,6 +46,23 @@ export const useStoreAll = create((set) => ({
           levels: 1,
           unitsPerLevel: noOfUnitsPerLevel,
         }, */
+      ],
+    }));
+  },
+
+  addCustom: (typology, customSettings) => {
+    set((prev) => ({
+      objects: [
+        ...prev.objects,
+        {
+          key: nanoid(),
+          position: [100, 0, 100],
+          rotation: [0, 0, 0],
+          typology: typology,
+          levels: 1,
+          unitsPerLevel: 0,
+          customCorridorSettings: customSettings,
+        },
       ],
     }));
   },

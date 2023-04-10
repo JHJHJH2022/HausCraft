@@ -6,6 +6,7 @@ import * as api from "../NeighbourhoodPage/api/modifyDesignSessions";
 export default function AllDesignSessions({
   allSessions,
   setCurrentSessionId,
+  currentSessionId,
 }) {
   if (allSessions) {
     return allSessions
@@ -19,6 +20,7 @@ export default function AllDesignSessions({
             parkingNum={parkingNum}
             buildingNum={buildingNum}
             setCurrentSessionId={setCurrentSessionId}
+            currentSessionId={currentSessionId}
           />
         );
       });

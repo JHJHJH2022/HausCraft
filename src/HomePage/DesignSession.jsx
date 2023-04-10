@@ -6,6 +6,7 @@ export default function DesignSession({
   buildingNum,
   parkingNum,
   setCurrentSessionId,
+  currentSessionId,
 }) {
   const handleClick = (e) => {
     const id = e.target.id;
@@ -13,7 +14,14 @@ export default function DesignSession({
   };
 
   return (
-    <div className="flex gap-10 border-b border-gray-300 p-8 z-0 ">
+    <div
+      className={
+        "flex gap-10 border-b border-gray-300 p-8 z-0 " +
+        (currentSessionId === id
+          ? "border-2  border-dashed  rounded-md bg-neutral"
+          : "")
+      }
+    >
       <div className="bg-black/20 rounded-md p-2 w-1/2">
         <img
           id={id}

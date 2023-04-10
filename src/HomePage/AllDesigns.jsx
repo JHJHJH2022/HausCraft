@@ -10,6 +10,7 @@ export default function AllDesigns({
   handleNewSessionInput,
   handleCreateNewSession,
   allSessions,
+  currentSessionId,
 }) {
   return (
     <div className="h-full flex flex-col gap-5">
@@ -40,6 +41,7 @@ export default function AllDesigns({
         <AllDesignSessions
           setCurrentSessionId={setCurrentSessionId}
           allSessions={allSessions}
+          currentSessionId={currentSessionId}
         />
       </div>
 
@@ -48,14 +50,16 @@ export default function AllDesigns({
           <label>
             <input
               type="text"
-              className="bg-white"
+              className="input input-bordered input-white w-full max-w-xs"
               placeholder="New Design..."
               value={newSession}
               onChange={handleNewSessionInput}
             />
           </label>
         </form>
-        <button onClick={handleCreateNewSession}>Create New Design</button>
+        <div className="btn btn-xl btn-outline btn-white">
+          <button onClick={handleCreateNewSession}>Create New Design</button>
+        </div>
       </div>
     </div>
   );
