@@ -173,7 +173,7 @@ export default function AppNeighbourhood() {
     setParkingNum(totalUnitCount);
   }, [objects]);
 
-  // calculate total five-room units
+  /*  // calculate total five-room units
   useEffect(() => {
     const allObjects = objects.filter((object) => {
       return object.typology === "customCorridor";
@@ -240,7 +240,7 @@ export default function AppNeighbourhood() {
 
     setBuildingNumTwo(twoRoomUnitCount);
   }, [objects]);
-
+ */
   /* get custom settings of selected object with its index */
 
   const defaultSettings = {
@@ -261,6 +261,7 @@ export default function AppNeighbourhood() {
 
   const [selectedInfo, setSelectedInfo] = useState();
 
+  /* for custom corridor */
   const [selectedIndexCustomSettings, setSelectedIndexCustomSettings] =
     useState(defaultSettings.corridor);
 
@@ -275,10 +276,32 @@ export default function AppNeighbourhood() {
     }
   };
   useEffect(() => {
-    getCustomSettings(selectedInfo);
+    if (selectedInfo?.typology == "customCorridor") {
+      getCustomSettings(selectedInfo);
+    }
   }, [selectedInfo]);
 
-  console.log(objects);
+  /* for custom connecting road */
+  const [
+    selectedIndexCustomConnectingRoadSettings,
+    setSelectedIndexCustomConnectingRoadSettings,
+  ] = useState(defaultSettings.connectingRoad);
+
+  const getCustomSettingsConnectingRoad = (info) => {
+    if (info != undefined) {
+      const selectedObjAttributesAll = objects.filter((object) => {
+        return info.index == object.key;
+      });
+      setSelectedIndexCustomConnectingRoadSettings(
+        selectedObjAttributesAll[0]?.customSettings.customConnectingRoadSettings
+      );
+    }
+  };
+  useEffect(() => {
+    if (selectedInfo?.typology == "customConnectingRoad") {
+      getCustomSettingsConnectingRoad(selectedInfo);
+    }
+  }, [selectedInfo]);
 
   // return objects
   return (
@@ -319,6 +342,9 @@ export default function AppNeighbourhood() {
             <CustomUI
               handleSave={handleSave}
               selectedIndexCustomSettings={selectedIndexCustomSettings}
+              selectedIndexCustomConnectingRoadSettings={
+                selectedIndexCustomConnectingRoadSettings
+              }
               updateCustomObject={updateCustomObject}
               selectedInfo={selectedInfo}
               addCustom={handleAddCustom}

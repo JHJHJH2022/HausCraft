@@ -52,8 +52,6 @@ export default function AnimatedObjects({
     }
   };
 
-  console.log(customSettings);
-
   const {
     buildingIndivHeight,
     treeHeight,

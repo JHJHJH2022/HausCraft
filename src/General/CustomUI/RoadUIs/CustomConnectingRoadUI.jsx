@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-export default function CustomConnectingRoadUI({ addCustom }) {
+export default function CustomConnectingRoadUI({
+  selectedInfo,
+  updateCustomObject,
+  addCustom,
+  selectedIndexCustomConnectingRoadSettings,
+}) {
   const [formData, setFormData] = useState({
     length: 10,
     roadType: "vehicularRoad",
@@ -15,6 +20,19 @@ export default function CustomConnectingRoadUI({ addCustom }) {
       };
     });
   }
+
+  useEffect(() => {
+    if (selectedIndexCustomConnectingRoadSettings !== undefined) {
+      setFormData(selectedIndexCustomConnectingRoadSettings);
+    }
+  }, [selectedIndexCustomConnectingRoadSettings]);
+
+  useEffect(() => {
+    // update custom settings by index
+    if (selectedInfo?.typology === "customConnectingRoad") {
+      updateCustomObject(selectedInfo?.index, selectedInfo?.typology, formData);
+    }
+  }, [formData]);
 
   return (
     <div className="flex flex-col gap-2 py-3">
@@ -37,7 +55,9 @@ export default function CustomConnectingRoadUI({ addCustom }) {
         </div>
       </div>
       {/* roadType*/}
-      <label htmlFor="roadType">Road Type</label>
+      <label htmlFor="roadType" className="label cursor-pointer">
+        Road Type
+      </label>
 
       <div>
         <select
@@ -47,23 +67,24 @@ export default function CustomConnectingRoadUI({ addCustom }) {
           name="roadType"
           className="select select-ghost w-full max-w-xs"
         >
-          <option value="linear">Vehicular Road</option>
-          <option value="rectilinear">Pedestrian Road</option>
+          <option value="vehicularRoad">Vehicular Road</option>
+          <option value="pedestrianRoad">Pedestrian Road</option>
         </select>
       </div>
 
       {/* length */}
-      <label htmlFor="length">Length : </label>
-      <span>{formData.length}</span>
+      <label htmlFor="length" className="label cursor-pointer">
+        Length : <span>{formData.length}</span>
+      </label>
 
       <input
         type="range"
         onChange={handleChange}
         name="length"
         value={formData.length}
-        min={0}
-        max={10}
-        step={2}
+        min={10}
+        max={500}
+        step={10}
         className="range range-secondary range-xs"
       ></input>
 

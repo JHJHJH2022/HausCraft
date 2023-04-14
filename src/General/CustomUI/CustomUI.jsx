@@ -7,6 +7,7 @@ import RoadUI from "./RoadUI.jsx";
 
 export default function CustomUI({
   selectedIndexCustomSettings,
+  selectedIndexCustomConnectingRoadSettings,
   updateCustomObject,
   selectedInfo,
   addCustom,
@@ -165,7 +166,9 @@ export default function CustomUI({
 
       {currentTab == "road" && (
         <RoadUI
-          selectedIndexCustomSettings={selectedIndexCustomSettings}
+          selectedIndexCustomConnectingRoadSettings={
+            selectedIndexCustomConnectingRoadSettings
+          }
           updateCustomObject={updateCustomObject}
           selectedInfo={selectedInfo}
           addCustom={addCustom}

@@ -23,7 +23,9 @@ export default function CorridorUI({
 
   useEffect(() => {
     // update custom settings by index
-    updateCustomObject(selectedInfo?.index, selectedInfo?.typology, formData);
+    if (selectedInfo?.typology === "customCorridor") {
+      updateCustomObject(selectedInfo?.index, selectedInfo?.typology, formData);
+    }
   }, [formData]);
 
   function handleChange(event) {

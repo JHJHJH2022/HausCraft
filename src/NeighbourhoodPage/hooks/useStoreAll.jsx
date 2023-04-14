@@ -51,12 +51,10 @@ export const useStoreAll = create((set) => ({
   },
 
   addCustom: (typology, inputSettings) => {
-    let customSettings;
-    if (typology === "customCorridor") {
-      customSettings = { customCorridorSettings: inputSettings };
-    } else if (typology === "customConnectingRoad") {
-      customSettings = { customConnectingRoadSettings: inputSettings };
-    }
+    let settingName = `${typology}Settings`;
+    let customSettings = {};
+    customSettings[settingName] = inputSettings;
+    console.log(customSettings);
 
     set((prev) => ({
       objects: [
