@@ -19,6 +19,7 @@ import SliderControl from "../../General/mainSubComponents/SliderControl";
 import CustomCorridorAllFull from "../objectComponentsCustom/CustomCorridors/CustomCorridor/CustomCorridorAllFull";
 import CustomConnectingRoad from "../objectComponentsCustom/CustomRoads/CustomConnectingRoad.jsx/CustomConnectingRoad";
 import CustomAmenityFull from "../objectComponentsCustom/CustomAmenity/CustomAmenityFull.jsx";
+import CustomCarparkFull from "../objectComponentsCustom/CustomCarpark/CustomCarparkFull.jsx";
 
 export default function AnimatedObjects({
   index,
@@ -125,6 +126,14 @@ export default function AnimatedObjects({
           adult={customSettings.customAmenitySettings?.adult}
           elderly={customSettings.customAmenitySettings?.elderly}
           shape={customSettings.customAmenitySettings?.shape}
+        />
+      )}
+      {typology === "customCarpark" && (
+        <CustomCarparkFull
+          roof={customSettings.customCarparkSettings?.roof}
+          ground={customSettings.customCarparkSettings?.ground}
+          length={customSettings.customCarparkSettings?.length}
+          level={customSettings.customCarparkSettings?.level}
         />
       )}
       {typology === "buildingIndiv" && (

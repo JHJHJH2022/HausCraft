@@ -55,11 +55,12 @@ export default function CustomConnectingRoadUI({
         </div>
       </div>
       {/* roadType*/}
-      <label htmlFor="roadType" className="label cursor-pointer">
-        Road Type
-      </label>
 
       <div>
+        <label htmlFor="roadType" className="label cursor-pointer">
+          Road Type
+        </label>
+
         <select
           id="roadType"
           value={formData.roadType}

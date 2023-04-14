@@ -258,6 +258,7 @@ export default function AppNeighbourhood() {
       roadType: "vehicularRoad",
     },
     amenity: { children: false, adult: false, elderly: false, shape: "A" },
+    carpark: { roof: "A", ground: "A", length: 50, level: 10 },
   };
 
   const [selectedInfo, setSelectedInfo] = useState();
@@ -327,6 +328,29 @@ export default function AppNeighbourhood() {
     }
   }, [selectedInfo]);
 
+  /* for custom carpark */
+  const [
+    selectedIndexCustomCarparkSettings,
+    setSelectedIndexCustomCarparkSettings,
+  ] = useState(defaultSettings.carpark);
+
+  const getCustomSettingsCarpark = (info) => {
+    if (info != undefined) {
+      const selectedObjAttributesAll = objects.filter((object) => {
+        return info.index == object.key;
+      });
+
+      setSelectedIndexCustomCarparkSettings(
+        selectedObjAttributesAll[0]?.customSettings.customCarparkSettings
+      );
+    }
+  };
+  useEffect(() => {
+    if (selectedInfo?.typology == "customCarpark") {
+      getCustomSettingsCarpark(selectedInfo);
+    }
+  }, [selectedInfo]);
+
   console.log(objects);
 
   // return objects
@@ -373,6 +397,9 @@ export default function AppNeighbourhood() {
               }
               selectedIndexCustomAmenitySettings={
                 selectedIndexCustomAmenitySettings
+              }
+              selectedIndexCustomCarparkSettings={
+                selectedIndexCustomCarparkSettings
               }
               updateCustomObject={updateCustomObject}
               selectedInfo={selectedInfo}

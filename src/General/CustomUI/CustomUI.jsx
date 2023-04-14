@@ -9,6 +9,7 @@ export default function CustomUI({
   selectedIndexCustomSettings,
   selectedIndexCustomConnectingRoadSettings,
   selectedIndexCustomAmenitySettings,
+  selectedIndexCustomCarparkSettings,
   updateCustomObject,
   selectedInfo,
   addCustom,
@@ -185,9 +186,12 @@ export default function CustomUI({
       )}
       {currentTab == "carpark" && (
         <CarparkUI
-          selectedIndexCustomSettings={selectedIndexCustomSettings}
+          selectedIndexCustomCarparkSettings={
+            selectedIndexCustomCarparkSettings
+          }
           updateCustomObject={updateCustomObject}
           selectedInfo={selectedInfo}
+          addCustom={addCustom}
         />
       )}
       {currentTab == "amenity" && (
@@ -205,6 +209,7 @@ export default function CustomUI({
           selectedIndexCustomSettings={selectedIndexCustomSettings}
           updateCustomObject={updateCustomObject}
           selectedInfo={selectedInfo}
+          addCustom={addCustom}
         />
       )}
     </div>

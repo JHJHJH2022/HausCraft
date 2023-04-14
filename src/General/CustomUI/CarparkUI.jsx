@@ -1,47 +1,21 @@
 import React, { useState, useEffect } from "react";
-export default function CarparkUI({
-  selectedIndex,
-  selectedIndexCustomSettings,
+export default function AmenityUI({
+  selectedInfo,
   updateCustomObject,
+  addCustom,
+  selectedIndexCustomCarparkSettings,
 }) {
   const [formData, setFormData] = useState({
-    clusterType: "linear", // linear, rectilinear
-    noOfUnitsArr: [0, 0, 0, 0], // number of 5,4,3,2-room units respectively
-    noOfFloors: 1,
-    corridorWidth: 2.0,
-    pairDist: 25,
-    slideDist: 0,
-    rectilinearInitialDist: -15,
+    roof: "A",
+    ground: "A",
+    length: 50,
+    level: 10,
   });
-
-  useEffect(() => {
-    if (selectedIndexCustomSettings !== undefined) {
-      setFormData(selectedIndexCustomSettings);
-    }
-  }, [selectedIndexCustomSettings]);
-
-  useEffect(() => {
-    // update custom settings by index
-    updateCustomObject(selectedIndex, formData);
-  }, [formData]);
 
   function handleChange(event) {
     const { name, value, type } = event.target;
 
     setFormData((prevFormData) => {
-      if (name == "fiveRoom") {
-        prevFormData.noOfUnitsArr[0] = parseFloat(value);
-        console.log(prevFormData);
-      } else if (name == "fourRoom") {
-        prevFormData.noOfUnitsArr[1] = parseFloat(value);
-        console.log(prevFormData);
-      } else if (name == "threeRoom") {
-        prevFormData.noOfUnitsArr[2] = parseFloat(value);
-        console.log(prevFormData);
-      } else if (name == "twoRoom") {
-        prevFormData.noOfUnitsArr[3] = parseFloat(value);
-        console.log(prevFormData);
-      }
       return {
         ...prevFormData,
         [name]: type === "range" ? parseFloat(value) : value,
@@ -49,54 +23,106 @@ export default function CarparkUI({
     });
   }
 
+  console.log(formData);
+
+  useEffect(() => {
+    if (selectedIndexCustomCarparkSettings !== undefined) {
+      setFormData(selectedIndexCustomCarparkSettings);
+    }
+  }, [selectedIndexCustomCarparkSettings]);
+
+  useEffect(() => {
+    // update custom settings by index
+    if (selectedInfo?.typology === "customCarpark") {
+      updateCustomObject(selectedInfo?.index, selectedInfo?.typology, formData);
+    }
+  }, [formData]);
+
   return (
     <div className="flex flex-col gap-2 py-3">
       {/* Title */}
-      <h1 className="text-accent font-bold py-2 text-xl">Carpark Component</h1>
+      <div className="flex justify-between">
+        <h1 className="text-accent font-bold py-2 text-xl">Car Park</h1>
+        <div className="flex gap-2">
+          <button
+            id={"customCarpark"}
+            type="button"
+            onClick={() => {
+              addCustom("customCarpark", formData);
+            }}
+            className="btn btn-sm btn-outline btn-accent rounded-md"
+          >
+            Add
+          </button>
+        </div>
+      </div>
       {/*  form starts from here */}
       <form>
         <hr class="my-3 h-0.5 border-t-0 bg-neutral-100 opacity-100 dark:opacity-50" />
-        <p className="text-lg font-bold">Basic Settings</p>
-        {/* Cluster Type - drop down */}
-        <label htmlFor="clusterType">Roof Type</label>
+
+        {/* all settings */}
+        <p className="text-lg font-bold">Settings</p>
         <br />
+        {/* roof */}
         <div>
+          <label htmlFor="roof" className="label cursor-pointer">
+            Roof Type
+          </label>
+
           <select
-            id="clusterType"
-            value={formData.clusterType}
+            id="roof"
+            value={formData.roof}
             onChange={handleChange}
-            name="clusterType"
+            name="roof"
             className="select select-ghost w-full max-w-xs"
           >
-            <option value="linear">Linear Cluster</option>
-            <option value="rectilinear">Rectilinear Cluster</option>
+            <option value="A">Type A</option>
+            <option value="B">Type B</option>
+            <option value="C">Type C</option>
           </select>
         </div>
-        {/* Cluster Type - drop down */}
-        <label htmlFor="clusterType">Ground Floor Type</label>
-        <br />
+        {/* ground */}
         <div>
+          <label htmlFor="ground" className="label cursor-pointer">
+            Ground Floor Type
+          </label>
+
           <select
-            id="clusterType"
-            value={formData.clusterType}
+            id="ground"
+            value={formData.ground}
             onChange={handleChange}
-            name="clusterType"
+            name="ground"
             className="select select-ghost w-full max-w-xs"
           >
-            <option value="linear">Linear Cluster</option>
-            <option value="rectilinear">Rectilinear Cluster</option>
+            <option value="A">Type A</option>
+            <option value="B">Type B</option>
           </select>
         </div>
 
-        {/* number of floors - range of int (in string form) */}
-        <label htmlFor="noOfFloors">Number of Floors : </label>
-        <span>{formData.noOfFloors}</span>
-        <br />
+        {/* length */}
+        <label htmlFor="length" className="label cursor-pointer">
+          Length : <span>{formData.length}</span>
+        </label>
         <input
           type="range"
           onChange={handleChange}
-          name="noOfFloors"
-          value={formData.noOfFloors}
+          value={formData.length}
+          name="length"
+          min={10}
+          max={500}
+          step={10}
+          className="range range-secondary range-xs"
+        ></input>
+
+        {/* level */}
+        <label htmlFor="level" className="label cursor-pointer">
+          Number of Floors : <span>{formData.level}</span>
+        </label>
+        <input
+          type="range"
+          onChange={handleChange}
+          value={formData.level}
+          name="level"
           min={1}
           max={50}
           step={1}
