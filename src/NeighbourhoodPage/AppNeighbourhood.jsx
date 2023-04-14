@@ -259,6 +259,15 @@ export default function AppNeighbourhood() {
     },
     amenity: { children: false, adult: false, elderly: false, shape: "A" },
     carpark: { roof: "A", ground: "A", length: 50, level: 10 },
+    landscape: {
+      shape: "A",
+      length: 10,
+      width: 10,
+      radius: 10,
+      density: 0.5,
+      sizeVariation: 0.5,
+      displacement: 0.5,
+    },
   };
 
   const [selectedInfo, setSelectedInfo] = useState();
@@ -353,6 +362,31 @@ export default function AppNeighbourhood() {
 
   console.log(objects);
 
+  /* for custom landscape */
+  const [
+    selectedIndexCustomLandscapeSettings,
+    setSelectedIndexCustomLandscapeSettings,
+  ] = useState(defaultSettings.landscape);
+
+  const getCustomSettingsLandscape = (info) => {
+    if (info != undefined) {
+      const selectedObjAttributesAll = objects.filter((object) => {
+        return info.index == object.key;
+      });
+
+      setSelectedIndexCustomLandscapeSettings(
+        selectedObjAttributesAll[0]?.customSettings.customLandscapeSettings
+      );
+    }
+  };
+  useEffect(() => {
+    if (selectedInfo?.typology == "customLandscape") {
+      getCustomSettingsLandscape(selectedInfo);
+    }
+  }, [selectedInfo]);
+
+  console.log(objects);
+
   // return objects
   return (
     <Suspense fallback={<span>loading...</span>}>
@@ -400,6 +434,9 @@ export default function AppNeighbourhood() {
               }
               selectedIndexCustomCarparkSettings={
                 selectedIndexCustomCarparkSettings
+              }
+              selectedIndexCustomLandscapeSettings={
+                selectedIndexCustomLandscapeSettings
               }
               updateCustomObject={updateCustomObject}
               selectedInfo={selectedInfo}

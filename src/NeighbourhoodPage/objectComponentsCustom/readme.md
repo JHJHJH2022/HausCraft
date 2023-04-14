@@ -2,7 +2,7 @@
 
 1. import each module model and material mapping into a jsx
 2. plan out the geometry strategy and what inputs are needed
-3. create a overall jsx for this custom components, where logics of geometry operations will be written, takes in modules from step 1 and export the custom component
+3. create a overall jsx for this custom components (copy from a most similar existing one), where logics of geometry operations will be written, takes in modules from step 1 and export the custom component
 4. create suitable UI based on what input are required _the return ... part_
 5. create form data and test if changing the panel correctly update the formdata _formData_ _handlechange function_
 6. Add button, _recieve addCustom prop_, check if at appneighbourhood objects are succesfully updated

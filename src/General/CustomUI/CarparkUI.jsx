@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-export default function AmenityUI({
+export default function CarparkUI({
   selectedInfo,
   updateCustomObject,
   addCustom,
@@ -62,7 +62,7 @@ export default function AmenityUI({
 
         {/* all settings */}
         <p className="text-lg font-bold">Settings</p>
-        <br />
+
         {/* roof */}
         <div>
           <label htmlFor="roof" className="label cursor-pointer">

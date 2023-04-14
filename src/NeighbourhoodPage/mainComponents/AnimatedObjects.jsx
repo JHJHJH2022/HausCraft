@@ -20,6 +20,7 @@ import CustomCorridorAllFull from "../objectComponentsCustom/CustomCorridors/Cus
 import CustomConnectingRoad from "../objectComponentsCustom/CustomRoads/CustomConnectingRoad.jsx/CustomConnectingRoad";
 import CustomAmenityFull from "../objectComponentsCustom/CustomAmenity/CustomAmenityFull.jsx";
 import CustomCarparkFull from "../objectComponentsCustom/CustomCarpark/CustomCarparkFull.jsx";
+import CustomLandscapeFull from "../objectComponentsCustom/CustomLandscape/CustomLandscapeFull.jsx";
 
 export default function AnimatedObjects({
   index,
@@ -85,7 +86,6 @@ export default function AnimatedObjects({
   } else if (typology === "tree") {
     objectHeight = treeHeight;
   }
-
   return (
     <Inspector
       setIsDragging={setIsDragging}
@@ -134,6 +134,17 @@ export default function AnimatedObjects({
           ground={customSettings.customCarparkSettings?.ground}
           length={customSettings.customCarparkSettings?.length}
           level={customSettings.customCarparkSettings?.level}
+        />
+      )}
+      {typology === "customLandscape" && (
+        <CustomLandscapeFull
+          shape={customSettings.customLandscapeSettings?.shape}
+          length={customSettings.customLandscapeSettings?.length}
+          width={customSettings.customLandscapeSettings?.width}
+          radius={customSettings.customLandscapeSettings?.radius}
+          density={customSettings.customLandscapeSettings?.density}
+          sizeVariation={customSettings.customLandscapeSettings?.sizeVariation}
+          displacement={customSettings.customLandscapeSettings?.displacement}
         />
       )}
       {typology === "buildingIndiv" && (

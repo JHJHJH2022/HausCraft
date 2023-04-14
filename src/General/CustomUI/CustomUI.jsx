@@ -10,6 +10,7 @@ export default function CustomUI({
   selectedIndexCustomConnectingRoadSettings,
   selectedIndexCustomAmenitySettings,
   selectedIndexCustomCarparkSettings,
+  selectedIndexCustomLandscapeSettings,
   updateCustomObject,
   selectedInfo,
   addCustom,
@@ -206,7 +207,9 @@ export default function CustomUI({
       )}
       {currentTab == "landscape" && (
         <LandscapeUI
-          selectedIndexCustomSettings={selectedIndexCustomSettings}
+          selectedIndexCustomLandscapeSettings={
+            selectedIndexCustomLandscapeSettings
+          }
           updateCustomObject={updateCustomObject}
           selectedInfo={selectedInfo}
           addCustom={addCustom}

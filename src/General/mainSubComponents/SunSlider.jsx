@@ -1,4 +1,3 @@
-
 import CircularSlider from "@fseehawer/react-circular-slider";
 
 export default function SunSlider({ setTimeOfDay, timeOfDay }) {
@@ -7,7 +6,7 @@ export default function SunSlider({ setTimeOfDay, timeOfDay }) {
   };
 
   return (
-    <div className="absolute right-48 bottom-16">
+    <div className="absolute right-48 bottom-36 z-50">
       <CircularSlider
         onChange={handleChange}
         label="TIME OF DAY"
