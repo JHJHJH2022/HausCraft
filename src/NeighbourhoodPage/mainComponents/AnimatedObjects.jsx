@@ -18,6 +18,7 @@ import { getObjectsHeight } from "../../General/helpers/getObjectsHeight";
 import SliderControl from "../../General/mainSubComponents/SliderControl";
 import CustomCorridorAllFull from "../objectComponentsCustom/CustomCorridors/CustomCorridor/CustomCorridorAllFull";
 import CustomConnectingRoad from "../objectComponentsCustom/CustomRoads/CustomConnectingRoad.jsx/CustomConnectingRoad";
+import CustomAmenityFull from "../objectComponentsCustom/CustomAmenity/CustomAmenityFull.jsx";
 
 export default function AnimatedObjects({
   index,
@@ -116,6 +117,14 @@ export default function AnimatedObjects({
         <CustomConnectingRoad
           length={customSettings.customConnectingRoadSettings?.length}
           roadType={customSettings.customConnectingRoadSettings?.roadType}
+        />
+      )}
+      {typology === "customAmenity" && (
+        <CustomAmenityFull
+          children={customSettings.customAmenitySettings?.children}
+          adult={customSettings.customAmenitySettings?.adult}
+          elderly={customSettings.customAmenitySettings?.elderly}
+          shape={customSettings.customAmenitySettings?.shape}
         />
       )}
       {typology === "buildingIndiv" && (

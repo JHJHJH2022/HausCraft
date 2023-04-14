@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-export default function AmenityUI({}) {
+export default function AmenityUI({
+  selectedInfo,
+  updateCustomObject,
+  addCustom,
+  selectedIndexCustomAmenitySettings,
+}) {
   const [formData, setFormData] = useState({
     children: false,
     adult: false,
@@ -7,7 +12,8 @@ export default function AmenityUI({}) {
     shape: "A",
   });
 
-  console.log(formData);
+  console.log(selectedIndexCustomAmenitySettings);
+  console.log(formData.adult);
 
   function handleChange(event) {
     const { name, value, type, checked } = event.target;
@@ -19,6 +25,19 @@ export default function AmenityUI({}) {
       };
     });
   }
+
+  useEffect(() => {
+    if (selectedIndexCustomAmenitySettings !== undefined) {
+      setFormData(selectedIndexCustomAmenitySettings);
+    }
+  }, [selectedIndexCustomAmenitySettings]);
+
+  useEffect(() => {
+    // update custom settings by index
+    if (selectedInfo?.typology === "customAmenity") {
+      updateCustomObject(selectedInfo?.index, selectedInfo?.typology, formData);
+    }
+  }, [formData]);
 
   return (
     <div className="flex flex-col gap-2 py-3">
@@ -52,7 +71,7 @@ export default function AmenityUI({}) {
               type="checkbox"
               className="toggle"
               name="children"
-              value={formData.children}
+              checked={formData.children}
               onChange={handleChange}
             />
           </label>
@@ -65,7 +84,7 @@ export default function AmenityUI({}) {
               type="checkbox"
               className="toggle"
               name="adult"
-              value={formData.adult}
+              checked={formData.adult}
               onChange={handleChange}
             />
           </label>
@@ -78,7 +97,7 @@ export default function AmenityUI({}) {
               type="checkbox"
               className="toggle"
               name="elderly"
-              value={formData.elderly}
+              checked={formData.elderly}
               onChange={handleChange}
             />
           </label>

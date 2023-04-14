@@ -8,6 +8,7 @@ import RoadUI from "./RoadUI.jsx";
 export default function CustomUI({
   selectedIndexCustomSettings,
   selectedIndexCustomConnectingRoadSettings,
+  selectedIndexCustomAmenitySettings,
   updateCustomObject,
   selectedInfo,
   addCustom,
@@ -191,9 +192,12 @@ export default function CustomUI({
       )}
       {currentTab == "amenity" && (
         <AmenityUI
-          selectedIndexCustomSettings={selectedIndexCustomSettings}
+          selectedIndexCustomAmenitySettings={
+            selectedIndexCustomAmenitySettings
+          }
           updateCustomObject={updateCustomObject}
           selectedInfo={selectedInfo}
+          addCustom={addCustom}
         />
       )}
       {currentTab == "landscape" && (

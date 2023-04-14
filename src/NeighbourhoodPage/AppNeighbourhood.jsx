@@ -257,6 +257,7 @@ export default function AppNeighbourhood() {
       length: 10,
       roadType: "vehicularRoad",
     },
+    amenity: { children: false, adult: false, elderly: false, shape: "A" },
   };
 
   const [selectedInfo, setSelectedInfo] = useState();
@@ -303,6 +304,31 @@ export default function AppNeighbourhood() {
     }
   }, [selectedInfo]);
 
+  /* for custom amenity */
+  const [
+    selectedIndexCustomAmenitySettings,
+    setSelectedIndexCustomAmenitySettings,
+  ] = useState(defaultSettings.amenity);
+
+  const getCustomSettingsAmenity = (info) => {
+    if (info != undefined) {
+      const selectedObjAttributesAll = objects.filter((object) => {
+        return info.index == object.key;
+      });
+
+      setSelectedIndexCustomAmenitySettings(
+        selectedObjAttributesAll[0]?.customSettings.customAmenitySettings
+      );
+    }
+  };
+  useEffect(() => {
+    if (selectedInfo?.typology == "customAmenity") {
+      getCustomSettingsAmenity(selectedInfo);
+    }
+  }, [selectedInfo]);
+
+  console.log(objects);
+
   // return objects
   return (
     <Suspense fallback={<span>loading...</span>}>
@@ -344,6 +370,9 @@ export default function AppNeighbourhood() {
               selectedIndexCustomSettings={selectedIndexCustomSettings}
               selectedIndexCustomConnectingRoadSettings={
                 selectedIndexCustomConnectingRoadSettings
+              }
+              selectedIndexCustomAmenitySettings={
+                selectedIndexCustomAmenitySettings
               }
               updateCustomObject={updateCustomObject}
               selectedInfo={selectedInfo}
@@ -387,7 +416,8 @@ export default function AppNeighbourhood() {
             )}
             {commentVisible && <Comment />}
             <Lights timeOfDay={timeOfDay} />
-            <gridHelper args={[200, 200, "white", "white"]} />
+            {/*  <gridHelper args={[200, 200, "white", "white"]} />
+             */}
             <Site />
 
             <AllAnimatedObjects
