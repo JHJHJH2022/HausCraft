@@ -33,7 +33,7 @@ export default function AppNeighbourhood() {
   const handleInput = (e) => {
     setHeightLimit(e.target.value);
   };
-  const [currentSessionId, setCurrentSessionId] = useState("Design 123"); // need to ensure user cannot delete this one!!! OR user will default to an empty page
+  const [currentSessionId, setCurrentSessionId] = useState("new"); // need to ensure user cannot delete this one!!! OR user will default to an empty page
 
   const [newSession, setNewSession] = useState("");
   const handleNewSessionInput = (e) => {
@@ -106,8 +106,6 @@ export default function AppNeighbourhood() {
     getAll();
   };
 
-  console.log(objects);
-
   const handleCreateNewSession = async () => {
     await api.createDesignSession(newSession);
     setCurrentSessionId(newSession);
@@ -115,7 +113,7 @@ export default function AppNeighbourhood() {
   };
   const handleDeleteSession = async () => {
     await api.deleteDesignSession(currentSessionId);
-    setCurrentSessionId("Design 123");
+    setCurrentSessionId("new");
     getAll();
   };
 
@@ -135,8 +133,8 @@ export default function AppNeighbourhood() {
     addobjects(typology); // button id must be same as typology in useStore!
   };
 
-  const handleAddCustom = () => {
-    addCustom("customCorridor", selectedIndexCustomSettings);
+  const handleAddCustom = (typology, settings) => {
+    addCustom(typology, settings);
   };
 
   // calculate total building units
@@ -185,8 +183,8 @@ export default function AppNeighbourhood() {
 
     for (let i = 0; i < allObjects.length; i++) {
       fiveRoomUnitCount +=
-        allObjects[i].customCorridorSettings.noOfUnitsArr[0] *
-        allObjects[i].customCorridorSettings.noOfFloors;
+        allObjects[i].customSettings.customCorridorSettings.noOfUnitsArr[0] *
+        allObjects[i].customSettings.customCorridorSettings.noOfFloors;
     }
 
     setBuildingNumFive(fiveRoomUnitCount);
@@ -202,8 +200,8 @@ export default function AppNeighbourhood() {
 
     for (let i = 0; i < allObjects.length; i++) {
       fourRoomUnitCount +=
-        allObjects[i].customCorridorSettings.noOfUnitsArr[1] *
-        allObjects[i].customCorridorSettings.noOfFloors;
+        allObjects[i].customSettings.customCorridorSettings.noOfUnitsArr[1] *
+        allObjects[i].customSettings.customCorridorSettings.noOfFloors;
     }
 
     setBuildingNumFour(fourRoomUnitCount);
@@ -219,8 +217,8 @@ export default function AppNeighbourhood() {
 
     for (let i = 0; i < allObjects.length; i++) {
       threeRoomUnitCount +=
-        allObjects[i].customCorridorSettings.noOfUnitsArr[2] *
-        allObjects[i].customCorridorSettings.noOfFloors;
+        allObjects[i].customSettings.customCorridorSettings.noOfUnitsArr[2] *
+        allObjects[i].customSettings.customCorridorSettings.noOfFloors;
     }
 
     setBuildingNumThree(threeRoomUnitCount);
@@ -236,18 +234,17 @@ export default function AppNeighbourhood() {
 
     for (let i = 0; i < allObjects.length; i++) {
       twoRoomUnitCount +=
-        allObjects[i].customCorridorSettings.noOfUnitsArr[3] *
-        allObjects[i].customCorridorSettings.noOfFloors;
+        allObjects[i].customSettings.customCorridorSettings.noOfUnitsArr[3] *
+        allObjects[i].customSettings.customCorridorSettings.noOfFloors;
     }
 
     setBuildingNumTwo(twoRoomUnitCount);
   }, [objects]);
 
   /* get custom settings of selected object with its index */
-  const [selectedIndex, setSelectedIndex] = useState();
 
-  const [selectedIndexCustomSettings, setSelectedIndexCustomSettings] =
-    useState({
+  const defaultSettings = {
+    corridor: {
       clusterType: "linear",
       noOfFloors: 18,
       noOfUnitsArr: [4, 0, 2, 6],
@@ -255,23 +252,33 @@ export default function AppNeighbourhood() {
       pairDist: 28,
       rectilinearInitialDist: -15,
       slideDist: 0,
-    });
+    },
+    connectingRoad: {
+      length: 10,
+      roadType: "vehicularRoad",
+    },
+  };
 
-  console.log(selectedIndexCustomSettings);
+  const [selectedInfo, setSelectedInfo] = useState();
 
-  const getCustomSettings = (index) => {
-    if (index !== undefined) {
+  const [selectedIndexCustomSettings, setSelectedIndexCustomSettings] =
+    useState(defaultSettings.corridor);
+
+  const getCustomSettings = (info) => {
+    if (info != undefined) {
       const selectedObjAttributesAll = objects.filter((object) => {
-        return index == object.key;
+        return info.index == object.key;
       });
       setSelectedIndexCustomSettings(
-        selectedObjAttributesAll[0]?.customCorridorSettings
+        selectedObjAttributesAll[0]?.customSettings.customCorridorSettings
       );
     }
   };
   useEffect(() => {
-    getCustomSettings(selectedIndex);
-  }, [selectedIndex]);
+    getCustomSettings(selectedInfo);
+  }, [selectedInfo]);
+
+  console.log(objects);
 
   // return objects
   return (
@@ -313,7 +320,7 @@ export default function AppNeighbourhood() {
               handleSave={handleSave}
               selectedIndexCustomSettings={selectedIndexCustomSettings}
               updateCustomObject={updateCustomObject}
-              selectedIndex={selectedIndex}
+              selectedInfo={selectedInfo}
               addCustom={handleAddCustom}
             />
           )}
@@ -365,7 +372,7 @@ export default function AppNeighbourhood() {
               updateobjects={updateobjects}
               updateobjectsLevels={updateobjectsLevels}
               streetView={streetView}
-              setSelectedIndex={setSelectedIndex}
+              setSelectedInfo={setSelectedInfo}
             />
 
             <CameraControl

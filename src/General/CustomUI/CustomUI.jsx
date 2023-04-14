@@ -8,7 +8,7 @@ import RoadUI from "./RoadUI.jsx";
 export default function CustomUI({
   selectedIndexCustomSettings,
   updateCustomObject,
-  selectedIndex,
+  selectedInfo,
   addCustom,
 }) {
   const [currentTab, setCurrentTab] = useState("housing");
@@ -167,7 +167,7 @@ export default function CustomUI({
         <RoadUI
           selectedIndexCustomSettings={selectedIndexCustomSettings}
           updateCustomObject={updateCustomObject}
-          selectedIndex={selectedIndex}
+          selectedInfo={selectedInfo}
           addCustom={addCustom}
         />
       )}
@@ -175,7 +175,7 @@ export default function CustomUI({
         <CorridorUI
           selectedIndexCustomSettings={selectedIndexCustomSettings}
           updateCustomObject={updateCustomObject}
-          selectedIndex={selectedIndex}
+          selectedInfo={selectedInfo}
           addCustom={addCustom}
         />
       )}
@@ -183,21 +183,21 @@ export default function CustomUI({
         <CarparkUI
           selectedIndexCustomSettings={selectedIndexCustomSettings}
           updateCustomObject={updateCustomObject}
-          selectedIndex={selectedIndex}
+          selectedInfo={selectedInfo}
         />
       )}
       {currentTab == "amenity" && (
         <AmenityUI
           selectedIndexCustomSettings={selectedIndexCustomSettings}
           updateCustomObject={updateCustomObject}
-          selectedIndex={selectedIndex}
+          selectedInfo={selectedInfo}
         />
       )}
       {currentTab == "landscape" && (
         <LandscapeUI
           selectedIndexCustomSettings={selectedIndexCustomSettings}
           updateCustomObject={updateCustomObject}
-          selectedIndex={selectedIndex}
+          selectedInfo={selectedInfo}
         />
       )}
     </div>

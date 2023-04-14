@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 export default function CorridorUI({
-  selectedIndex,
+  selectedInfo,
   selectedIndexCustomSettings,
   updateCustomObject,
   addCustom,
@@ -23,7 +23,7 @@ export default function CorridorUI({
 
   useEffect(() => {
     // update custom settings by index
-    updateCustomObject(selectedIndex, formData);
+    updateCustomObject(selectedInfo?.index, selectedInfo?.typology, formData);
   }, [formData]);
 
   function handleChange(event) {
@@ -58,8 +58,11 @@ export default function CorridorUI({
         <h1 className="text-accent font-bold py-2 text-xl">Housing</h1>
         <div className="flex gap-2">
           <button
+            id={"customCorridor"}
             type="button"
-            onClick={addCustom}
+            onClick={() => {
+              addCustom("customCorridor", formData);
+            }}
             className="btn btn-sm btn-outline btn-accent rounded-md"
           >
             Add

@@ -50,7 +50,14 @@ export const useStoreAll = create((set) => ({
     }));
   },
 
-  addCustom: (typology, customSettings) => {
+  addCustom: (typology, inputSettings) => {
+    let customSettings;
+    if (typology === "customCorridor") {
+      customSettings = { customCorridorSettings: inputSettings };
+    } else if (typology === "customConnectingRoad") {
+      customSettings = { customConnectingRoadSettings: inputSettings };
+    }
+
     set((prev) => ({
       objects: [
         ...prev.objects,
@@ -61,7 +68,7 @@ export const useStoreAll = create((set) => ({
           typology: typology,
           levels: 1,
           unitsPerLevel: 0,
-          customCorridorSettings: customSettings,
+          customSettings: customSettings,
         },
       ],
     }));
@@ -87,11 +94,11 @@ export const useStoreAll = create((set) => ({
     }));
   },
 
-  updateCustomObject: (index, formData) => {
+  updateCustomObject: (index, typology, formData) => {
     set((prev) => ({
       objects: prev.objects.map((object) => {
         if (index === object.key) {
-          object.customCorridorSettings = formData;
+          object.customSettings[typology + "Settings"] = formData;
         }
         return object;
       }),

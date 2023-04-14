@@ -10,10 +10,10 @@ export default function AllAnimatedObjects({
   updateobjects,
   updateobjectsLevels,
   streetView,
-  setSelectedIndex,
+  setSelectedInfo,
 }) {
   return objects.map(
-    ({ key, position, rotation, typology, levels, customCorridorSettings }) => {
+    ({ key, position, rotation, typology, levels, customSettings }) => {
       return (
         <AnimatedObjects
           key={key}
@@ -27,10 +27,10 @@ export default function AllAnimatedObjects({
           setIsRotating={setIsRotating}
           typology={typology}
           levels={levels}
-          customCorridorSettings={customCorridorSettings}
+          customSettings={customSettings}
           setIsChangingNoOfFloors={setIsChangingNoOfFloors}
           streetView={streetView}
-          setSelectedIndex={setSelectedIndex}
+          setSelectedInfo={setSelectedInfo}
         />
       );
     }

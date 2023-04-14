@@ -17,6 +17,7 @@ import Slider from "../../General/mainSubComponents/htmlSlider";
 import { getObjectsHeight } from "../../General/helpers/getObjectsHeight";
 import SliderControl from "../../General/mainSubComponents/SliderControl";
 import CustomCorridorAllFull from "../objectComponentsCustom/CustomCorridors/CustomCorridor/CustomCorridorAllFull";
+import CustomConnectingRoad from "../objectComponentsCustom/CustomRoads/CustomConnectingRoad.jsx/CustomConnectingRoad";
 
 export default function AnimatedObjects({
   index,
@@ -29,9 +30,9 @@ export default function AnimatedObjects({
   typology,
   setIsChangingNoOfFloors,
   levels,
-  customCorridorSettings,
+  customSettings,
   streetView,
-  setSelectedIndex,
+  setSelectedInfo,
 }) {
   const initialNoOfFloors = levels;
   const [noOfFloors, setNoOfFloors] = useState(initialNoOfFloors);
@@ -47,9 +48,11 @@ export default function AnimatedObjects({
       removeobjects(index);
     } else {
       // left mouse click to update or copy custom properties
-      setSelectedIndex(index);
+      setSelectedInfo({ typology: typology, index: index });
     }
   };
+
+  console.log(customSettings);
 
   const {
     buildingIndivHeight,
@@ -95,17 +98,26 @@ export default function AnimatedObjects({
       handleMouseClick={handleMouseClick}
       streetView={streetView}
     >
-      {typology === "customCorridor" && customCorridorSettings && (
+      {typology === "customCorridor" && customSettings && (
         // check if the settings is not empty
 
         <CustomCorridorAllFull
-          noOfFloors={customCorridorSettings.noOfFloors}
-          noOfUnitsArr={customCorridorSettings.noOfUnitsArr}
-          corridorWidth={customCorridorSettings.corridorWidth}
-          pairDist={customCorridorSettings.pairDist}
-          clusterType={customCorridorSettings.clusterType}
-          rectilinearInitialDist={customCorridorSettings.rectilinearInitialDist}
-          slideDist={customCorridorSettings.slideDist}
+          noOfFloors={customSettings.customCorridorSettings.noOfFloors}
+          noOfUnitsArr={customSettings.customCorridorSettings.noOfUnitsArr}
+          corridorWidth={customSettings.customCorridorSettings.corridorWidth}
+          pairDist={customSettings.customCorridorSettings.pairDist}
+          clusterType={customSettings.customCorridorSettings.clusterType}
+          rectilinearInitialDist={
+            customSettings.customCorridorSettings.rectilinearInitialDist
+          }
+          slideDist={customSettings.customCorridorSettings.slideDist}
+        />
+      )}
+
+      {typology === "customConnectingRoad" && (
+        <CustomConnectingRoad
+          length={customSettings.customConnectingRoadSettings?.length}
+          roadType={customSettings.customConnectingRoadSettings?.roadType}
         />
       )}
       {typology === "buildingIndiv" && (
