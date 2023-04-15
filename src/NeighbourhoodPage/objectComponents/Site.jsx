@@ -1,8 +1,13 @@
 import { importObjects } from "../imports/ImportedObjects";
+import { useGLTF, useTexture } from "@react-three/drei";
 
 export default function Site() {
   const meshes = importObjects().siteObj;
   const height = meshes.height / 2;
+
+  /*  const bakedTexture = useTexture("./bakedTextures/grassTexture2-01.jpg"); */
+
+  /*  bakedTexture.repeat.set(1, 1); */
   return (
     <group position={[0, -height - 2, 0]}>
       <mesh
@@ -16,7 +21,9 @@ export default function Site() {
         receiveShadow
         geometry={meshes.siteGreen.geometry}
         material={meshes.siteGreen.material}
-      ></mesh>
+      >
+        {/*    <meshStandardMaterial map={bakedTexture} /> */}
+      </mesh>
       <mesh
         castShadow
         receiveShadow

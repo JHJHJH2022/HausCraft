@@ -29,7 +29,6 @@ export default function AdultA({ position }) {
   );
   bakedTexture.flipY = false;
   bakedTexture.repeat.set(1, 1);
-  console.log(model.nodes);
   // return geometry
   return (
     <>

@@ -27,7 +27,6 @@ export default function ChildrenB({ position }) {
   );
   bakedTexture.flipY = false;
   bakedTexture.repeat.set(1, 1);
-  console.log(model.nodes);
 
   // map={bakedTexture}
   // return geometry

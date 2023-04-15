@@ -27,8 +27,6 @@ export default function LandscapeUI({
     });
   }
 
-  console.log(formData);
-
   useEffect(() => {
     if (selectedIndexCustomLandscapeSettings !== undefined) {
       setFormData(selectedIndexCustomLandscapeSettings);
