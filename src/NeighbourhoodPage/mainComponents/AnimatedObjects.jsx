@@ -17,7 +17,11 @@ import Slider from "../../General/mainSubComponents/htmlSlider";
 import { getObjectsHeight } from "../../General/helpers/getObjectsHeight";
 import SliderControl from "../../General/mainSubComponents/SliderControl";
 import CustomCorridorAllFull from "../objectComponentsCustom/CustomCorridors/CustomCorridor/CustomCorridorAllFull";
-import CustomConnectingRoad from "../objectComponentsCustom/CustomRoads/CustomConnectingRoad.jsx/CustomConnectingRoad";
+import CustomConnectingRoad from "../objectComponentsCustom/CustomRoads/CustomConnectingRoad";
+import CustomRoundabout from "../objectComponentsCustom/CustomRoads/CustomRoundabout.jsx";
+import CustomTurnTwoWay from "../objectComponentsCustom/CustomRoads/CustomTurnTwoWay.jsx";
+import CustomTurnThreeWay from "../objectComponentsCustom/CustomRoads/CustomTurnThreeWay.jsx";
+
 import CustomAmenityFull from "../objectComponentsCustom/CustomAmenity/CustomAmenityFull.jsx";
 import CustomCarparkFull from "../objectComponentsCustom/CustomCarpark/CustomCarparkFull.jsx";
 import CustomLandscapeFull from "../objectComponentsCustom/CustomLandscape/CustomLandscapeFull.jsx";
@@ -147,6 +151,10 @@ export default function AnimatedObjects({
           displacement={customSettings.customLandscapeSettings?.displacement}
         />
       )}
+      {typology === "customRoundabout" && <CustomRoundabout />}
+      {typology === "customTurnTwoWay" && <CustomTurnTwoWay />}
+      {typology === "customTurnThreeWay" && <CustomTurnThreeWay />}
+
       {typology === "buildingIndiv" && (
         <>
           <SliderControl

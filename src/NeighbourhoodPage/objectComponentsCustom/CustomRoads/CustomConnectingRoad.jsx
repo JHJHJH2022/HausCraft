@@ -1,5 +1,5 @@
-import PedestrianRoad from "./PedestrianRoad";
-import VehicularRoad from "./VehicularRoad";
+import PedestrianRoad from "./CustomConnectingRoad/PedestrianRoad";
+import VehicularRoad from "./CustomConnectingRoad/VehicularRoad";
 
 export default function CustomConnectingRoad({ length, roadType }) {
   return (

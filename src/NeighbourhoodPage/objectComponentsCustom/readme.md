@@ -18,5 +18,5 @@ next steps:
 1. model each part
 2. add logics
 3. update feedback panel
-4. add surrouding buildings to site, make site larger
+4. **add surrouding buildings to site, make site larger**
 5. small fixes: buttons position, sun function (wont affect if take video on local host, can take down in deplyed version), display info on all designs management panel, update screen shot
