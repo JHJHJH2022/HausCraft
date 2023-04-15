@@ -8,7 +8,7 @@ export default function EditControl({
     <>
       <OrbitControls
         minZoom={editMode ? 4 : 3}
-        maxZoom={20}
+        maxZoom={50}
         enabled={!isDragging && !isChangingNoOfFloors}
         near={0.1}
         far={500}

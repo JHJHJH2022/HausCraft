@@ -35,10 +35,10 @@
 
    - remove hidden faces
    - unlink duplicates (A to select all -> F3 -> makesingle - object&data)
-   - fix faces orientation
+   - fix faces orientation: edit mode -> select all -> F3 -> recalculate outside
    - normalize scales (ctrl A -> apply all transformation)
    - add appropriate lighting if need this info in texture
-
+****
 2. **UV unwrapping**
 
 - open a uv editor panel
@@ -54,7 +54,7 @@
 - inside uv editor, Image -> save as to save the texture. file format -> Radiance HDR, save in the save folder as the .blend file
 
 4. **Preparing material**
-
+   
 - open a shader editor panel
 - shift A -> texture -> image texture
 - choose baked texture from drop down, and keep this node selected / active

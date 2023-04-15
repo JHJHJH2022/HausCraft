@@ -1,26 +1,26 @@
 import { useGLTF, useTexture } from "@react-three/drei";
 
+import AdultA from "./CustomAmenityModules/AdultA";
+import AdultB from "./CustomAmenityModules/AdultB";
+import ChildrenA from "./CustomAmenityModules/ChildrenA";
+import ChildrenB from "./CustomAmenityModules/ChildrenB";
+import ElderlyA from "./CustomAmenityModules/ElderlyA";
+import ElderlyB from "./CustomAmenityModules/ElderlyB";
+
 export default function CustomAmenityModules({
   children,
   adult,
   elderly,
   shape,
 }) {
-  console.log(elderly);
-  const dragon = useGLTF("dragon.glb");
-
-  const bakedTexture = useTexture("dragonBakedNoLight.jpg");
-  bakedTexture.flipY = false;
-
   return (
-    <mesh castShadow receiveShadow geometry={dragon.nodes.dragon.geometry}>
-      {children && <meshStandardMaterial map={bakedTexture} />}
-      {adult && (
-        <meshStandardMaterial /* map={bakedTexture}  */ color="yellow" />
-      )}
-      {elderly && (
-        <meshStandardMaterial /* map={bakedTexture}  */ color="pink" />
-      )}
-    </mesh>
+    <>
+      {/* children == true && shape == "A" && */ <AdultA />}
+      {/* children == true && shape == "A" &&  */ <AdultB />}
+      <ChildrenA />
+      <ChildrenB />
+      <ElderlyA />
+      <ElderlyB />
+    </>
   );
 }
