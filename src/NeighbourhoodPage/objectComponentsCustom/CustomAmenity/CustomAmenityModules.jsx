@@ -13,14 +13,46 @@ export default function CustomAmenityModules({
   elderly,
   shape,
 }) {
-  return (
-    <>
-      {/* children == true && shape == "A" && */ <AdultA />}
-      {/* children == true && shape == "A" &&  */ <AdultB />}
-      <ChildrenA />
-      <ChildrenB />
-      <ElderlyA />
-      <ElderlyB />
-    </>
-  );
+  if (shape == "A")
+    return (
+      <>
+        {adult && (
+          <group position={[-7.5, 0, 0]}>
+            <AdultA />
+          </group>
+        )}
+
+        {children && (
+          <group position={[7.5, 0, 0]}>
+            <ChildrenA />
+          </group>
+        )}
+        {elderly && (
+          <group position={[0, 0, 13]}>
+            <ElderlyA />
+          </group>
+        )}
+      </>
+    );
+  else if (shape == "B")
+    return (
+      <>
+        {adult && (
+          <group position={[-8, 0, 0]}>
+            <AdultB />
+          </group>
+        )}
+
+        {children && (
+          <group position={[8, 0, 0]}>
+            <ChildrenB />
+          </group>
+        )}
+        {elderly && (
+          <group position={[0, 0, 11]}>
+            <ElderlyB />
+          </group>
+        )}
+      </>
+    );
 }

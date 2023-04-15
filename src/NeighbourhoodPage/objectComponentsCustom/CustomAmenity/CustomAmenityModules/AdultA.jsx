@@ -34,7 +34,7 @@ export default function AdultA({ position }) {
   return (
     <>
       <mesh castShadow receiveShadow geometry={geometry} position={position}>
-        <meshStandardMaterial color={"lightgrey"} map={bakedTexture} />
+        <meshStandardMaterial color={"hsl(67, 35%, 82%)"} />
       </mesh>
       <mesh
         castShadow
