@@ -2,6 +2,7 @@ import CustomConnectingRoadUI from "./RoadUIs/CustomConnectingRoadUI";
 import CustomRoundaboutUI from "./RoadUIs/CustomRoundaboutUI";
 import CustomTurnTwoWayUI from "./RoadUIs/CustomTurnTwoWayUI";
 import CustomTurnThreeWayUI from "./RoadUIs/CustomTurnThreeWayUI";
+import CustomTurnFourWayUI from "./RoadUIs/CustomTurnFourWayUI";
 
 export default function RoadUI({
   selectedInfo,
@@ -44,6 +45,15 @@ export default function RoadUI({
       />
       <br />
       <CustomTurnThreeWayUI
+        addCustom={addCustom}
+        selectedInfo={selectedInfo}
+        updateCustomObject={updateCustomObject}
+        selectedIndexCustomConnectingRoadSettings={
+          selectedIndexCustomConnectingRoadSettings
+        }
+      />
+      <br />
+      <CustomTurnFourWayUI
         addCustom={addCustom}
         selectedInfo={selectedInfo}
         updateCustomObject={updateCustomObject}

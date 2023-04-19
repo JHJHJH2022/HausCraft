@@ -42,9 +42,9 @@ export default function Inspector({
         event.ray.intersectPlane(floorPlane, planeIntersectPoint);
 
         let newPos = [
-          Math.floor(planeIntersectPoint.x) + 0.5,
+          Math.floor(planeIntersectPoint.x * 2) / 2,
           objectHeight / 2, // y need to be exact value
-          Math.floor(planeIntersectPoint.z) + 0.5,
+          Math.floor(planeIntersectPoint.z * 2) / 2,
         ]; /* to snap to grid */
 
         setPos(newPos);
@@ -64,7 +64,7 @@ export default function Inspector({
 
       api.start({
         position: pos,
-        scale: active ? 1.05 : 1,
+        /* scale: active ? 1.05 : 1, */
         rotation: rtn,
       });
       return null;

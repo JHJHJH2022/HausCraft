@@ -21,6 +21,7 @@ import CustomConnectingRoad from "../objectComponentsCustom/CustomRoads/CustomCo
 import CustomRoundabout from "../objectComponentsCustom/CustomRoads/CustomRoundabout.jsx";
 import CustomTurnTwoWay from "../objectComponentsCustom/CustomRoads/CustomTurnTwoWay.jsx";
 import CustomTurnThreeWay from "../objectComponentsCustom/CustomRoads/CustomTurnThreeWay.jsx";
+import CustomTurnFourWay from "../objectComponentsCustom/CustomRoads/CustomTurnFourWay.jsx";
 
 import CustomAmenityFull from "../objectComponentsCustom/CustomAmenity/CustomAmenityFull.jsx";
 import CustomCarparkFull from "../objectComponentsCustom/CustomCarpark/CustomCarparkFull.jsx";
@@ -154,6 +155,7 @@ export default function AnimatedObjects({
       {typology === "customRoundabout" && <CustomRoundabout />}
       {typology === "customTurnTwoWay" && <CustomTurnTwoWay />}
       {typology === "customTurnThreeWay" && <CustomTurnThreeWay />}
+      {typology === "customTurnFourWay" && <CustomTurnFourWay />}
 
       {typology === "buildingIndiv" && (
         <>
