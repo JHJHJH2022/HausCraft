@@ -8,7 +8,7 @@ export default function Lights({ timeOfDay }) {
 
   return (
     <>
-      <ambientLight intensity={0.2} />
+      <ambientLight intensity={0.4} /> {/* originial was 0.2 */}
       <directionalLight
         intensity={intensity} // 4 when cast shadow
         position={[(100 / 6) * sunValue - 10, 150, (200 / 6) * sunValue - 10]}

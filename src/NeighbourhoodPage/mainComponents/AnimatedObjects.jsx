@@ -16,6 +16,16 @@ import TreesClusterTwo from "../objectComponents/Trees/TreesClusterTwo";
 import Slider from "../../General/mainSubComponents/htmlSlider";
 import { getObjectsHeight } from "../../General/helpers/getObjectsHeight";
 import SliderControl from "../../General/mainSubComponents/SliderControl";
+import CustomCorridorAllFull from "../objectComponentsCustom/CustomCorridors/CustomCorridor/CustomCorridorAllFull";
+import CustomConnectingRoad from "../objectComponentsCustom/CustomRoads/CustomConnectingRoad";
+import CustomRoundabout from "../objectComponentsCustom/CustomRoads/CustomRoundabout.jsx";
+import CustomTurnTwoWay from "../objectComponentsCustom/CustomRoads/CustomTurnTwoWay.jsx";
+import CustomTurnThreeWay from "../objectComponentsCustom/CustomRoads/CustomTurnThreeWay.jsx";
+import CustomTurnFourWay from "../objectComponentsCustom/CustomRoads/CustomTurnFourWay.jsx";
+
+import CustomAmenityFull from "../objectComponentsCustom/CustomAmenity/CustomAmenityFull.jsx";
+import CustomCarparkFull from "../objectComponentsCustom/CustomCarpark/CustomCarparkFull.jsx";
+import CustomLandscapeFull from "../objectComponentsCustom/CustomLandscape/CustomLandscapeFull.jsx";
 
 export default function AnimatedObjects({
   index,
@@ -28,9 +38,10 @@ export default function AnimatedObjects({
   typology,
   setIsChangingNoOfFloors,
   levels,
+  customSettings,
   streetView,
+  setSelectedInfo,
 }) {
-  const floatInAirHt = 0;
   const initialNoOfFloors = levels;
   const [noOfFloors, setNoOfFloors] = useState(initialNoOfFloors);
   const [sliderVisible, setSliderVisible] = useState(false);
@@ -39,10 +50,13 @@ export default function AnimatedObjects({
     updateobjectsLevels(index, noOfFloors);
   }, [noOfFloors]);
 
-  const handleDelete = (e) => {
+  const handleMouseClick = (e) => {
+    e.stopPropagation();
     if (e.altKey) {
       removeobjects(index);
-      console.log("clicked");
+    } else {
+      // left mouse click to update or copy custom properties
+      setSelectedInfo({ typology: typology, index: index });
     }
   };
 
@@ -77,20 +91,72 @@ export default function AnimatedObjects({
   } else if (typology === "tree") {
     objectHeight = treeHeight;
   }
-
   return (
     <Inspector
       setIsDragging={setIsDragging}
       responsiveness={25}
       position={position}
       rotation={rotation}
-      floatInAirHt={floatInAirHt}
       objectHeight={objectHeight} // this needs to be fixed when roof level and ground are diff height, should be different here as well, probably this is causing bugs for carpark ground and cluster roof
       index={index}
       updateobjects={updateobjects}
-      handleDelete={handleDelete}
+      handleMouseClick={handleMouseClick}
       streetView={streetView}
     >
+      {typology === "customCorridor" && customSettings && (
+        // check if the settings is not empty
+
+        <CustomCorridorAllFull
+          noOfFloors={customSettings.customCorridorSettings.noOfFloors}
+          noOfUnitsArr={customSettings.customCorridorSettings.noOfUnitsArr}
+          corridorWidth={customSettings.customCorridorSettings.corridorWidth}
+          pairDist={customSettings.customCorridorSettings.pairDist}
+          clusterType={customSettings.customCorridorSettings.clusterType}
+          rectilinearInitialDist={
+            customSettings.customCorridorSettings.rectilinearInitialDist
+          }
+          slideDist={customSettings.customCorridorSettings.slideDist}
+        />
+      )}
+
+      {typology === "customConnectingRoad" && (
+        <CustomConnectingRoad
+          length={customSettings.customConnectingRoadSettings?.length}
+          roadType={customSettings.customConnectingRoadSettings?.roadType}
+        />
+      )}
+      {typology === "customAmenity" && (
+        <CustomAmenityFull
+          children={customSettings.customAmenitySettings?.children}
+          adult={customSettings.customAmenitySettings?.adult}
+          elderly={customSettings.customAmenitySettings?.elderly}
+          shape={customSettings.customAmenitySettings?.shape}
+        />
+      )}
+      {typology === "customCarpark" && (
+        <CustomCarparkFull
+          roof={customSettings.customCarparkSettings?.roof}
+          ground={customSettings.customCarparkSettings?.ground}
+          length={customSettings.customCarparkSettings?.length}
+          level={customSettings.customCarparkSettings?.level}
+        />
+      )}
+      {typology === "customLandscape" && (
+        <CustomLandscapeFull
+          shape={customSettings.customLandscapeSettings?.shape}
+          length={customSettings.customLandscapeSettings?.length}
+          width={customSettings.customLandscapeSettings?.width}
+          radius={customSettings.customLandscapeSettings?.radius}
+          density={customSettings.customLandscapeSettings?.density}
+          sizeVariation={customSettings.customLandscapeSettings?.sizeVariation}
+          displacement={customSettings.customLandscapeSettings?.displacement}
+        />
+      )}
+      {typology === "customRoundabout" && <CustomRoundabout />}
+      {typology === "customTurnTwoWay" && <CustomTurnTwoWay />}
+      {typology === "customTurnThreeWay" && <CustomTurnThreeWay />}
+      {typology === "customTurnFourWay" && <CustomTurnFourWay />}
+
       {typology === "buildingIndiv" && (
         <>
           <SliderControl

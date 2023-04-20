@@ -22,11 +22,51 @@ export const useStoreAll = create((set) => ({
         ...prev.objects,
         {
           key: nanoid(),
+          position: [100, 0, 100],
+          rotation: [0, 0, 0],
+          typology: "customCorridor",
+          levels: 1,
+          unitsPerLevel: 0,
+          customCorridorSettings: {
+            clusterType: "linear",
+            noOfFloors: 18,
+            noOfUnitsArr: [4, 0, 2, 6],
+            corridorWidth: 5,
+            pairDist: 28,
+            rectilinearInitialDist: -15,
+            slideDist: 0,
+          },
+        },
+
+        /*   {
+          key: nanoid(),
           position: [0, 0, 0],
           rotation: [0, 0, 0],
           typology: typology,
           levels: 1,
           unitsPerLevel: noOfUnitsPerLevel,
+        }, */
+      ],
+    }));
+  },
+
+  addCustom: (typology, inputSettings) => {
+    let settingName = `${typology}Settings`;
+    let customSettings = {};
+    customSettings[settingName] = inputSettings;
+    console.log(customSettings);
+
+    set((prev) => ({
+      objects: [
+        ...prev.objects,
+        {
+          key: nanoid(),
+          position: [100, 0, 100],
+          rotation: [0, 0, 0],
+          typology: typology,
+          levels: 1,
+          unitsPerLevel: 0,
+          customSettings: customSettings,
         },
       ],
     }));
@@ -46,6 +86,17 @@ export const useStoreAll = create((set) => ({
         if (index === object.key) {
           if (newPos.length > 0) object.position = newPos;
           if (newRotation.length > 0) object.rotation = newRotation;
+        }
+        return object;
+      }),
+    }));
+  },
+
+  updateCustomObject: (index, typology, formData) => {
+    set((prev) => ({
+      objects: prev.objects.map((object) => {
+        if (index === object.key) {
+          object.customSettings[typology + "Settings"] = formData;
         }
         return object;
       }),

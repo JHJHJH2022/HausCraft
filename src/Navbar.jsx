@@ -2,18 +2,15 @@ import { Link } from "react-router-dom";
 
 export default function NavigationBar() {
   return (
-    <div
-      className="shadow-md shadow-gray-300 z-50 bg-white"
-      style={{ height: "8%" }}
-    >
+    <div className="shadow-md  z-50 " style={{ height: "8%" }}>
       <nav className="flex justify-between py-3 px-20">
         <Link to="/" className="flex items-center gap-1">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="#FE000B"
+            strokeWidth="3"
+            stroke="green"
             className="w-6 h-6"
           >
             <path
@@ -23,34 +20,45 @@ export default function NavigationBar() {
             />
           </svg>
 
-          <span className="font-bold text-xl">HausCraft</span>
+          <span className="font-bold text-xl text-accent">HausCraft</span>
         </Link>
 
         <ul className="flex gap-4  py-2 px-4 ">
           <li>
-            <Link to="/home">Home</Link>
+            <Link to="/home" className="text-lg text-accent font-bold ">
+              Home
+            </Link>
           </li>
-          <li className="border-l border-gray-300"></li>
+          <li className="border-l border-accent"></li>
           <li>
-            <Link to="/corridor">Components</Link>
+            <Link to="/corridor" className="text-lg text-accent font-bold ">
+              Components
+            </Link>
           </li>
-          <li className="border-l border-gray-300"></li>
+          <li className="border-l border-accent"></li>
           <li>
-            <Link to="/neighbourhood">Neighbourhood</Link>
+            <Link
+              to="/neighbourhood"
+              className="text-lg text-accent font-bold "
+            >
+              Neighbourhood
+            </Link>
           </li>
-          <li className="border-l border-gray-300"></li>
+          <li className="border-l border-accent"></li>
           <li>
-            <Link to="/about">About</Link>
+            <Link to="/about" className="text-lg text-accent font-bold ">
+              About
+            </Link>
           </li>
         </ul>
 
-        <Link className="flex items-center gap-2 border border-gray-300 rounded-full py-2 px-4 ">
+        <Link className="flex items-center gap-2 border border-accent/80 rounded-full py-2 px-4 ">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             strokeWidth={1.5}
-            stroke="currentColor"
+            stroke="orange"
             className="w-6 h-6"
           >
             <path
@@ -59,7 +67,7 @@ export default function NavigationBar() {
               d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
             />
           </svg>
-          <div className="bg-gray-500 text-white rounded-full border border-gray-500 overflow-hidden">
+          <div className="bg-accent text-neutral rounded-full border border-accent overflow-hidden">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"

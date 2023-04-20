@@ -13,7 +13,7 @@ export default function CameraControl({
       <OrthographicCamera
         makeDefault={!streetView}
         near={0}
-        zoom={editMode ? 4 : 3}
+        zoom={4}
         position={[200, 200, 250]}
       />
 

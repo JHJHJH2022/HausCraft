@@ -11,11 +11,10 @@ export default function Inspector({
   position,
   rotation,
   objectHeight,
-  floatInAirHt,
   setIsDragging,
   index,
   updateobjects,
-  handleDelete,
+  handleMouseClick,
   streetView,
 }) {
   // set constants
@@ -23,11 +22,7 @@ export default function Inspector({
   let planeIntersectPoint = new THREE.Vector3();
 
   // keep position of object in state
-  const [pos, setPos] = useState([
-    position[0],
-    objectHeight / 2 + floatInAirHt,
-    position[2],
-  ]);
+  const [pos, setPos] = useState([position[0], objectHeight / 2, position[2]]);
   const { size } = useThree();
   const euler = useMemo(() => new THREE.Euler(), []);
   const [rtn, setRtn] = useState(rotation);
@@ -43,18 +38,13 @@ export default function Inspector({
   const bind = useDrag(
     ({ active, event, delta: [dx] }) => {
       event.stopPropagation();
-      if (
-        active &&
-        event.ctrlKey === false &&
-        event.shiftKey === false &&
-        !streetView
-      ) {
+      if (active && event.ctrlKey === true && !streetView) {
         event.ray.intersectPlane(floorPlane, planeIntersectPoint);
 
         let newPos = [
-          Math.floor(planeIntersectPoint.x) + 0.5,
+          Math.floor(planeIntersectPoint.x * 2) / 2,
           objectHeight / 2, // y need to be exact value
-          Math.floor(planeIntersectPoint.z) + 0.5,
+          Math.floor(planeIntersectPoint.z * 2) / 2,
         ]; /* to snap to grid */
 
         setPos(newPos);
@@ -63,7 +53,7 @@ export default function Inspector({
         const newPosArray = [newPos[0], newPos[1], newPos[2]];
         updateobjects(index, newPosArray, []);
         //
-      } else if (active && event.ctrlKey === true && event.shiftKey === false) {
+      } else if (active && event.shiftKey === true && event.ctrlKey === false) {
         euler.y += (dx / size.width) * responsiveness;
         let newRtn = [0, angleSnap(euler.y, 45), 0];
         setRtn(newRtn);
@@ -74,7 +64,7 @@ export default function Inspector({
 
       api.start({
         position: pos,
-        scale: active ? 1.05 : 1,
+        /* scale: active ? 1.05 : 1, */
         rotation: rtn,
       });
       return null;
@@ -82,7 +72,7 @@ export default function Inspector({
     { delay: true }
   );
   return (
-    <animated.group {...bind()} {...spring} onClick={handleDelete}>
+    <animated.group {...bind()} {...spring} onClick={handleMouseClick}>
       {children}
     </animated.group>
   );
