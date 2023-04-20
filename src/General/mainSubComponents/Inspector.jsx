@@ -38,7 +38,7 @@ export default function Inspector({
   const bind = useDrag(
     ({ active, event, delta: [dx] }) => {
       event.stopPropagation();
-      if (active && event.shiftKey === true && !streetView) {
+      if (active && event.ctrlKey === true && !streetView) {
         event.ray.intersectPlane(floorPlane, planeIntersectPoint);
 
         let newPos = [
@@ -53,7 +53,7 @@ export default function Inspector({
         const newPosArray = [newPos[0], newPos[1], newPos[2]];
         updateobjects(index, newPosArray, []);
         //
-      } else if (active && event.ctrlKey === true && event.shiftKey === false) {
+      } else if (active && event.shiftKey === true && event.ctrlKey === false) {
         euler.y += (dx / size.width) * responsiveness;
         let newRtn = [0, angleSnap(euler.y, 45), 0];
         setRtn(newRtn);

@@ -3,7 +3,7 @@ import { getMeshHeight } from "../../General/helpers/helpers";
 
 export function importObjects() {
   // site model
-  const site = useGLTF("site.glb");
+  const site = useGLTF("site1.glb");
   const crossing = site.nodes.crossing;
   const road = site.nodes.road;
   const siteGreen = site.nodes.siteGreen;

@@ -5,6 +5,14 @@ export default function Display({
   buildingNumThree,
   buildingNumTwo,
   parkingNum,
+  amenityChildrenNum,
+  amenityAdultNum,
+  amenityElderlyNum,
+  maxHeight2,
+  maxHeight3,
+  maxHeight4,
+  maxHeight5,
+  buildingNumInPlan,
   currentSessionId,
 }) {
   return (
@@ -13,13 +21,8 @@ export default function Display({
       <h1 className="text-accent font-bold py-2 text-xl">{currentSessionId}</h1>
       <hr class="my-3 h-0.5 border-t-0 bg-neutral-100 opacity-100 dark:opacity-50" />
       <div className="flex flex-col gap-3">
-        <p className="text-lg font-bold">Housing Units</p>
-        <h5 className="flex justify-between content-center">
-          <span>Housing Units</span>
-          <span className="text-secondary font-bold text-xl">
-            {buildingNum}{" "}
-          </span>
-        </h5>
+        <p className="text-lg font-bold">Housing and Parking Units</p>
+
         <h5 className="flex justify-between content-center">
           <span>Total Housing Units</span>
           <span className="text-secondary font-bold text-xl">
@@ -53,40 +56,68 @@ export default function Display({
             {buildingNumTwo}{" "}
           </span>
         </h5>
+        <h5 className="flex justify-between content-center">
+          <span>Maximum Height</span>
+          <span className="text-secondary font-bold text-xl">
+            {Math.max(maxHeight2, maxHeight3, maxHeight4, maxHeight5) * 3 + 3} m{" "}
+          </span>
+        </h5>
 
-        <hr class="my-3 h-0.5 border-t-0 bg-neutral-100 opacity-100 dark:opacity-50" />
-        <p className="text-lg font-bold">Amenities Units</p>
         <h5 className="flex justify-between content-center">
           <span>Parking Lots</span>
           <span className="text-secondary font-bold text-xl">
             {parkingNum}{" "}
           </span>
         </h5>
+
+        <hr class="my-3 h-0.5 border-t-0 bg-neutral-100 opacity-100 dark:opacity-50" />
+        <p className="text-lg font-bold">Amenities Units</p>
+
         <h5 className="flex justify-between content-center">
-          <span>Play Facilities</span>
+          <span>Total Number of Amenities</span>
           <span className="text-secondary font-bold text-xl">
-            {parkingNum}{" "}
+            {amenityChildrenNum + amenityAdultNum + amenityElderlyNum}{" "}
           </span>
         </h5>
         <h5 className="flex justify-between content-center">
-          <span>Social Facilities</span>
+          <span>Total Area of Amenities</span>
           <span className="text-secondary font-bold text-xl">
-            {parkingNum}{" "}
+            {(amenityChildrenNum + amenityAdultNum + amenityElderlyNum) * 150}{" "}
+            m2
+          </span>
+        </h5>
+
+        <h5 className="flex justify-between content-center">
+          <span>Children Playground</span>
+          <span className="text-secondary font-bold text-xl">
+            {amenityChildrenNum * 150} m2
+          </span>
+        </h5>
+        <h5 className="flex justify-between content-center">
+          <span>Adult Fitness Station</span>
+          <span className="text-secondary font-bold text-xl">
+            {amenityAdultNum * 150} m2
+          </span>
+        </h5>
+        <h5 className="flex justify-between content-center">
+          <span>Elderly Fitness Station</span>
+          <span className="text-secondary font-bold text-xl">
+            {amenityElderlyNum * 150} m2
           </span>
         </h5>
 
         <hr class="my-3 h-0.5 border-t-0 bg-neutral-100 opacity-100 dark:opacity-50" />
         <p className="text-lg font-bold">Landscape Units</p>
         <h5 className="flex justify-between content-center">
-          <span>Total Green Area</span>
+          <span>Total Landscape Area</span>
           <span className="text-secondary font-bold text-xl">
-            {parkingNum}{" "}
+            {56980 - buildingNumInPlan * 250} m2{" "}
           </span>
         </h5>
         <h5 className="flex justify-between content-center">
-          <span>Green Cover Ratio</span>
+          <span>Site Landscape Coverage</span>
           <span className="text-secondary font-bold text-xl">
-            {parkingNum}{" "}
+            {Math.floor(((56980 - buildingNumInPlan * 100) / 56980) * 100)}%{" "}
           </span>
         </h5>
       </div>

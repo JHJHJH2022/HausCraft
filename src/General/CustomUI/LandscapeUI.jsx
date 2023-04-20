@@ -66,7 +66,7 @@ export default function LandscapeUI({
         <p className="text-lg font-bold">Settings</p>
 
         {/* shape */}
-        <div>
+        {/*  <div>
           <label htmlFor="shape" className="label cursor-pointer">
             Type of Base Shape
           </label>
@@ -81,23 +81,23 @@ export default function LandscapeUI({
             <option value="A">Type A</option>
             <option value="B">Type B</option>
           </select>
-        </div>
+        </div> */}
         {/* length */}
         <label htmlFor="length" className="label cursor-pointer">
-          Length : <span>{formData.length}</span>
+          Number of Landscape Cluster : <span>{formData.length}</span>
         </label>
         <input
           type="range"
           onChange={handleChange}
           value={formData.length}
           name="length"
-          min={2}
-          max={50}
+          min={1}
+          max={30}
           step={1}
           className="range range-secondary range-xs"
         ></input>
         {/* width */}
-        <label htmlFor="width" className="label cursor-pointer">
+        {/*   <label htmlFor="width" className="label cursor-pointer">
           Width : <span>{formData.width}</span>
         </label>
         <input
@@ -109,10 +109,10 @@ export default function LandscapeUI({
           max={50}
           step={1}
           className="range range-secondary range-xs"
-        ></input>
+        ></input> */}
         {/* radius */}
         <label htmlFor="radius" className="label cursor-pointer">
-          Radius : <span>{formData.radius}</span>
+          Randomness Seed : <span>{formData.radius}</span>
         </label>
         <input
           type="range"
@@ -135,13 +135,13 @@ export default function LandscapeUI({
           name="density"
           min={0.1}
           max={1}
-          step={0.1}
+          step={0.01}
           className="range range-secondary range-xs"
         ></input>
 
         {/* sizeVariation */}
         <label htmlFor="sizeVariation" className="label cursor-pointer">
-          Size Variation : <span>{formData.sizeVariation}</span>
+          Displacement X : <span>{formData.sizeVariation}</span>
         </label>
         <input
           type="range"
@@ -150,13 +150,13 @@ export default function LandscapeUI({
           name="sizeVariation"
           min={0.1}
           max={1}
-          step={0.1}
+          step={0.01}
           className="range range-secondary range-xs"
         ></input>
 
         {/* displacement */}
         <label htmlFor="displacement" className="label cursor-pointer">
-          displacement of Displacement :<span>{formData.displacement}</span>
+          Displacement Y : <span>{formData.displacement}</span>
         </label>
         <input
           type="range"
@@ -165,7 +165,7 @@ export default function LandscapeUI({
           name="displacement"
           min={0.1}
           max={1}
-          step={0.1}
+          step={0.01}
           className="range range-secondary range-xs"
         ></input>
       </form>

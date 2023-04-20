@@ -69,8 +69,17 @@ export default function AppNeighbourhood() {
   const [buildingNumFour, setBuildingNumFour] = useState(0);
   const [buildingNumThree, setBuildingNumThree] = useState(0);
   const [buildingNumTwo, setBuildingNumTwo] = useState(0);
-
   const [parkingNum, setParkingNum] = useState(0);
+  const [greenRoofNum, setGreenRoofNum] = useState(0);
+  const [maxHeight5, setMaxHeight5] = useState(0);
+  const [maxHeight4, setMaxHeight4] = useState(0);
+  const [maxHeight3, setMaxHeight3] = useState(0);
+  const [maxHeight2, setMaxHeight2] = useState(0);
+  const [buildingNumInPlan, setBuildingNumInPlan] = useState(0);
+  const [amenityChildrenNum, setAmenityChildrenNum] = useState(0);
+  const [amenityAdultNum, setAmenityAdultNum] = useState(0);
+  const [amenityElderlyNum, setAmenityElderlyNum] = useState(0);
+
   const [objects] = useStoreAll((state) => [state.objects]);
   const [addobjects] = useStoreAll((state) => [state.addobjects]);
   const [addCustom] = useStoreAll((state) => [state.addCustom]);
@@ -100,7 +109,8 @@ export default function AppNeighbourhood() {
   const handleSave = async () => {
     await api.updateDesignSession(currentSessionId, {
       objects: objects,
-      buildingNum: buildingNum,
+      buildingNum:
+        buildingNumFour + buildingNumFive + buildingNumThree + buildingNumTwo,
       parkingNum: parkingNum,
     });
     getAll();
@@ -158,35 +168,84 @@ export default function AppNeighbourhood() {
     setBuildingNum(totalUnitCount);
   }, [objects]);
 
-  // calculate total carpark units
+  /*   calculate total  units */
+  /*   calculate total  units */
+  /*   calculate total  units */
+  /*   calculate total  units */
+  /*   calculate total  units */
+  /*   calculate total  units */
+
+  /*  const [greenRoofNum, setGreenRoofNum] = useState(0);
+  const [maxHeight, setMaxHeight] = useState(0); */
+
+  // custom amenity
   useEffect(() => {
     const allObjects = objects.filter((object) => {
-      return object.typology === "carpark";
+      return object.typology === "customAmenity";
     });
 
-    let totalUnitCount = 0;
+    let childrenCount = 0;
+    let adultCount = 0;
+    let elderlyCount = 0;
 
     for (let i = 0; i < allObjects.length; i++) {
-      totalUnitCount += allObjects[i].unitsPerLevel * allObjects[i].levels;
+      if (allObjects[i].customSettings.customAmenitySettings.children == true) {
+        childrenCount += 1;
+      }
+      if (allObjects[i].customSettings.customAmenitySettings.adult == true) {
+        adultCount += 1;
+      }
+      if (allObjects[i].customSettings.customAmenitySettings.elderly == true) {
+        elderlyCount += 1;
+      }
     }
-
-    setParkingNum(totalUnitCount);
+    setAmenityChildrenNum(childrenCount);
+    setAmenityAdultNum(adultCount);
+    setAmenityElderlyNum(elderlyCount);
   }, [objects]);
 
-  /*  // calculate total five-room units
+  // custom carpark
+  useEffect(() => {
+    const allObjects = objects.filter((object) => {
+      return object.typology === "customCarpark";
+    });
+
+    let carparkCount = 0;
+    let greenRoofCount = 0;
+
+    for (let i = 0; i < allObjects.length; i++) {
+      greenRoofCount += 1;
+      carparkCount +=
+        allObjects[i].customSettings.customCarparkSettings.level * 200;
+    }
+
+    setParkingNum(carparkCount);
+    setGreenRoofNum(greenRoofCount);
+  }, [objects]);
+
+  // calculate total five-room units
   useEffect(() => {
     const allObjects = objects.filter((object) => {
       return object.typology === "customCorridor";
     });
 
     let fiveRoomUnitCount = 0;
+    let maxLevels5 = 0;
 
     for (let i = 0; i < allObjects.length; i++) {
       fiveRoomUnitCount +=
         allObjects[i].customSettings.customCorridorSettings.noOfUnitsArr[0] *
         allObjects[i].customSettings.customCorridorSettings.noOfFloors;
+      if (
+        allObjects[i].customSettings.customCorridorSettings.noOfFloors >
+          maxLevels5 ==
+        true
+      ) {
+        maxLevels5 =
+          allObjects[i].customSettings.customCorridorSettings.noOfFloors;
+      }
     }
-
+    setMaxHeight5(maxLevels5);
     setBuildingNumFive(fiveRoomUnitCount);
   }, [objects]);
 
@@ -197,12 +256,22 @@ export default function AppNeighbourhood() {
     });
 
     let fourRoomUnitCount = 0;
+    let maxLevels4 = 0;
 
     for (let i = 0; i < allObjects.length; i++) {
       fourRoomUnitCount +=
         allObjects[i].customSettings.customCorridorSettings.noOfUnitsArr[1] *
         allObjects[i].customSettings.customCorridorSettings.noOfFloors;
+      if (
+        allObjects[i].customSettings.customCorridorSettings.noOfFloors >
+          maxLevels4 ==
+        true
+      ) {
+        maxLevels4 =
+          allObjects[i].customSettings.customCorridorSettings.noOfFloors;
+      }
     }
+    setMaxHeight4(maxLevels4);
 
     setBuildingNumFour(fourRoomUnitCount);
   }, [objects]);
@@ -214,12 +283,22 @@ export default function AppNeighbourhood() {
     });
 
     let threeRoomUnitCount = 0;
+    let maxLevels3 = 0;
 
     for (let i = 0; i < allObjects.length; i++) {
       threeRoomUnitCount +=
         allObjects[i].customSettings.customCorridorSettings.noOfUnitsArr[2] *
         allObjects[i].customSettings.customCorridorSettings.noOfFloors;
+      if (
+        allObjects[i].customSettings.customCorridorSettings.noOfFloors >
+          maxLevels3 ==
+        true
+      ) {
+        maxLevels3 =
+          allObjects[i].customSettings.customCorridorSettings.noOfFloors;
+      }
     }
+    setMaxHeight3(maxLevels3);
 
     setBuildingNumThree(threeRoomUnitCount);
   }, [objects]);
@@ -231,16 +310,54 @@ export default function AppNeighbourhood() {
     });
 
     let twoRoomUnitCount = 0;
+    let maxLevels2 = 0;
 
     for (let i = 0; i < allObjects.length; i++) {
       twoRoomUnitCount +=
         allObjects[i].customSettings.customCorridorSettings.noOfUnitsArr[3] *
         allObjects[i].customSettings.customCorridorSettings.noOfFloors;
+      if (
+        allObjects[i].customSettings.customCorridorSettings.noOfFloors >
+          maxLevels2 ==
+        true
+      ) {
+        maxLevels2 =
+          allObjects[i].customSettings.customCorridorSettings.noOfFloors;
+      }
     }
+    setMaxHeight2(maxLevels2);
 
     setBuildingNumTwo(twoRoomUnitCount);
   }, [objects]);
- */
+
+  // calculate total building num in plan
+  useEffect(() => {
+    const allObjects = objects.filter((object) => {
+      return object.typology === "customCorridor";
+    });
+
+    let totalNumPlan = 0;
+
+    for (let i = 0; i < allObjects.length; i++) {
+      let sum = allObjects[
+        i
+      ].customSettings.customCorridorSettings.noOfUnitsArr.reduce(
+        (partialSum, a) => partialSum + a,
+        0
+      );
+      totalNumPlan += sum;
+    }
+
+    setBuildingNumInPlan(totalNumPlan);
+  }, [objects]);
+
+  /*  end of  calculate total  units */
+  /*  end of  calculate total  units */
+  /*  end of  calculate total  units */
+  /*  end of  calculate total  units */
+  /*  end of  calculate total  units */
+  /*  end of  calculate total  units */
+
   /* get custom settings of selected object with its index */
 
   const defaultSettings = {
@@ -395,7 +512,7 @@ export default function AppNeighbourhood() {
         style={{ height: "92%", width: "100%" }}
       >
         {!editMode && (
-          <div className="w-1/2 h-full">
+          <div className="w-1/4 h-full">
             <AllDesigns
               allSessions={allSessions}
               setCurrentSessionId={setCurrentSessionId}
@@ -406,7 +523,7 @@ export default function AppNeighbourhood() {
             />
           </div>
         )}
-        <div className={editMode ? "w-full h-full" : "w-1/2 h-full"}>
+        <div className={editMode ? "w-full h-full" : "w-3/4 h-full"}>
           {editMode && !streetView && (
             <Display
               buildingNum={buildingNum}
@@ -415,13 +532,21 @@ export default function AppNeighbourhood() {
               buildingNumThree={buildingNumThree}
               buildingNumTwo={buildingNumTwo}
               parkingNum={parkingNum}
+              amenityChildrenNum={amenityChildrenNum}
+              amenityAdultNum={amenityAdultNum}
+              amenityElderlyNum={amenityElderlyNum}
+              maxHeight2={maxHeight2}
+              maxHeight3={maxHeight3}
+              maxHeight4={maxHeight4}
+              maxHeight5={maxHeight5}
+              buildingNumInPlan={buildingNumInPlan}
               handleClick={handleClick}
               currentSessionId={currentSessionId}
             />
           )}
-          {editMode && !streetView && (
+          {/*  {editMode && !streetView && (
             <ComponentsList handleClick={handleClick} />
-          )}
+          )} */}
           {editMode && !streetView && (
             <CustomUI
               handleSave={handleSave}

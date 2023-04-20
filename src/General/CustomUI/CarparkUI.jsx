@@ -124,7 +124,7 @@ export default function CarparkUI({
           value={formData.level}
           name="level"
           min={1}
-          max={50}
+          max={15}
           step={1}
           className="range range-secondary range-xs"
         ></input>

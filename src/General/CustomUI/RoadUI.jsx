@@ -16,7 +16,7 @@ export default function RoadUI({
       <h1 className="text-accent font-bold py-2 text-xl">Road</h1>
       {/*  form starts from here */}
       {/* connecting pieces in between  */}
-
+      <hr class="my-3 h-0.5 border-t-0 bg-neutral-100 opacity-100 dark:opacity-50" />
       <CustomConnectingRoadUI
         addCustom={addCustom}
         selectedInfo={selectedInfo}

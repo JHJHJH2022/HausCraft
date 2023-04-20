@@ -81,9 +81,9 @@ export default function CustomConnectingRoadUI({
         onChange={handleChange}
         name="length"
         value={formData.length}
-        min={10}
-        max={500}
-        step={10}
+        min={1}
+        max={300}
+        step={1}
         className="range range-secondary range-xs"
       ></input>
     </div>
